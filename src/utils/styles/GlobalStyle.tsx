@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-const FormatStyle = StyleSheet.create({
+const GlobalStyle = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -43,4 +43,4 @@ const FormatStyle = StyleSheet.create({
   },
 });
 
-export default FormatStyle;
+export default GlobalStyle;

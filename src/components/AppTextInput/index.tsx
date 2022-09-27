@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, TextInput } from 'react-native';
-import Colors from '../../utils/Colors';
-import TextStyles from '../../utils/TextStyles';
+import Colors from '../../utils/styles/Colors';
+import TextStyles from '../../utils/styles/TextStyles';
 
 interface AppButtonProps {
   onChangeText: (text: string) => void

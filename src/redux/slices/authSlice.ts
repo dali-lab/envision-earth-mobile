@@ -45,7 +45,7 @@ export const setCredentials = createAsyncThunk(
 export const initCredentials = createAsyncThunk(
   'initCredentials',
   async (req: unknown, { dispatch }) => {
-    await getBearerToken().then((token: string) => {
+    await getBearerToken().then((token) => {
       if (token) {
         dispatch(setCredentials(token));
       } else dispatch(logout({}));

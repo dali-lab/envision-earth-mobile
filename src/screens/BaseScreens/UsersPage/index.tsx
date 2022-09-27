@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { SafeAreaView, ScrollView, Text, View } from 'react-native';
-import useAppSelector from '../../hooks/useAppSelector';
-import useAppDispatch from '../../hooks/useAppDispatch';
-import { createUser, getUser, updateUser, deleteUser, UserScopes } from '../../redux/slices/usersSlice';
+import useAppSelector from '../../../hooks/useAppSelector';
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import { createUser, getUser, updateUser, deleteUser, UserScopes } from '../../../redux/slices/usersSlice';
 import { Picker } from '@react-native-picker/picker';
-import Accordion from '../../components/Accordion';
-import AppTextInput from '../../components/AppTextInput';
-import AppButton from '../../components/AppButton';
-import FormatStyle from '../../utils/FormatStyle';
-import TextStyles from '../../utils/TextStyles';
+import Accordion from '../../../components/Accordion';
+import AppTextInput from '../../../components/AppTextInput';
+import AppButton from '../../../components/AppButton';
+import GlobalStyle from '../../../utils/styles/GlobalStyle';
+import TextStyles from '../../../utils/styles/TextStyles';
 
 const UsersPage = () => {
   const { loading, selectedUser } = useAppSelector((state) => state.users);
@@ -60,7 +60,7 @@ const UsersPage = () => {
   };
 
   return (
-    <SafeAreaView style={FormatStyle.container}>
+    <SafeAreaView style={GlobalStyle.container}>
       <ScrollView>
         { loading
           ? <Text>Loading...</Text>
@@ -69,7 +69,7 @@ const UsersPage = () => {
               <Accordion
                 title='Get User'
               >
-                <View style={FormatStyle.innerContainer}>
+                <View style={GlobalStyle.innerContainer}>
                   {
                     (selectedUser != null)
                       ? <Text style={TextStyles.regular}>Current selected user: {selectedUser.id}, {selectedUser.email}, {selectedUser.name}, {selectedUser.role}</Text>
@@ -90,7 +90,7 @@ const UsersPage = () => {
               <Accordion
                 title='Create User'
               >
-                <View style={FormatStyle.innerContainer}>
+                <View style={GlobalStyle.innerContainer}>
                   <AppTextInput
                     onChangeText={(text) => setCreateEmail(text)}
                     value={createEmail}
@@ -115,7 +115,7 @@ const UsersPage = () => {
               <Accordion
                 title='Update User'
               >
-                <View style={FormatStyle.innerContainer}>
+                <View style={GlobalStyle.innerContainer}>
                   <AppTextInput
                     onChangeText={(text) => setUpdateId(text)}
                     value={updateId}
@@ -155,7 +155,7 @@ const UsersPage = () => {
               <Accordion
                 title='Delete User'
               >
-                <View style={FormatStyle.innerContainer}>
+                <View style={GlobalStyle.innerContainer}>
                   <AppTextInput
                     onChangeText={(text) => setDeleteId(text)}
                     value={deleteId}

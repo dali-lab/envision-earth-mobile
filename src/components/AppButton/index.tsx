@@ -1,8 +1,8 @@
 import React from 'react';
 import { GestureResponderEvent, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import Colors from '../../utils/Colors';
-import TextStyles from '../../utils/TextStyles';
+import Colors from '../../utils/styles/Colors';
+import TextStyles from '../../utils/styles/TextStyles';
 
 interface AppButtonProps {
   onPress: (event: GestureResponderEvent) => void

@@ -1,20 +1,20 @@
 import React from 'react';
 import { Image, ScrollView, SafeAreaView, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import useAppDispatch from '../../hooks/useAppDispatch';
-import { logout } from '../../redux/slices/authSlice';
-import AppButton from '../../components/AppButton';
-import FormatStyle from '../../utils/FormatStyle';
-import NavType from '../../utils/NavType';
-import { ROUTES } from '../../utils/constants';
-import LogoImage from '../../assets/dali_dark.png';
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import { logout } from '../../../redux/slices/authSlice';
+import AppButton from '../../../components/AppButton';
+import GlobalStyle from '../../../utils/styles/GlobalStyle';
+import NavType from '../../../utils/NavType';
+import { ROUTES } from '../../../utils/constants';
+import LogoImage from '../../../assets/dali_dark.png';
 
 const FrontPage = () => {
   const navigation = useNavigation<NavType>();
   const dispatch = useAppDispatch();
 
   return (
-    <SafeAreaView style={FormatStyle.container}>
+    <SafeAreaView style={GlobalStyle.container}>
       <ScrollView>
         <Image
           style={{

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, Dimensions, Text, View, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
-import Colors from '../../utils/Colors';
-import TextStyles from '../../utils/TextStyles';
+import Colors from '../../utils/styles/Colors';
+import TextStyles from '../../utils/styles/TextStyles';
 
 interface AccordionProps {
   title: string

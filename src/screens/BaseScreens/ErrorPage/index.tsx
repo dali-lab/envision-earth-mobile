@@ -1,11 +1,11 @@
 import React from 'react';
 import { Text, SafeAreaView } from 'react-native';
-import FormatStyle from '../../utils/FormatStyle';
-import TextStyles from '../../utils/TextStyles';
+import GlobalStyle from '../../../utils/styles/GlobalStyle';
+import TextStyles from '../../../utils/styles/TextStyles';
 
 const ErrorPage = () => {
   return (
-    <SafeAreaView style={FormatStyle.container}>
+    <SafeAreaView style={GlobalStyle.container}>
       <Text style={TextStyles.title}>
         503
       </Text>

@@ -17,9 +17,11 @@ This repository is an optional frontend starter for new DALI React projects. Ins
     │   └── assets             # static assets   
     │   └── components         # reusable components across several screens
     │   └── hooks              # useAppDispatch, useAppSelector
+    │   └── navigation         # Defines navigation flow
     │   └── redux              # Redux store and setup
     │   └── screens            # individual pages
     │   └── utils              # utility folder containing helper files
+    │     └── styles           # global styles
     ├── tsconfig.json          # TypeScript configuration
     ├── package.json           # npm config
     └── ...

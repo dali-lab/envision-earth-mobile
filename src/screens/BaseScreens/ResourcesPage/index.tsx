@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { Text, SafeAreaView, ScrollView, View } from 'react-native';
-import useAppSelector from '../../hooks/useAppSelector';
-import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../../hooks/useAppSelector';
+import useAppDispatch from '../../../hooks/useAppDispatch';
 import {
   getAllResources,
   createResource,
   updateResource,
   deleteResource,
   IResource,
-} from '../../redux/slices/resourcesSlice';
-import Accordion from '../../components/Accordion';
-import AppTextInput from '../../components/AppTextInput';
-import AppButton from '../../components/AppButton';
-import FormatStyle from '../../utils/FormatStyle';
-import TextStyles from '../../utils/TextStyles';
+} from '../../../redux/slices/resourcesSlice';
+import Accordion from '../../../components/Accordion';
+import AppTextInput from '../../../components/AppTextInput';
+import AppButton from '../../../components/AppButton';
+import GlobalStyle from '../../../utils/styles/GlobalStyle';
+import TextStyles from '../../../utils/styles/TextStyles';
 
 const ResourcesPage = () => {
   const { loading, all } = useAppSelector((state) => state.resources);
@@ -55,7 +55,7 @@ const ResourcesPage = () => {
   };
 
   return (
-    <SafeAreaView style={FormatStyle.container}>
+    <SafeAreaView style={GlobalStyle.container}>
       <ScrollView>
         { loading
           ? <Text>Loading...</Text>
@@ -64,7 +64,7 @@ const ResourcesPage = () => {
               <Accordion
                 title='All Resources'
               >
-                <View style={FormatStyle.innerContainer}>
+                <View style={GlobalStyle.innerContainer}>
                   <AppButton
                     onPress={() => dispatch(getAllResources({}))}
                     title={'Get All Resources'}
@@ -77,7 +77,7 @@ const ResourcesPage = () => {
               <Accordion
                 title='Create Resource'
               >
-                <View style={FormatStyle.innerContainer}>
+                <View style={GlobalStyle.innerContainer}>
                   <AppTextInput
                     onChangeText={(text) => setCreateTitle(text)}
                     value={createTitle}
@@ -102,7 +102,7 @@ const ResourcesPage = () => {
               <Accordion
                 title='Update Resource'
               >
-                <View style={FormatStyle.innerContainer}>
+                <View style={GlobalStyle.innerContainer}>
                   <AppTextInput
                     onChangeText={(text) => setUpdateId(text)}
                     value={updateId}
@@ -132,7 +132,7 @@ const ResourcesPage = () => {
               <Accordion
                 title='Delete Resource'
               >
-                <View style={FormatStyle.innerContainer}>
+                <View style={GlobalStyle.innerContainer}>
                   <AppTextInput
                     onChangeText={(text) => setDeleteId(text)}
                     value={deleteId}

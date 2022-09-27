@@ -1,19 +1,49 @@
-import ErrorPage from './ErrorPage';
-import ForbiddenPage from './ForbiddenPage';
-import FrontPage from './FrontPage';
-import ResourcesPage from './ResourcesPage';
-import SignInPage from './SignInPage';
-import SignUpPage from './SignUpPage';
-import UsersPage from './UsersPage';
-import VerifyPage from './VerifyPage';
+import {
+  ErrorPage,
+  ForbiddenPage,
+  ResourcesPage,
+  UsersPage,
+} from './BaseScreens';
+import {
+  SignInPage,
+  SignUpPage,
+  VerifyPage,
+} from './AuthScreens';
+import {
+  FrontPage,
+} from './DashboardScreens';
+import {
+  AnimalRootPage,
+  BCSPage,
+  DungPage,
+  RumenPage,
+  SheenPage,
+} from './AnimalScreens';
+import { 
+  SettingsPage,
+} from './UserScreens';
+import {
+  ForagePage,
+} from './EcosystemScreens';
+import {
+  CalendarPage,
+} from './AnalyticsScreens';
 
 export { 
   ErrorPage, 
   ForbiddenPage, 
-  FrontPage, 
   ResourcesPage, 
-  SignInPage, 
-  SignUpPage, 
   UsersPage, 
-  VerifyPage 
+  SignInPage, 
+  SignUpPage,
+  VerifyPage,
+  FrontPage,
+  AnimalRootPage,
+  BCSPage,
+  DungPage,
+  RumenPage,
+  SheenPage,
+  SettingsPage,
+  ForagePage,
+  CalendarPage,
 };

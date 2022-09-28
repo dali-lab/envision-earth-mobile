@@ -27,6 +27,8 @@
     "eslint-plugin-import": "^2.25.2",
     "expo": "^46.0.0",
     "expo-dev-client": "^1.2.1",
+    "expo-file-system": "^14.1.0",
+    "expo-image-picker": "~13.3.1",
     "expo-status-bar": "~1.4.0",
     "react": "18.0.0",
     "react-dom": "18.0.0",
@@ -62,5 +64,15 @@
   "resolutions": {
     "react-devtools-core": "4.14.0",
     "@types/react": "^18.0.19"
+  },
+  "expo": {
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ]
   }
 }

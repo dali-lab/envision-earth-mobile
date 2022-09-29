@@ -2,14 +2,12 @@ import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-/*
 import { 
   createDrawerNavigator, 
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
 } from '@react-navigation/drawer';
-*/
 import useAppSelector from './../hooks/useAppSelector';
 import useAppDispatch from './../hooks/useAppDispatch';
 // import { UserScopes } from './../redux/slices/usersSlice';
@@ -30,8 +28,8 @@ import {
   DungPage,
   RumenPage,
   SheenPage,
-  // SettingsPage,
-  // HelpGuidesPage,
+  SettingsPage,
+  HelpGuidesPage,
   ForagePage,
   CalendarPage,
 } from './../screens';
@@ -40,9 +38,8 @@ const AuthStack = createStackNavigator();
 const DashboardStack = createStackNavigator();
 const FormStack = createStackNavigator();
 const AnalyticsStack = createStackNavigator();
-const SettingsStack = createStackNavigator();
+const SettingsDrawer = createDrawerNavigator();
 
-const SettingsDrawer = createStackNavigator(); // createDrawerNavigator
 const Tab = createBottomTabNavigator();
 const RootStack = createStackNavigator();
 
@@ -88,37 +85,26 @@ const AnalyticsStackScreen = () => {
   );
 };
 
-const SettingsStackScreen = () => {
-  return (
-    <SettingsStack.Navigator>
-      <RootStack.Navigator
-        screenOptions={{ header: () => null }}
-      >
-        <RootStack.Screen name='SettingsDrawer' component={SettingsDrawerNavigator} />
-      </RootStack.Navigator>
-    </SettingsStack.Navigator>
-  );
-};
-
 const SettingsDrawerNavigator = () => {
-  /*
   return (
-    <SettingsDrawer.Navigator drawerContent={props => {
-      return (
-        <DrawerContentScrollView {...props}>
-          <DrawerItemList {...props} />
-          <DrawerItem label='Logout' onPress={() => console.log('TODO')} />
-        </DrawerContentScrollView>
-      );
-    }}>
-      <Tab.Screen name='User Settings' component={SettingsPage} />
-      <Tab.Screen name='Help Guides' component={HelpGuidesPage} />
-    </SettingsDrawer.Navigator>
-  );
-  */
-  return (
-    <SettingsDrawer.Navigator>
-
+    <SettingsDrawer.Navigator
+      useLegacyImplementation={true}
+      initialRouteName='User Settings'
+      screenOptions={{
+        drawerPosition: 'right',
+        drawerType: 'back',
+      }}
+      drawerContent={props => {
+        return (
+          <DrawerContentScrollView {...props}>
+            <DrawerItemList {...props} />
+            <DrawerItem label='Logout' onPress={() => alert('TODO')} />
+          </DrawerContentScrollView>
+        );
+      }}
+    >
+      <SettingsDrawer.Screen name='User Settings' component={SettingsPage} />
+      <SettingsDrawer.Screen name='Help Guides' component={HelpGuidesPage} />
     </SettingsDrawer.Navigator>
   );
 };
@@ -126,12 +112,12 @@ const SettingsDrawerNavigator = () => {
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={{ header: () => null }}
+      // screenOptions={{ header: () => null }}
     >
       <Tab.Screen name='Home' component={DashboardStackScreen} />
       <Tab.Screen name='Manage Forms' component={FormStackScreen} />
       <Tab.Screen name='Data Analytics' component={AnalyticsStackScreen} />
-      <Tab.Screen name='Settings' component={SettingsStackScreen} />
+      <Tab.Screen name='Settings' component={SettingsDrawerNavigator} />
     </Tab.Navigator>
   );
 };
@@ -169,5 +155,3 @@ const RootNavigation = () => {
 };
 
 export default RootNavigation;
-
-// initialRouteName='Home' 

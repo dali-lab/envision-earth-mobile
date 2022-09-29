@@ -8,7 +8,7 @@ import AppButton from '../../../components/AppButton';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import TextStyles from '../../../utils/styles/TextStyles';
 
-const VerifyPage = () => {
+const VerifyUserPage = () => {
   const dispatch = useAppDispatch();
   const { id, email } = useAppSelector((state) => state.auth);
   const [code, setCode] = useState<string>('');
@@ -23,7 +23,7 @@ const VerifyPage = () => {
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
-      <Text style={TextStyles.title}>Verify</Text>
+      <Text style={TextStyles.title}>Verify User</Text>
       <AppTextInput
         onChangeText={(text) => setCode(text)}
         value={code}
@@ -41,4 +41,4 @@ const VerifyPage = () => {
   );
 };
 
-export default VerifyPage;
+export default VerifyUserPage;

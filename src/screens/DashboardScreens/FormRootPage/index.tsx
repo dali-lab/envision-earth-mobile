@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, SafeAreaView } from 'react-native';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 
-const AnimalRootPage = () => {
+const FormRootPage = () => {
   return (
     <SafeAreaView style={GlobalStyle.container}>
       <ScrollView>
@@ -12,4 +12,4 @@ const AnimalRootPage = () => {
   );
 };
 
-export default AnimalRootPage;
+export default FormRootPage;

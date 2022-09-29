@@ -7,24 +7,24 @@ import {
 import {
   SignInPage,
   SignUpPage,
-  VerifyPage,
+  VerifyUserPage,
+  VerifyTeamPage,
 } from './AuthScreens';
 import {
   FrontPage,
+  FormRootPage,
 } from './DashboardScreens';
 import {
-  AnimalRootPage,
   BCSPage,
   DungPage,
   RumenPage,
   SheenPage,
-} from './AnimalScreens';
+  ForagePage,
+} from './FormScreens';
 import { 
   SettingsPage,
+  HelpGuidesPage,
 } from './UserScreens';
-import {
-  ForagePage,
-} from './EcosystemScreens';
 import {
   CalendarPage,
 } from './AnalyticsScreens';
@@ -36,14 +36,16 @@ export {
   UsersPage, 
   SignInPage, 
   SignUpPage,
-  VerifyPage,
+  VerifyUserPage,
+  VerifyTeamPage,
   FrontPage,
-  AnimalRootPage,
+  FormRootPage,
   BCSPage,
   DungPage,
   RumenPage,
   SheenPage,
-  SettingsPage,
   ForagePage,
+  SettingsPage,
+  HelpGuidesPage,
   CalendarPage,
 };

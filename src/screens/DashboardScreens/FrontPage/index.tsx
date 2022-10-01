@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, ScrollView, SafeAreaView, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { logout } from '../../../redux/slices/authSlice';
 import AppButton from '../../../components/AppButton';
@@ -8,10 +9,17 @@ import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import NavType from '../../../utils/NavType';
 import { ROUTES } from '../../../utils/constants';
 import LogoImage from '../../../assets/dali_dark.png';
+import { loadTeamData } from '../../../redux/slices/syncSlice';
 
 const FrontPage = () => {
   const navigation = useNavigation<NavType>();
   const dispatch = useAppDispatch();
+
+  const { id }  = useAppSelector((state) => state.auth); // userId
+
+  useEffect(() => {
+    dispatch(loadTeamData(id));
+  }, []);
 
   return (
     <SafeAreaView style={GlobalStyle.container}>

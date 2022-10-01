@@ -94,7 +94,7 @@ export const deleteUser = createAsyncThunk(
   },
 );
 
-export const resourceSlice = createSlice({
+export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
@@ -126,6 +126,6 @@ export const resourceSlice = createSlice({
 });
 
 export const { startUsersLoading, stopUsersLoading } =
-  resourceSlice.actions;
+  usersSlice.actions;
 
-export default resourceSlice.reducer;
+export default usersSlice.reducer;

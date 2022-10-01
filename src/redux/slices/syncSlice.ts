@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getTeamByUserId } from './teamsSlice';
+import { getHerdByTeamId } from './herdsSlice';
 
 export type SyncState = {
   loadingTasks: string,
@@ -11,11 +11,11 @@ const initialState: SyncState = {
 
 export const loadTeamData = createAsyncThunk(
   'sync/loadTeamData',
-  async (userId: string, { dispatch }) => {
+  async (teamId: string, { dispatch }) => {
     const loadMessage = 'Loading Census Data...';
     try {
       dispatch(startLoading(loadMessage));
-      await dispatch(getTeamByUserId({ userId }));
+      await dispatch(getHerdByTeamId({ teamId }));
       dispatch(stopLoading(loadMessage));
     } catch (err) {
       console.error(err);

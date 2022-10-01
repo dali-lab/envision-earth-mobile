@@ -9,6 +9,7 @@ import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import NavType from '../../../utils/NavType';
 import { ROUTES } from '../../../utils/constants';
 import LogoImage from '../../../assets/dali_dark.png';
+import { getTeamByUserId } from '../../../redux/slices/teamsSlice';
 import { loadTeamData } from '../../../redux/slices/syncSlice';
 
 const FrontPage = () => {
@@ -16,10 +17,15 @@ const FrontPage = () => {
   const dispatch = useAppDispatch();
 
   const { id }  = useAppSelector((state) => state.auth); // userId
+  const { selectedTeam } = useAppSelector((state) => state.teams); 
 
   useEffect(() => {
-    dispatch(loadTeamData(id));
+    dispatch(getTeamByUserId({ userId: id }));
   }, []);
+
+  useEffect(() => {
+    dispatch(loadTeamData(selectedTeam?.id as string));
+  }, [selectedTeam]);
 
   return (
     <SafeAreaView style={GlobalStyle.container}>

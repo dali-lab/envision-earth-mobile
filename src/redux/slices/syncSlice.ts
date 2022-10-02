@@ -19,7 +19,7 @@ export const loadTeamData = createAsyncThunk(
       dispatch(stopLoading(loadMessage));
     } catch (err) {
       console.error(err);
-      alert('Error while loading  team data: ' + err);
+      alert('Error while loading team data: ' + err);
       dispatch(stopLoading(loadMessage));
       throw err;
     }

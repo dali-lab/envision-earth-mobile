@@ -6,6 +6,7 @@ import usersReducer from './slices/usersSlice';
 import teamsReducer from './slices/teamsSlice';
 import syncReducer from './slices/syncSlice';
 import herdReducer from './slices/herdsSlice';
+import cowCensusReducer from './slices/cowCensusSlice';
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     teams: teamsReducer,
     sync: syncReducer,
     herds: herdReducer,
+    cowCensuses: cowCensusReducer,
   },
 });
 

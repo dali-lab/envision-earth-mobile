@@ -3,6 +3,10 @@ import connectionReducer from './slices/connectionSlice';
 import authReducer from './slices/authSlice';
 import resourcesReducer from './slices/resourcesSlice';
 import usersReducer from './slices/usersSlice';
+import teamsReducer from './slices/teamsSlice';
+import syncReducer from './slices/syncSlice';
+import herdReducer from './slices/herdsSlice';
+import cowCensusReducer from './slices/cowCensusSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +14,10 @@ export const store = configureStore({
     auth: authReducer,
     resources: resourcesReducer,
     users: usersReducer,
+    teams: teamsReducer,
+    sync: syncReducer,
+    herds: herdReducer,
+    cowCensuses: cowCensusReducer,
   },
 });
 

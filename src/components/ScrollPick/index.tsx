@@ -1,20 +1,22 @@
 // Imported from old repo - major changes still needed
 
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { 
   NativeSyntheticEvent,
   NativeScrollEvent, 
-  GestureResponderEvent, 
-  // StyleSheet, 
+  StyleSheet, 
 } from 'react-native';
 import { ScrollView, View, Text } from 'react-native';
 
 interface ScrollPickProps {
-  onPress: (event: GestureResponderEvent) => void
+  elements: Array<number | string>,
+  selectedIdx: number,
+  setSelectedIdx: Dispatch<SetStateAction<number>>
 }
 
-const ScrollPick = ({ onPress }: ScrollPickProps) => {
-  const offsets = new Array(9);
+// eslint-disable-next-line @typescript-eslint/comma-dangle
+const ScrollPick = ({ elements, selectedIdx, setSelectedIdx }: ScrollPickProps) => {
+  const offsets = new Array(elements.length);
   const startOffset = 45;
   const diffOffset = 68;
   const originalOffset = startOffset + diffOffset * 3;
@@ -22,15 +24,13 @@ const ScrollPick = ({ onPress }: ScrollPickProps) => {
     offsets[i] = startOffset + diffOffset * i;
   }
 
-  const [selectedEntry, setSelectedEntry] = useState(1);
-
-  const entrySelections = (selectedNumber: number) => {
-    const allTextComponents = new Array(9);
-    for (let i = 0; i < 9; i++) {
-      if (selectedNumber == i + 1) {
-        allTextComponents[i] = i + 1;
+  const entrySelections = (idx: number) => {
+    const allTextComponents = new Array(elements.length);
+    for (let i = 0; i < elements.length; i++) {
+      if (idx == i) {
+        allTextComponents[i] = <Text key={i} style={styles.selectedOption}>{elements[i]}</Text>;
       } else {
-        allTextComponents[i] = i + 1;
+        allTextComponents[i] = <Text key={i} style={styles.unselectedOption}>{elements[i]}</Text>;
       }
     }
     return allTextComponents;
@@ -39,9 +39,9 @@ const ScrollPick = ({ onPress }: ScrollPickProps) => {
   const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (originalOffset != e.nativeEvent.contentOffset.x) moved = true;
     if (moved == false) return;
-    const suspectedSelect = 1 + ((e.nativeEvent.contentOffset.x - startOffset) / diffOffset);
+    const suspectedSelect = ((e.nativeEvent.contentOffset.x - startOffset) / diffOffset);
     if ((e.nativeEvent.contentOffset.x - startOffset) % diffOffset == 0) {
-      setSelectedEntry(suspectedSelect);
+      setSelectedIdx(suspectedSelect);
     }
   };
   
@@ -51,25 +51,34 @@ const ScrollPick = ({ onPress }: ScrollPickProps) => {
       showsHorizontalScrollIndicator={false}
       snapToOffsets={offsets}
       decelerationRate='fast'
-      snapToAlignment={'start'}
+      snapToAlignment={'start'} 
       onScroll={handleScroll}
+      scrollEventThrottle={16}
       snapToEnd={false}
       snapToStart={false}
       contentOffset={{ x: originalOffset, y: 0 }}
     >
-      <View>
-        <Text>
-          {entrySelections(selectedEntry)}
-        </Text>
-      </View>
+      <View style={styles.buffer}></View>
+      {entrySelections(selectedIdx)}
+      <View style={styles.buffer}></View>
     </ScrollView>
   );
 };
 
-/*
 const styles = StyleSheet.create({
-
+  unselectedOption: {
+    fontSize: 44,
+    fontWeight: 'bold',
+    margin: 20,
+  },
+  selectedOption: {
+    fontSize: 54,
+    fontWeight: 'bold',
+    margin: 15,
+  },
+  buffer: {
+    width: 200,
+  },
 });
-*/
 
 export default ScrollPick;

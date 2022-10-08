@@ -57,7 +57,7 @@ const FrontPage = () => {
           isArrow={true}
         />
         <AppButton
-          onPress={() => navigation.navigate(ROUTES.VERIFY)}
+          onPress={() => navigation.navigate(ROUTES.VERIFY_USER)}
           title={'Verify'}
           isArrow={true}
         />

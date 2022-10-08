@@ -33,6 +33,7 @@ import {
   ForagePage,
   CalendarPage,
 } from './../screens';
+import { ROUTES } from '../utils/constants';
 
 const AuthStack = createStackNavigator();
 const DashboardStack = createStackNavigator();
@@ -46,10 +47,10 @@ const RootStack = createStackNavigator();
 const AuthStackScreen = () => {
   return (
     <AuthStack.Navigator>
-      <AuthStack.Screen name='Sign In' component={SignInPage} />
-      <AuthStack.Screen name='Sign Up' component={SignUpPage} />
-      <AuthStack.Screen name='Verify User' component={VerifyUserPage} />
-      <AuthStack.Screen name='Verify Team' component={VerifyTeamPage} />
+      <AuthStack.Screen name={ROUTES.SIGNIN} component={SignInPage} />
+      <AuthStack.Screen name={ROUTES.SIGNUP} component={SignUpPage} />
+      <AuthStack.Screen name={ROUTES.VERIFY_USER} component={VerifyUserPage} />
+      <AuthStack.Screen name={ROUTES.VERIFY_TEAM} component={VerifyTeamPage} />
     </AuthStack.Navigator>
   );
 };
@@ -57,9 +58,9 @@ const AuthStackScreen = () => {
 const DashboardStackScreen = () => {
   return (
     <DashboardStack.Navigator>
-      <DashboardStack.Screen name='Front Page' component={FrontPage} />
-      <DashboardStack.Screen name='Users' component={UsersPage} />
-      <DashboardStack.Screen name='Resources' component={ResourcesPage} />
+      <DashboardStack.Screen name={ROUTES.HOME} component={FrontPage} />
+      <DashboardStack.Screen name={ROUTES.USERS} component={UsersPage} />
+      <DashboardStack.Screen name={ROUTES.RESOURCES} component={ResourcesPage} />
     </DashboardStack.Navigator>
   );
 };
@@ -67,12 +68,12 @@ const DashboardStackScreen = () => {
 const FormStackScreen = () => {
   return (
     <FormStack.Navigator>
-      <FormStack.Screen name='Forms' component={FormRootPage} />
-      <FormStack.Screen name='BCS Form' component={BCSPage} />
-      <FormStack.Screen name='Dung Form' component={DungPage} />
-      <FormStack.Screen name='Rumen Form' component={RumenPage} />
-      <FormStack.Screen name='Sheen Form' component={SheenPage} />
-      <FormStack.Screen name='Forage Form' component={ForagePage} />
+      <FormStack.Screen name={ROUTES.FORM_ROOT_PAGE} component={FormRootPage} />
+      <FormStack.Screen name={ROUTES.BCS_PAGE} component={BCSPage} />
+      <FormStack.Screen name={ROUTES.DUNG_PAGE} component={DungPage} />
+      <FormStack.Screen name={ROUTES.RUMEN_PAGE} component={RumenPage} />
+      <FormStack.Screen name={ROUTES.SHEEN_PAGE} component={SheenPage} />
+      <FormStack.Screen name={ROUTES.FORAGE_PAGE} component={ForagePage} />
     </FormStack.Navigator>
   );
 };

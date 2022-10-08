@@ -1,25 +1,26 @@
 // Imported from old repo - major changes still needed
 
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Button, Text, Image, View } from 'react-native';
 import {
   MediaTypeOptions,
   ImagePickerResult,
   launchImageLibraryAsync,
 } from 'expo-image-picker';
-// import useAppDispatch from '../../hooks/useAppDispatch';
 
 export interface IPhotoInput {
-  fullUrl: string,
+  uri: string,
   fileName: string,
   buffer: string, // base64
 }
 
-const UploadImage = () => {
-  // const dispatch = useAppDispatch();
+interface UploadImageProps {
+  image: IPhotoInput | undefined,
+  setImage: Dispatch<SetStateAction<IPhotoInput>>
+}
 
-  const [image, setImage] = useState<IPhotoInput | undefined>();
-
+const UploadImage = ({ image, setImage }: UploadImageProps) => {
+  
   const pickImage = async () => {
     let photo: ImagePickerResult;
     try {
@@ -41,22 +42,13 @@ const UploadImage = () => {
     }
 
     if (photo?.cancelled === true) return;
-    if (photo.uri && photo.fileName && photo.base64) {
+    if (photo) {
       const parsedPhoto = {
-        fullUrl: photo.uri,
-        fileName: photo.fileName,
-        buffer: photo.base64,
+        uri: photo.uri as string,
+        fileName: photo.fileName as string,
+        buffer: photo.base64 as string,
       };
       setImage(parsedPhoto);
-    }
-  };
-
-  const sendImage = async () => {
-    try {
-      console.log(image);
-      // await dispatch(addPhoto(image));
-    } catch (e) {
-      console.log(e);
     }
   };
 
@@ -64,8 +56,7 @@ const UploadImage = () => {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text> 
         <Button title='Pick an image from camera roll' onPress={pickImage} />
-        {(image) && <Image source={{ uri: image.fullUrl }} style={{ width: 200, height: 200 }} />}
-        <Button title='Upload Image' onPress={sendImage} />
+        {(image) && <Image source={{ uri: image.uri }} style={{ width: 200, height: 200 }} />}
       </Text>
     </View>
   );

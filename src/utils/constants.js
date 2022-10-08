@@ -1,11 +1,21 @@
 // With Expo Go, SERVER_URL needs to be exact IPv4 Address
-export const SERVER_URL = 'http://10.135.155.156:9090/';
+export const SERVER_URL = 'http://10.135.155.179:9090/';
 
 export const ROUTES = {
-  HOME: 'Front Page',
   SIGNIN: 'Sign In',
   SIGNUP: 'Sign Up',
-  VERIFY: 'Verify',
+  VERIFY_USER: 'Verify User',
+  VERIFY_TEAM: 'Verify Team',
+  
   USERS: 'Users',
   RESOURCES: 'Resources',
+  
+  HOME: 'Front Page',
+
+  FORM_ROOT_PAGE: 'Forms',
+  BCS_PAGE: 'BCS Form',
+  DUNG_PAGE: 'Dung Form',
+  RUMEN_PAGE: 'Rumen Form',
+  SHEEN_PAGE: 'Sheen Form',
+  FORAGE_PAGE: 'Forage Form',
 };

@@ -44,9 +44,23 @@ export const getCowCensusesByHerdId = createAsyncThunk(
   },
 );
 
+interface IPhotoInput {
+  uri: string,
+  fileName: string,
+  buffer: string, // base64
+}
+
+interface ICreateCowCensusRequest {
+  herdId: string;
+  bcs: number,
+  notes: string;
+  tag: string;
+  photo?: IPhotoInput;
+}
+
 export const createCowCensus = createAsyncThunk(
   'cowCensuses/createCowCensus',
-  async (req: { title: string, description: string, value: number }, { dispatch }) => {
+  async (req: ICreateCowCensusRequest, { dispatch }) => {
     dispatch(startCowCensusLoading());
     return axios
       .post(`${SERVER_URL}cow_censuses/`, req)

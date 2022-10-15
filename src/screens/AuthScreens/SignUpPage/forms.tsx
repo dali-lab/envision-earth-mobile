@@ -1,46 +1,46 @@
-export interface EmailPasswordPage {
-    email: string;
-    password: string;
+export interface EmailPasswordData {
+  email: string;
+  password: string;
 } 
 
-export interface FirstLastNamePage {
-    firstName: string;
-    lastName: string;
+export interface FirstLastNameData {
+  firstName: string;
+  lastName: string;
 }
 
-export interface RanchInfo1 {
-    ranchId: string;
-    yearsAtRanch: number;
-    yearsHolisticRanching: number;
-    landSize: number;
+export interface RanchInfo1Data {
+  ranchId: string;
+  yearsAtRanch: number;
+  yearsHolisticRanching: number;
+  landSize: number;
 }
 
-export interface RanchInfo2 {
-    ranchAddress: string;
-    cattleBreed: string;
-    numCattle: number;
+export interface RanchInfo2Data {
+  ranchAddress: string;
+  cattleBreed: string;
+  numCattle: number;
 }
 
-export interface NotifPrefs {
-    notifFrequency: 'daily' | 'weekly' | 'monthly' | 'custom' ;
+export interface NotifPrefData {
+  notifFrequency: 'daily' | 'weekly' | 'monthly' | 'custom' ;
 }
 
 export interface EmailPasswordProps {
-    setData: (data: EmailPasswordPage) => {};
+  setData: (data: EmailPasswordData) => null;
 }
 
 export interface FirstLastNameProps {
-    setData: (data: FirstLastNamePage) => {};
+  setData: (data: FirstLastNameData) => null;
 }
 
 export interface RanchInfo1Props {
-    setData: (data: RanchInfo1) => {};
+  setData: (data: RanchInfo1Data) => null;
 }
 
 export interface RanchInfo2Props {
-    setData: (data: RanchInfo2) => {};
+  setData: (data: RanchInfo2Data) => null;
 }
 
 export interface NotifPrefsProps {
-    setData: (data: NotifPrefs) => {};
+  setData: (data: NotifPrefData) => null;
 }

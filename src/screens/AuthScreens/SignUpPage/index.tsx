@@ -6,56 +6,52 @@ import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import TextStyles from '../../../utils/styles/TextStyles';
+import { EmailPasswordPage, FirstLastNamePage, NotifPrefs, RanchInfo1, RanchInfo2 } from './forms';
 
 const SignUpPage = () => {
   const dispatch = useAppDispatch();
 
   const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
 
+  const [emailPass, setEmailPass] = useState<EmailPasswordPage>();
+  const [firstLastName, setFirstLastName] = useState<FirstLastNamePage>();
+  const [ranchInfo1, setRanchInfo1] = useState<RanchInfo1>();
+  const [ranchInfo2, setRanchInfo2] = useState<RanchInfo2>();
+  const [notifPrefs, setNotifPrefs] = useState<NotifPrefs>();
+
   const handleSubmit = () => {
-    // Send only if all fields filled in
-    if (!name) alert('Please enter your name!');
-    else if (!email) alert('Please enter an email address!');
-    else if (!password) alert('Please enter a password!');
-    else if (!confirmPassword) alert('Please confirm your password!');
-    else if (!(password === confirmPassword)) alert('Passwords do not match!');
-    else {
-      dispatch(signUp({ email, password, name }));
-    }
+    const data = {
+      ...emailPass,
+      ...firstLastName,
+      ...ranchInfo1,
+      ...ranchInfo2,
+      ...notifPrefs,
+    };
+  };
+
+  const handleSubmitEmailPass = (data: EmailPasswordPage) => {
+    setEmailPass(data);
+  };
+
+  const handleSubmitFirstLastName = (data: FirstLastNamePage) => {
+    setFirstLastName(data);
+  };
+
+  const handleSubmitRanchInfo1 = (data: RanchInfo1) => {
+    setRanchInfo1(data);
+  };
+
+  const handleSubmitRanchInfo2 = (data: RanchInfo2) => {
+    setRanchInfo2(data);
+  };
+
+  const handleSubmitNotifPrefs = (data: NotifPrefs) => {
+    setNotifPrefs(data);
   };
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
-      <Text style={TextStyles.title}>Sign Up</Text>
-      <Text style={TextStyles.subTitle}>Name</Text>
-      <AppTextInput
-        onChangeText={(text) => setName(text)}
-        value={name}
-        placeholder='Name'
-      />
-      <Text style={TextStyles.subTitle}>Email</Text>
-      <AppTextInput
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-        placeholder='Email'
-      />
-      <Text style={TextStyles.subTitle}>Password</Text>
-      <AppTextInput
-        onChangeText={(text) => setPassword(text)}
-        value={password}
-        placeholder='Password'
-        secureTextEntry={true}
-      />
-      <Text style={TextStyles.subTitle}>Confirm Password</Text>
-      <AppTextInput
-        onChangeText={(text) => setConfirmPassword(text)}
-        value={confirmPassword}
-        placeholder='Confirm Password'
-        secureTextEntry
-      />
       <AppButton
         onPress={handleSubmit}
         title={'Sign Up'}

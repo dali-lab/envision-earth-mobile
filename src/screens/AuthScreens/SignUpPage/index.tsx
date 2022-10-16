@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { signUp } from '../../../redux/slices/authSlice';
@@ -16,6 +16,7 @@ import NotifPrefPage from './notifprefs';
 
 const SignUpPage = () => {
   const dispatch = useAppDispatch();
+  const pagesRef = useRef();
 
   const [emailPass, setEmailPass] = useState<EmailPasswordData>();
   const [firstLastName, setFirstLastName] = useState<FirstLastNameData>();
@@ -57,7 +58,11 @@ const SignUpPage = () => {
     <SafeAreaView style={GlobalStyle.container}>
 
       {/* Sign up Pages */}
-      <PagerView initialPage={0}>
+      <PagerView 
+        initialPage={1}
+        orientation='horizontal'
+        // ref={pagesRef}
+      >
         <View key={'1'}>
           <EmailPasswordPage />
         </View>
@@ -76,8 +81,10 @@ const SignUpPage = () => {
       </PagerView>
 
       <AppButton
-        onPress={handleSubmit}
-        title={'Sign Up'}
+        onPress={() => {
+          // setPage()
+        }}
+        title={'Next'}
       />
     </SafeAreaView>
   );

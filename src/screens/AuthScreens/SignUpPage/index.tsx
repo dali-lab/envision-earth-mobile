@@ -1,64 +1,90 @@
-import React, { useState } from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { SafeAreaView, Text, View } from 'react-native';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { signUp } from '../../../redux/slices/authSlice';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import TextStyles from '../../../utils/styles/TextStyles';
+import { EmailPasswordData, FirstLastNameData, NotifPrefData, RanchInfo1Data, RanchInfo2Data } from './forms';
+import PagerView from 'react-native-pager-view';
+import EmailPasswordPage from './emailpassword';
+import FirstLastNamePage from './firstlastname';
+import RanchInfoPage from './ranchinfo';
+import RanchInfo2Page from './ranchinfo2';
+import NotifPrefPage from './notifprefs';
 
 const SignUpPage = () => {
   const dispatch = useAppDispatch();
+  const pagesRef = useRef();
 
-  const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [emailPass, setEmailPass] = useState<EmailPasswordData>();
+  const [firstLastName, setFirstLastName] = useState<FirstLastNameData>();
+  const [ranchInfo1, setRanchInfo1] = useState<RanchInfo1Data>();
+  const [ranchInfo2, setRanchInfo2] = useState<RanchInfo2Data>();
+  const [notifPrefs, setNotifPrefs] = useState<NotifPrefData>();
 
   const handleSubmit = () => {
-    // Send only if all fields filled in
-    if (!name) alert('Please enter your name!');
-    else if (!email) alert('Please enter an email address!');
-    else if (!password) alert('Please enter a password!');
-    else if (!confirmPassword) alert('Please confirm your password!');
-    else if (!(password === confirmPassword)) alert('Passwords do not match!');
-    else {
-      dispatch(signUp({ email, password, name }));
-    }
+    const data = {
+      ...emailPass,
+      ...firstLastName,
+      ...ranchInfo1,
+      ...ranchInfo2,
+      ...notifPrefs,
+    };
+  };
+
+  const handleSubmitEmailPass = (data: EmailPasswordPage) => {
+    setEmailPass(data);
+  };
+
+  const handleSubmitFirstLastName = (data: FirstLastNamePage) => {
+    setFirstLastName(data);
+  };
+
+  const handleSubmitRanchInfo1 = (data: RanchInfo1) => {
+    setRanchInfo1(data);
+  };
+
+  const handleSubmitRanchInfo2 = (data: RanchInfo2) => {
+    setRanchInfo2(data);
+  };
+
+  const handleSubmitNotifPrefs = (data: NotifPrefs) => {
+    setNotifPrefs(data);
   };
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
-      <Text style={TextStyles.title}>Sign Up</Text>
-      <Text style={TextStyles.subTitle}>Name</Text>
-      <AppTextInput
-        onChangeText={(text) => setName(text)}
-        value={name}
-        placeholder='Name'
-      />
-      <Text style={TextStyles.subTitle}>Email</Text>
-      <AppTextInput
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-        placeholder='Email'
-      />
-      <Text style={TextStyles.subTitle}>Password</Text>
-      <AppTextInput
-        onChangeText={(text) => setPassword(text)}
-        value={password}
-        placeholder='Password'
-        secureTextEntry={true}
-      />
-      <Text style={TextStyles.subTitle}>Confirm Password</Text>
-      <AppTextInput
-        onChangeText={(text) => setConfirmPassword(text)}
-        value={confirmPassword}
-        placeholder='Confirm Password'
-        secureTextEntry
-      />
+
+      {/* Sign up Pages */}
+      <PagerView 
+        initialPage={1}
+        orientation='horizontal'
+        // ref={pagesRef}
+      >
+        <View key={'1'}>
+          <EmailPasswordPage />
+        </View>
+        <View key={'2'}>
+          <FirstLastNamePage />
+        </View>
+        <View key={'3'}>
+          <RanchInfoPage />
+        </View>
+        <View key={'4'}>
+          <RanchInfo2Page />
+        </View>
+        <View key={'5'}>
+          <NotifPrefPage />
+        </View>
+      </PagerView>
+
       <AppButton
-        onPress={handleSubmit}
-        title={'Sign Up'}
+        onPress={() => {
+          // setPage()
+        }}
+        title={'Next'}
       />
     </SafeAreaView>
   );

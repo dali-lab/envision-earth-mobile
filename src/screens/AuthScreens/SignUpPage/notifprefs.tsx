@@ -1,14 +1,15 @@
-import { SafeAreaView, TextComponent } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text } from 'react-native';
 import AppButton from '../../../components/AppButton';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
 
 const NotifPrefPage = () => {
   const [notifSelect, setNotifSelect] = useState('');
 
   return (
-    <SafeAreaView style={GlobalStyle.container}>
-      <TextComponent>almost done!</TextComponent>
-      <TextComponent>How often would you like to receive notifications from Grazing Earth?</TextComponent>
+    <View>
+      <Text>almost done!</Text>
+      <Text>How often would you like to receive notifications from Grazing Earth?</Text>
+      <Text>{notifSelect}</Text>
       <AppButton
         onPress={() => setNotifSelect('daily')}
         title={'daily'}
@@ -29,7 +30,7 @@ const NotifPrefPage = () => {
         onPress={() => setNotifSelect('custom')}
         title={'custom'}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native';
+import { View } from 'react-native';
 import AppTextInput from '../../../components/AppTextInput';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import NumberSlider from 'react-native-number-slider';
@@ -10,10 +10,11 @@ const RanchInfo2Page = () => {
   const [herdSize, setHerdSize] = useState<number>(0);
 
   const handleSubmit = () => {
+    
   };
 
   return (
-    <SafeAreaView style={GlobalStyle.container}>
+    <View>
       <AppTextInput
         onChangeText={(text) => setRanchId(ranchAddr)}
         value={ranchAddr}
@@ -28,7 +29,7 @@ const RanchInfo2Page = () => {
         onValueChange={(value: number) => setHerdSize(value)}
         value={herdSize}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

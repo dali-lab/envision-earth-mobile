@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native';
+import { View } from 'react-native';
 import AppTextInput from '../../../components/AppTextInput';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 
@@ -23,7 +23,7 @@ const EmailPasswordPage = () => {
   };
 
   return (
-    <SafeAreaView style={GlobalStyle.container}>
+    <View style={GlobalStyle.container}>
       <AppTextInput
         onChangeText={(text) => setEmail(text)}
         value={email}
@@ -34,7 +34,7 @@ const EmailPasswordPage = () => {
         value={password}
         placeholder='Email'
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

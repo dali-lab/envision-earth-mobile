@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { SafeAreaView } from "react-native";
-import AppTextInput from "../../../components/AppTextInput";
-import GlobalStyle from "../../../utils/styles/GlobalStyle";
+import { useState } from 'react';
+import { View } from 'react-native';
+import AppTextInput from '../../../components/AppTextInput';
+import GlobalStyle from '../../../utils/styles/GlobalStyle';
 
 const RanchInfoPage = () => {
   const [ranchId, setRanchId] = useState<string>('');
@@ -13,7 +13,7 @@ const RanchInfoPage = () => {
   };
 
   return (
-    <SafeAreaView style={GlobalStyle.container}>
+    <View>
       <AppTextInput
         onChangeText={(text) => setRanchId(text)}
         value={ranchId}
@@ -34,7 +34,7 @@ const RanchInfoPage = () => {
         value={ranchId}
         placeholder='ranch ID #'
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

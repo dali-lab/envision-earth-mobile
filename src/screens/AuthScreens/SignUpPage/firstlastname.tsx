@@ -1,5 +1,4 @@
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
-import { SafeAreaView, Text } from 'react-native';
+import { View } from 'react-native';
 import AppTextInput from '../../../components/AppTextInput';
 import { useState } from 'react';
 
@@ -23,7 +22,7 @@ const FirstLastNamePage = () => {
   };
 
   return (
-    <SafeAreaView style={GlobalStyle.container}>
+    <View>
       <AppTextInput
         onChangeText={(text) => setFirstName(text)}
         value={firstName}
@@ -34,7 +33,7 @@ const FirstLastNamePage = () => {
         value={lastName}
         placeholder='last name'
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

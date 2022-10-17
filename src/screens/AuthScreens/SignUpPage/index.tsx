@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { signUp } from '../../../redux/slices/authSlice';
 import AppTextInput from '../../../components/AppTextInput';
@@ -8,11 +8,11 @@ import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import TextStyles from '../../../utils/styles/TextStyles';
 import { EmailPasswordData, FirstLastNameData, NotifPrefData, RanchInfo1Data, RanchInfo2Data } from './forms';
 import PagerView from 'react-native-pager-view';
-import EmailPasswordPage from './emailpassword';
-import FirstLastNamePage from './firstlastname';
-import RanchInfoPage from './ranchinfo';
-import RanchInfo2Page from './ranchinfo2';
-import NotifPrefPage from './notifprefs';
+import EmailPasswordPage from './emailPassword';
+import FirstLastNamePage from './firstLastName';
+import RanchInfoPage from './ranchInfo';
+import RanchInfo2Page from './ranchInfo2';
+import NotifPrefPage from './notifPrefs';
 
 const SignUpPage = () => {
   const dispatch = useAppDispatch();

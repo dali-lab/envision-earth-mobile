@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SafeAreaView, Text } from 'react-native';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
-import { resendCode, verify } from '../../../redux/slices/authSlice';
+import { resendCode, verifyUser } from '../../../redux/slices/authSlice';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
@@ -17,7 +17,7 @@ const VerifyUserPage = () => {
     // Send only if all fields filled in
     if (!code) alert('Please enter a code!');
     else {
-      dispatch(verify({ id, email, code }));
+      dispatch(verifyUser({ id, email, code }));
     }
   };
 

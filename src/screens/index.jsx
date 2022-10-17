@@ -8,7 +8,7 @@ import {
   SignInPage,
   SignUpPage,
   VerifyUserPage,
-  VerifyTeamPage,
+  JoinTeamPage,
 } from './AuthScreens';
 import {
   FrontPage,
@@ -37,7 +37,7 @@ export {
   SignInPage, 
   SignUpPage,
   VerifyUserPage,
-  VerifyTeamPage,
+  JoinTeamPage,
   FrontPage,
   FormRootPage,
   BCSPage,

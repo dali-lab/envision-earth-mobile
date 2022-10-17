@@ -1,11 +1,11 @@
 import SignInPage from './SignInPage';
 import SignUpPage from './SignUpPage';
 import VerifyUserPage from './VerifyUserPage';
-import VerifyTeamPage from './VerifyTeamPage';
+import JoinTeamPage from './JoinTeamPage';
 
 export {
   SignInPage,
   SignUpPage,
   VerifyUserPage,
-  VerifyTeamPage,
+  JoinTeamPage,
 };

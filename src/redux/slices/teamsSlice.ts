@@ -5,6 +5,11 @@ import axios from 'axios';
 export interface ITeam {
   id: string,
   name: string,
+  acreSize: number;
+  address: string;
+  yrsRanch: number;
+  yrsHolMang: number;
+  code: string;
 }
 
 export interface TeamState {

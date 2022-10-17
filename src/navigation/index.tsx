@@ -11,8 +11,9 @@ import {
 import useAppSelector from './../hooks/useAppSelector';
 import useAppDispatch from './../hooks/useAppDispatch';
 // import { UserScopes } from './../redux/slices/usersSlice';
-import { checkConnection } from './../redux/slices/connectionSlice';
-import { initCredentials } from './../redux/slices/authSlice';
+import { checkConnection } from '../redux/slices/connectionSlice';
+import { initCredentials } from '../redux/slices/authSlice';
+import { getTeamByUserId } from '../redux/slices/teamsSlice';
 import {
   // ErrorPage, 
   // ForbiddenPage, 
@@ -21,7 +22,7 @@ import {
   SignInPage, 
   SignUpPage,
   VerifyUserPage,
-  VerifyTeamPage,
+  JoinTeamPage,
   FrontPage,
   FormRootPage,
   BCSPage,
@@ -50,7 +51,14 @@ const AuthStackScreen = () => {
       <AuthStack.Screen name={ROUTES.SIGNIN} component={SignInPage} />
       <AuthStack.Screen name={ROUTES.SIGNUP} component={SignUpPage} />
       <AuthStack.Screen name={ROUTES.VERIFY_USER} component={VerifyUserPage} />
-      <AuthStack.Screen name={ROUTES.VERIFY_TEAM} component={VerifyTeamPage} />
+    </AuthStack.Navigator>
+  );
+};
+
+const NoTeamStackScreen = () => {
+  return (
+    <AuthStack.Navigator>
+      <AuthStack.Screen name={ROUTES.JOIN_TEAM} component={JoinTeamPage} />
     </AuthStack.Navigator>
   );
 };
@@ -126,13 +134,21 @@ const TabNavigator = () => {
 const RootNavigation = () => {
   // const { isConnected } = useAppSelector((state) => state.connection);
   const { authenticated } = useAppSelector((state) => state.auth);
+  const { id }  = useAppSelector((state) => state.auth); // userId
+  const { selectedTeam } = useAppSelector((state) => state.teams); 
   const dispatch = useAppDispatch();
+  
   useEffect(() => {
     dispatch(checkConnection()).finally(() => { });
   }, []);
   useEffect(() => {
     dispatch(initCredentials({})).finally(() => { });
   }, []);
+  useEffect(() => {
+    if (authenticated) {
+      dispatch(getTeamByUserId({ userId: id }));
+    }
+  }, [authenticated]);
 
   // if (!isConnected) return <ErrorPage />
 
@@ -140,6 +156,12 @@ const RootNavigation = () => {
     return (
       <NavigationContainer>
         <AuthStackScreen />
+      </NavigationContainer>
+    );
+  } else if (authenticated && !selectedTeam) {
+    return (
+      <NavigationContainer>
+        <NoTeamStackScreen />
       </NavigationContainer>
     );
   } else {

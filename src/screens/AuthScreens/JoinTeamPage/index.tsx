@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import { SafeAreaView, Text } from 'react-native';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
-import { resendCode, verify } from '../../../redux/slices/authSlice';
+import { resendCode } from '../../../redux/slices/authSlice';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import TextStyles from '../../../utils/styles/TextStyles';
 
-const VerifyTeamPage = () => {
+const JoinTeamPage = () => {
   const dispatch = useAppDispatch();
   const { id, email } = useAppSelector((state) => state.auth);
   const [code, setCode] = useState<string>('');
@@ -19,7 +19,7 @@ const VerifyTeamPage = () => {
     // Send only if all fields filled in
     if (!code) alert('Please enter a code!');
     else {
-      dispatch(verify({ id, email, code }));
+      // dispatch(verifyUser({ id, email, code }));
     }
   };
 
@@ -43,4 +43,4 @@ const VerifyTeamPage = () => {
   );
 };
 
-export default VerifyTeamPage;
+export default JoinTeamPage;

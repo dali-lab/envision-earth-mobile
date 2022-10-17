@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { SafeAreaView, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { signIn } from '../../../redux/slices/authSlice';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import TextStyles from '../../../utils/styles/TextStyles';
+import NavType from '../../../utils/NavType';
+import { ROUTES } from '../../../utils/constants';
 
 const SignInPage = () => {
+  const navigation = useNavigation<NavType>();
   const dispatch = useAppDispatch();
 
   const [email, setEmail] = useState('');
@@ -41,6 +45,12 @@ const SignInPage = () => {
       <AppButton
         onPress={handleSubmit}
         title={'Log in'}
+        isArrow={true}
+      />
+      <AppButton
+        onPress={() => navigation.navigate(ROUTES.SIGNUP)}
+        title={'Sign Up'}
+        isArrow={true}
       />
     </SafeAreaView>
   );

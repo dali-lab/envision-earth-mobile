@@ -158,7 +158,7 @@ export const resendCode = createAsyncThunk(
   },
 );
 
-export const verify = createAsyncThunk(
+export const verifyUser = createAsyncThunk(
   'auth/verify',
   async (req: { id: string, email: string, code: string }) => {
     return axios
@@ -201,7 +201,7 @@ export const authSlice = createSlice({
       alert('Code sent to your email');
     });
     builder.addCase(resendCode.rejected, () => {});
-    builder.addCase(verify.fulfilled, (state, action) => {
+    builder.addCase(verifyUser.fulfilled, (state, action) => {
       if (action.payload != null) {
         setBearerToken(action.payload.token);
         state = ({ ...state, ...action.payload.user });

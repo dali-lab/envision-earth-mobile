@@ -10,8 +10,11 @@ import NavType from '../../../utils/NavType';
 import { ROUTES } from '../../../utils/constants';
 import LogoImage from '../../../assets/dali_dark.png';
 import { getTeamByUserId } from '../../../redux/slices/teamsSlice';
+import { getPlotsByTeamId } from '../../../redux/slices/plotsSlice';
 import { getHerdByTeamId } from '../../../redux/slices/herdsSlice';
 import { getCowCensusesByHerdId } from '../../../redux/slices/cowCensusSlice';
+import { getDungCensusesByHerdId } from '../../../redux/slices/dungCensusSlice';
+import { getForageQualityCensusesByPlotId } from '../../../redux/slices/forageQualityCensusSlice';
 // import { loadTeamData } from '../../../redux/slices/syncSlice';
 
 const FrontPage = () => {
@@ -20,6 +23,7 @@ const FrontPage = () => {
 
   const { id }  = useAppSelector((state) => state.auth); // userId
   const { selectedTeam } = useAppSelector((state) => state.teams); 
+  const { allPlots } = useAppSelector((state) => state.plots);
   const { selectedHerd } = useAppSelector((state) => state.herds);
 
   useEffect(() => {
@@ -31,10 +35,27 @@ const FrontPage = () => {
     }
   }, [selectedTeam]);
   useEffect(() => {
+    if (allPlots) {
+      dispatch(getPlotsByTeamId({ teamId: selectedTeam?.id as string }));
+    }
+  }, [selectedTeam]);
+  useEffect(() => {
     if (selectedHerd) {
       dispatch(getCowCensusesByHerdId({ herdId: selectedHerd?.id as string }));
     }
   }, [selectedHerd]);
+  useEffect(() => {
+    if (selectedHerd) {
+      dispatch(getDungCensusesByHerdId({ herdId: selectedHerd?.id as string }));
+    }
+  }, [selectedHerd]);
+  useEffect(() => {
+    if (allPlots) {
+      Object.keys(allPlots).forEach((plotId: string) => {
+        dispatch(getForageQualityCensusesByPlotId({ plotId }));
+      });
+    }
+  }, [allPlots]);
 
   return (
     <SafeAreaView style={GlobalStyle.container}>

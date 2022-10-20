@@ -8,11 +8,7 @@ import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import TextStyles from '../../../utils/styles/TextStyles';
 import { EmailPasswordData, FirstLastNameData, NotifPrefData, RanchInfo1Data, RanchInfo2Data } from './forms';
 import PagerView from 'react-native-pager-view';
-import EmailPasswordPage from './emailPassword';
-import FirstLastNamePage from './firstLastName';
-import RanchInfoPage from './ranchInfo';
-import RanchInfo2Page from './ranchInfo2';
-import NotifPrefPage from './notifPrefs';
+import { EmailPasswordPage, FirstLastNamePage, RanchInfoPage, RanchInfo2Page, NotifPrefPage } from './pages';
 
 const SignUpPage = () => {
   const dispatch = useAppDispatch();
@@ -58,10 +54,10 @@ const SignUpPage = () => {
     <SafeAreaView style={GlobalStyle.container}>
 
       {/* Sign up Pages */}
-      <PagerView 
+      <PagerView
         initialPage={1}
         orientation='horizontal'
-        // ref={pagesRef}
+      // ref={pagesRef}
       >
         <View key={'1'}>
           <EmailPasswordPage />

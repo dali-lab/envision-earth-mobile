@@ -15,7 +15,6 @@ import { getHerdByTeamId } from '../../../redux/slices/herdsSlice';
 import { getCowCensusesByHerdId } from '../../../redux/slices/cowCensusSlice';
 import { getDungCensusesByHerdId } from '../../../redux/slices/dungCensusSlice';
 import { getForageQualityCensusesByPlotId } from '../../../redux/slices/forageQualityCensusSlice';
-// import { loadTeamData } from '../../../redux/slices/syncSlice';
 
 const FrontPage = () => {
   const navigation = useNavigation<NavType>();

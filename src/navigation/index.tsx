@@ -11,8 +11,8 @@ import {
 import useAppSelector from './../hooks/useAppSelector';
 import useAppDispatch from './../hooks/useAppDispatch';
 // import { UserScopes } from './../redux/slices/usersSlice';
-import { checkConnection } from '../redux/slices/connectionSlice';
-import { initCredentials } from '../redux/slices/authSlice';
+import { checkConnection, clearConnection } from '../redux/slices/connectionSlice';
+import { initCredentials, clearAuth } from '../redux/slices/authSlice';
 import { getTeamByUserId } from '../redux/slices/teamsSlice';
 import {
   // ErrorPage, 

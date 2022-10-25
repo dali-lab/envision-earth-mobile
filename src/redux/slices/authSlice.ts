@@ -176,6 +176,7 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    clearAuth: () => ({ ...initialState }),
     startAuthLoading: (state) => ({ ...state, loading: true }),
     stopAuthLoading: (state) => ({ ...state, loading: false }),
   },
@@ -213,7 +214,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { startAuthLoading, stopAuthLoading } =
+export const { clearAuth, startAuthLoading, stopAuthLoading } =
   authSlice.actions;
 
 export default authSlice.reducer;

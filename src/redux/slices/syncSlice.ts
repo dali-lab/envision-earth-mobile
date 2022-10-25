@@ -1,28 +1,60 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { RootState } from 'redux/util';
 import { getHerdByTeamId } from './herdsSlice';
+import { ICowCensus, ICreateCowCensusRequest } from './cowCensusSlice';
+import { SERVER_URL } from '../../utils/constants.js';
+import axios from 'axios';
 
 export type SyncState = {
-  loadingTasks: string,
+  loadingTasks: Set<string>,
 };
+
+interface SyncData {
+  upserted: {
+    cowCensusRequests: ICreateCowCensusRequest[],
+  };
+}
+
+interface SyncResponse {
+  cowCensuses: ICowCensus[],
+}
 
 const initialState: SyncState = {
-  loadingTasks: '',
+  loadingTasks: new Set([]),
 };
 
-export const loadTeamData = createAsyncThunk(
-  'sync/loadTeamData',
-  async (teamId: string, { dispatch }) => {
-    const loadMessage = 'Loading Census Data...';
-    try {
-      dispatch(startLoading(loadMessage));
-      await dispatch(getHerdByTeamId({ teamId }));
-      dispatch(stopLoading(loadMessage));
-    } catch (err) {
-      console.error(err);
-      alert('Error while loading team data: ' + err);
-      dispatch(stopLoading(loadMessage));
-      throw err;
-    }
+export const uploadCensusData = createAsyncThunk(
+  'sync/uploadCensusData',
+  async (_params, { getState, dispatch }) => {
+    const loadMessage = 'Uploading New Census Data...';
+    dispatch(startLoading(loadMessage));
+    const appState = getState() as RootState;
+    
+    const cowCensusRequests: ICreateCowCensusRequest[] = [];
+    appState.cowCensuses.drafts.forEach((draft: ICreateCowCensusRequest) => {
+      cowCensusRequests.push(draft);
+    });
+
+    const syncData: SyncData = {
+      upserted: { cowCensusRequests },
+    };
+
+    return axios
+      .post<SyncData, { data: SyncResponse }>(`${SERVER_URL}sync/`, syncData)
+      .then(async (response) => {
+        dispatch(stopLoading(loadMessage));
+        return response.data;
+      })
+      .catch((err) => {
+        dispatch(stopLoading(loadMessage));
+        alert(
+          'An error occurred while syncing your data: ' +
+            err?.message +
+            '. Once new data is loaded check your censuses and re-census any missing entries.',
+        );
+        throw err;
+      });
+
   },
 );
 
@@ -37,14 +69,14 @@ export const syncSlice = createSlice({
       state,
       action: { payload: string } = { payload: 'Loading...' },
     ) => {
-      // state.loadingTasks.add(action.payload);
+      state.loadingTasks.add(action.payload);
       return state;
     },
     stopLoading: (
       state,
       action: { payload: string } = { payload: 'Loading...' },
     ) => {
-      // state.loadingTasks.delete(action.payload);
+      state.loadingTasks.delete(action.payload);
       return state;
     },
   },

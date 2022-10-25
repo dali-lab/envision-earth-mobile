@@ -1,7 +1,6 @@
 import { createAsyncThunk, createDraftSafeSelector, createSlice } from '@reduxjs/toolkit';
 import { SERVER_URL } from '../../utils/constants.js';
 import axios from 'axios';
-import uuid from 'react-native-uuid';
 
 export interface ICowCensus {
   id: string,
@@ -18,7 +17,7 @@ interface IPhotoInput {
   buffer: string, // base64
 }
 
-interface ICreateCowCensusRequest {
+export interface ICreateCowCensusRequest {
   id?: string;
   herdId: string;
   bcs: number,

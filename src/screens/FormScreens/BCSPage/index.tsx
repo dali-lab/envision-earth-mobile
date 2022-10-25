@@ -1,8 +1,9 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import { ScrollView, SafeAreaView, View } from 'react-native';
+import { useIsConnected } from 'react-native-offline';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
-import { createCowCensus } from '../../../redux/slices/cowCensusSlice';
+import { createCowCensus, locallyCreateCowCensus } from '../../../redux/slices/cowCensusSlice';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import AppButton from '../../../components/AppButton';
 import AppTextInput from '../../../components/AppTextInput';
@@ -10,6 +11,8 @@ import ScrollPick from '../../../components/ScrollPick';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 
 const BCSPage = () => {
+  const isWifi = useIsConnected();
+  
   const { selectedHerd } = useAppSelector((state) => state.herds);
   const dispatch = useAppDispatch();
 
@@ -22,13 +25,23 @@ const BCSPage = () => {
   const handleCreateCowCensus = async () => {
     // TODO: which fields are necessary, and which are optional?
 
-    dispatch(createCowCensus({ 
-      herdId: selectedHerd?.id as string,
-      bcs: BCS_ELEMENTS[selectedIdx],
-      notes,
-      tag,
-      photo: image,
-    }));
+    if (isWifi) {
+      await dispatch(createCowCensus({ 
+        herdId: selectedHerd?.id as string,
+        bcs: BCS_ELEMENTS[selectedIdx],
+        notes,
+        tag,
+        photo: image,
+      }));
+    } else {
+      dispatch(locallyCreateCowCensus({
+        herdId: selectedHerd?.id as string,
+        bcs: BCS_ELEMENTS[selectedIdx],
+        notes,
+        tag,
+        photo: image,
+      }));
+    }
   };
 
   return (

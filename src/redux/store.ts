@@ -1,4 +1,4 @@
-import { AnyAction, configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import forageQualityCensusReducer from './slices/forageQualityCensusSlice';
 import { RootState } from './util';
 import { persistStore, persistReducer } from 'redux-persist';

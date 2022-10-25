@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'redux/util';
-import { getHerdByTeamId } from './herdsSlice';
-import { ICowCensus, ICreateCowCensusRequest } from './cowCensusSlice';
+import { clearCowCensusDrafts, ICowCensus, ICreateCowCensusRequest } from './cowCensusSlice';
 import { SERVER_URL } from '../../utils/constants.js';
 import axios from 'axios';
 
@@ -43,6 +42,7 @@ export const uploadCensusData = createAsyncThunk(
       .post<SyncData, { data: SyncResponse }>(`${SERVER_URL}sync/`, syncData)
       .then(async (response) => {
         dispatch(stopLoading(loadMessage));
+        dispatch(clearCowCensusDrafts());
         return response.data;
       })
       .catch((err) => {

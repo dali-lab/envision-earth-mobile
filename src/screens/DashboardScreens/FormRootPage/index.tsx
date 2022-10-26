@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, SafeAreaView } from 'react-native';
+import { ScrollView, SafeAreaView, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AppButton from '../../../components/AppButton';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
@@ -11,32 +11,35 @@ const FormRootPage = () => {
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
+      <Text>Forms</Text>
       <ScrollView>
-        <AppButton
-          onPress={() => navigation.navigate(ROUTES.BCS_PAGE)}
-          title={ROUTES.BCS_PAGE}
-          isArrow={true}
-        />
-        <AppButton
-          onPress={() => navigation.navigate(ROUTES.DUNG_PAGE)}
-          title={ROUTES.DUNG_PAGE}
-          isArrow={true}
-        />
-        <AppButton
-          onPress={() => navigation.navigate(ROUTES.RUMEN_PAGE)}
-          title={ROUTES.RUMEN_PAGE}
-          isArrow={true}
-        />
-        <AppButton
-          onPress={() => navigation.navigate(ROUTES.SHEEN_PAGE)}
-          title={ROUTES.SHEEN_PAGE}
-          isArrow={true}
-        />
-        <AppButton
-          onPress={() => navigation.navigate(ROUTES.FORAGE_PAGE)}
-          title={ROUTES.FORAGE_PAGE}
-          isArrow={true}
-        />
+        <View>
+          <Text>Monitor Animals</Text>
+          <View>
+            <AppButton
+              onPress={() => navigation.navigate(ROUTES.BCS_PAGE)}
+              title='Log Body Condition Score'
+            />
+            <AppButton
+              onPress={() => navigation.navigate(ROUTES.DUNG_PAGE)}
+              title='Log Dung Condition'
+            />
+          </View>
+        </View>
+
+        <View>
+          <Text>Monitor Ecosystem</Text>
+          <View>
+            <AppButton
+              onPress={() => navigation.navigate(ROUTES.FORAGE_QUALITY_PAGE)}
+              title='Log Forage Quality'
+            />
+            <AppButton
+              onPress={() => navigation.navigate(ROUTES.FORAGE_QUANTITY_PAGE)}
+              title='Log Forage Quantity'
+            />
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

@@ -28,28 +28,21 @@ const SignInPage = () => {
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
-      <Text style={TextStyles.title}>Login</Text>
-      <Text style={TextStyles.subTitle}>Email</Text>
+      <Text style={TextStyles.title}>Welcome Back</Text>
       <AppTextInput
         onChangeText={(text) => setEmail(text)}
         value={email}
-        placeholder='Type your email'
+        placeholder='username'
       />
-      <Text style={TextStyles.subTitle}>Password</Text>
       <AppTextInput
         onChangeText={(text) => setPassword(text)}
         value={password}
-        placeholder='Type your password'
+        placeholder='password'
         secureTextEntry={true}
       />
       <AppButton
         onPress={handleSubmit}
-        title={'Log in'}
-        isArrow={true}
-      />
-      <AppButton
-        onPress={() => navigation.navigate(ROUTES.SIGNUP)}
-        title={'Sign Up'}
+        title={'log in'}
         isArrow={true}
       />
     </SafeAreaView>

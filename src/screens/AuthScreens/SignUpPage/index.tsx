@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { StyleSheet, SafeAreaView, View, Text } from 'react-native';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { signUp } from '../../../redux/slices/authSlice';
 import AppTextInput from '../../../components/AppTextInput';
@@ -49,29 +49,40 @@ const SignUpPage = () => {
   const handleSubmitNotifPrefs = (data: NotifPrefs) => {
     setNotifPrefs(data);
   };
-
+  const styles = StyleSheet.create({
+    pagerView: {
+      flex: 1,
+    },
+  });
   return (
     <SafeAreaView style={GlobalStyle.container}>
 
+      <Text>Beep</Text>
       {/* Sign up Pages */}
       <PagerView
-        initialPage={1}
+        initialPage={0}
+        style={styles.pagerView}
         orientation='horizontal'
       // ref={pagesRef}
       >
-        <View key={'1'}>
+        <View key={1}>
+          <Text>1</Text>
           <EmailPasswordPage />
         </View>
-        <View key={'2'}>
+        <View key={2}>
+          <Text>2</Text>
           <FirstLastNamePage />
         </View>
-        <View key={'3'}>
+        <View key={3}>
+          <Text>3</Text>
           <RanchInfoPage />
         </View>
-        <View key={'4'}>
+        <View key={4}>
+          <Text>4</Text>
           <RanchInfo2Page />
         </View>
-        <View key={'5'}>
+        <View key={5}>
+          <Text>5</Text>
           <NotifPrefPage />
         </View>
       </PagerView>

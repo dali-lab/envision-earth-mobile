@@ -129,7 +129,7 @@ const SettingsDrawerNavigator = () => {
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-    // screenOptions={{ header: () => null }}
+      // screenOptions={{ header: () => null }}
     >
       <Tab.Screen name='Home' component={DashboardStackScreen} />
       <Tab.Screen name='Manage Forms' component={FormStackScreen} />

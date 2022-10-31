@@ -8,29 +8,45 @@ interface AppButtonProps {
   value: string
   placeholder: string
   secureTextEntry?: boolean
+  width?: number
+  height?: number
 }
 
-const AppTextInput = ({ onChangeText, value, placeholder, secureTextEntry }: AppButtonProps) => (
+const AppTextInput = ({ 
+  onChangeText, 
+  value, 
+  placeholder, 
+  secureTextEntry, 
+  width, 
+  height,
+}: AppButtonProps) => (
   <TextInput
     onChangeText={onChangeText}
     value={value}
     placeholder={placeholder}
-    placeholderTextColor={Colors.neutral[4]}
-    style={styles.appTextInputContainer}
+    placeholderTextColor={Colors.primary.lightGreen}
+    style={[
+      styles.appTextInputContainer,
+      { width, height },
+    ]}
     secureTextEntry={(secureTextEntry === null || secureTextEntry === undefined) ? false : secureTextEntry}
   />
 );
 
 const styles = StyleSheet.create({
   appTextInputContainer: {
-    ...TextStyles.regular,
+    ...TextStyles.body,
     borderColor: 'lightgrey',
-    borderRadius: 4,
+    borderRadius: 12,
     borderWidth: 1,
     width: '75%',
     padding: 10,
     textAlign: 'center',
+    backgroundColor: Colors.secondary.white,
+    textColor:Colors.primary.deepGreen,
   },
 });
+
+// TODO: How to make inset shadow?
 
 export default AppTextInput;

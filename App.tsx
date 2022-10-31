@@ -1,16 +1,16 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { View } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import { store, persistor } from './src/redux/store';
 // import Index from './src';
 import RootNavigation from './src/navigation';
 import { 
   useFonts, 
-  Raleway_400Regular, 
-  Raleway_600SemiBold, 
-  Raleway_800ExtraBold,
-} from '@expo-google-fonts/raleway';
+  Inter_400Regular, 
+  Inter_600SemiBold, 
+  Inter_800ExtraBold,
+} from '@expo-google-fonts/inter';
 import { PersistGate } from 'redux-persist/integration/react';
 import { NetworkProvider } from 'react-native-offline';
 
@@ -20,9 +20,9 @@ import { NetworkProvider } from 'react-native-offline';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    Raleway_400Regular,
-    Raleway_600SemiBold,
-    Raleway_800ExtraBold,
+    Inter_400Regular,
+    Inter_600SemiBold,
+    Inter_800ExtraBold,
   });
 
   if (!fontsLoaded) {
@@ -33,6 +33,7 @@ export default function App() {
     <Provider store={store}>
       <NetworkProvider pingInterval={5000}>
         <PersistGate loading={null} persistor={persistor}>
+          <StatusBar barStyle = 'dark-content' />
           <RootNavigation />
         </PersistGate>
       </NetworkProvider>

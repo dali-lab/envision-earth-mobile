@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { 
-  createDrawerNavigator, 
+import {
+  createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
@@ -11,15 +11,15 @@ import {
 import useAppSelector from './../hooks/useAppSelector';
 import useAppDispatch from './../hooks/useAppDispatch';
 // import { UserScopes } from './../redux/slices/usersSlice';
-import { checkConnection, clearConnection } from '../redux/slices/connectionSlice';
-import { initCredentials, clearAuth } from '../redux/slices/authSlice';
+import { checkConnection } from '../redux/slices/connectionSlice';
+import { initCredentials } from '../redux/slices/authSlice';
 import { getTeamByUserId } from '../redux/slices/teamsSlice';
 import {
   // ErrorPage, 
   // ForbiddenPage, 
-  ResourcesPage, 
-  UsersPage, 
-  SignInPage, 
+  ResourcesPage,
+  UsersPage,
+  SignInPage,
   SignUpPage,
   VerifyUserPage,
   JoinTeamPage,
@@ -31,12 +31,18 @@ import {
   SheenPage,
   SettingsPage,
   HelpGuidesPage,
-  ForagePage,
+  ForageQualPage,
+  ForageQuanPage,
   CalendarPage,
 } from './../screens';
 import { ROUTES } from '../utils/constants';
+import { LaunchScreen } from '../screens/AuthScreens';
+
+const testing = true;
 
 const AuthStack = createStackNavigator();
+const SignupStack = createStackNavigator();
+const LoginStack = createStackNavigator();
 const DashboardStack = createStackNavigator();
 const FormStack = createStackNavigator();
 const AnalyticsStack = createStackNavigator();
@@ -48,6 +54,7 @@ const RootStack = createStackNavigator();
 const AuthStackScreen = () => {
   return (
     <AuthStack.Navigator>
+      <AuthStack.Screen name={ROUTES.AUTHLAUNCH} component={LaunchScreen} />
       <AuthStack.Screen name={ROUTES.SIGNIN} component={SignInPage} />
       <AuthStack.Screen name={ROUTES.SIGNUP} component={SignUpPage} />
       <AuthStack.Screen name={ROUTES.VERIFY_USER} component={VerifyUserPage} />
@@ -81,7 +88,8 @@ const FormStackScreen = () => {
       <FormStack.Screen name={ROUTES.DUNG_PAGE} component={DungPage} />
       <FormStack.Screen name={ROUTES.RUMEN_PAGE} component={RumenPage} />
       <FormStack.Screen name={ROUTES.SHEEN_PAGE} component={SheenPage} />
-      <FormStack.Screen name={ROUTES.FORAGE_PAGE} component={ForagePage} />
+      <FormStack.Screen name={ROUTES.FORAGE_QUALITY_PAGE} component={ForageQualPage} />
+      <FormStack.Screen name={ROUTES.FORAGE_QUANTITY_PAGE} component={ForageQuanPage} />
     </FormStack.Navigator>
   );
 };
@@ -121,7 +129,7 @@ const SettingsDrawerNavigator = () => {
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      // screenOptions={{ header: () => null }}
+    // screenOptions={{ header: () => null }}
     >
       <Tab.Screen name='Home' component={DashboardStackScreen} />
       <Tab.Screen name='Manage Forms' component={FormStackScreen} />
@@ -134,10 +142,10 @@ const TabNavigator = () => {
 const RootNavigation = () => {
   // const { isConnected } = useAppSelector((state) => state.connection);
   const { authenticated } = useAppSelector((state) => state.auth);
-  const { id }  = useAppSelector((state) => state.auth); // userId
-  const { selectedTeam } = useAppSelector((state) => state.teams); 
+  const { id } = useAppSelector((state) => state.auth); // userId
+  const { selectedTeam } = useAppSelector((state) => state.teams);
   const dispatch = useAppDispatch();
-  
+
   useEffect(() => {
     dispatch(checkConnection()).finally(() => { });
   }, []);
@@ -150,6 +158,14 @@ const RootNavigation = () => {
     }
   }, [authenticated]);
 
+  // TODO: Delete
+  /*
+  if (testing) {
+    return (
+      <ForageQuanPage />
+    );
+  }
+  */
   // if (!isConnected) return <ErrorPage />
 
   if (!authenticated) {

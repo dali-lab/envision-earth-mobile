@@ -19,9 +19,10 @@ import {
   DungPage,
   RumenPage,
   SheenPage,
-  ForagePage,
+  ForageQuanPage,
+  ForageQualPage,
 } from './FormScreens';
-import { 
+import {
   SettingsPage,
   HelpGuidesPage,
 } from './UserScreens';
@@ -29,12 +30,12 @@ import {
   CalendarPage,
 } from './AnalyticsScreens';
 
-export { 
-  ErrorPage, 
-  ForbiddenPage, 
-  ResourcesPage, 
-  UsersPage, 
-  SignInPage, 
+export {
+  ErrorPage,
+  ForbiddenPage,
+  ResourcesPage,
+  UsersPage,
+  SignInPage,
   SignUpPage,
   VerifyUserPage,
   JoinTeamPage,
@@ -44,7 +45,8 @@ export {
   DungPage,
   RumenPage,
   SheenPage,
-  ForagePage,
+  ForageQualPage,
+  ForageQuanPage,
   SettingsPage,
   HelpGuidesPage,
   CalendarPage,

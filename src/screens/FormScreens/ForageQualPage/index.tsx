@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, SafeAreaView } from 'react-native';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 
-const ForagePage = () => {
+const ForageQualPage = () => {
   return (
     <SafeAreaView style={GlobalStyle.container}>
       <ScrollView>
@@ -12,4 +12,4 @@ const ForagePage = () => {
   );
 };
 
-export default ForagePage;
+export default ForageQualPage;

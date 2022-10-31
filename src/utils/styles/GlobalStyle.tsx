@@ -1,15 +1,16 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import Colors from '../../utils/styles/Colors';
 
 const GlobalStyle = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.primary.lightestGreen,
     alignItems: 'center',
     justifyContent: 'center',
   },
 
   innerContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     alignItems: 'center',
     width: Dimensions.get('window').width * (6 / 7),
     paddingBottom: 0,

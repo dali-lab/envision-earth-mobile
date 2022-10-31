@@ -35,7 +35,7 @@ const Accordion = ({ title, children }: AccordionProps) => {
 
 const styles = StyleSheet.create({
   title: {
-    ...TextStyles.subTitle,
+    ...TextStyles.subHeading,
     // fontSize: 18,
     // fontWeight:'bold',
     color: 'white',

@@ -5,6 +5,7 @@ import NavType from 'utils/NavType';
 import { useNavigation } from '@react-navigation/native';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import TextStyles from '../../../utils/styles/TextStyles';
+import Colors from '../../../utils/styles/Colors';
 
 const LaunchScreen = () => {
   const navigation = useNavigation<NavType>();
@@ -17,10 +18,28 @@ const LaunchScreen = () => {
   };
 
   return (
-    <SafeAreaView style={GlobalStyle.container}>
+    <SafeAreaView 
+      style={[
+        GlobalStyle.container, 
+      ]}
+    >
       <Text style={TextStyles.title}>Grazing Earth</Text>
-      <AppButton title='Log In' onPress={onPressLogin} />
-      <AppButton title='Sign Up' onPress={onPressSignUp} />
+      <AppButton 
+        title='log in' 
+        onPress={onPressLogin} 
+        backgroundColor={Colors.secondary.white}
+        textColor={Colors.primary.mainOrange}
+        width={331}
+        height={59}
+      />
+      <AppButton 
+        title='sign up' 
+        onPress={onPressSignUp} 
+        backgroundColor={Colors.primary.mainOrange}
+        textColor={Colors.secondary.white}
+        width={331}
+        height={59}
+      />
     </SafeAreaView>
   );
 };

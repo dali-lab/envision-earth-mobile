@@ -9,7 +9,7 @@ const ErrorPage = () => {
       <Text style={TextStyles.title}>
         503
       </Text>
-      <Text style={TextStyles.subTitle}>
+      <Text style={TextStyles.subHeading}>
         Could not connect to backend. (Is the backend running?)
       </Text>
     </SafeAreaView>

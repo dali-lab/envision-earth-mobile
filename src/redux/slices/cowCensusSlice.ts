@@ -5,6 +5,7 @@ import axios from 'axios';
 export interface ICowCensus {
   id: string,
   herdId: string,
+  plotId: string;
   photoId: string,
   bcs: number,
   notes: string,
@@ -19,8 +20,9 @@ interface IPhotoInput {
 
 export interface ICreateCowCensusRequest {
   id?: string;
+  plotId: string;
   herdId: string;
-  bcs: number,
+  bcs: number[],
   notes: string;
   tag: string;
   photo?: IPhotoInput;

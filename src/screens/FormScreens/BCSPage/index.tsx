@@ -28,7 +28,8 @@ const BCSPage = () => {
     if (isWifi) {
       await dispatch(createCowCensus({ 
         herdId: selectedHerd?.id as string,
-        bcs: BCS_ELEMENTS[selectedIdx],
+        plotId: '7c175ec1-6822-43d1-962e-8bed235100f6',
+        bcs: [BCS_ELEMENTS[selectedIdx]],
         notes,
         tag,
         photo: image,
@@ -43,6 +44,8 @@ const BCSPage = () => {
       }));
     }
   };
+
+  // TODO: Plot selection modal
 
   return (
     <SafeAreaView style={GlobalStyle.container}>

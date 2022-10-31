@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { SafeAreaView, Text, View, ScrollView } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
+type PageType = 'stac' | 'eyeball';
 type BootData = 'bare' | 'mix' | 'grass';
 type HeightData = 't' | 's' | 'a' | 'c' | 'th' | 'p';
 interface Card {
@@ -11,6 +12,10 @@ interface Card {
 }
 
 const ForageQuanPage = () => {
+  // Page state
+  const [pageType, setPageType] = useState<PageType>('stac');
+
+  // STAC state
   const [cardData, setCardData] = useState<Card[]>([]);
   const [pageInd, setPageInd] = useState<number>(0);
   const [numCards, setNumCards] = useState<number>(5);
@@ -107,26 +112,21 @@ const ForageQuanPage = () => {
     );
   };
 
-  return (
-    <SafeAreaView>
-      <Text>Forage Quantity</Text>
+  const MethodView = () => {
+    if (pageType === 'stac') {
+      // STAC Method
+      return (
+        <ScrollView>
+          <Text>measurement guide</Text>
+          {/* TODO: Insert image of STAC guide */}
+          <Text>Learn more about STAC method</Text>
 
-      <Text>paddock</Text>
+          <Text>Score Forage</Text>
 
-      <Text>what method are you using?</Text>
+          <Text>{pageInd}</Text>
+          <Text>{numCards}</Text>
 
-      {/* STAC method; eyeball method will come later */}
-      <ScrollView>
-        <Text>measurement guide</Text>
-        {/* TODO: Insert image of STAC guide */}
-        <Text>Learn more about STAC method</Text>
-
-        <Text>Score Forage</Text>
-
-        <Text>{pageInd}</Text>
-        <Text>{numCards}</Text>
-
-        {/* 
+          {/* 
         <FlatList
           data={cardData}
           renderItem={StacCard}
@@ -135,25 +135,51 @@ const ForageQuanPage = () => {
           onEndReached={loadNewCard} />
         */}
 
-        <StacCard data={cardData[pageInd]} />
+          <StacCard data={cardData[pageInd]} />
 
-        {/* [0, 1, 2, 3, 4].map(num => <StacCard index={num} key={num} />) */}
+          {/* [0, 1, 2, 3, 4].map(num => <StacCard index={num} key={num} />) */}
 
-        <AppButton
-          onPress={nextCard}
-          title='Next'
-        />
+          <AppButton
+            onPress={nextCard}
+            title='Next'
+          />
 
-        <AppButton
-          onPress={prevCard}
-          title='Prev'
-        />
+          <AppButton
+            onPress={prevCard}
+            title='Prev'
+          />
 
-        <AppButton
-          onPress={onSubmit}
-          title='submit'
-        />
-      </ScrollView>
+          <AppButton
+            onPress={onSubmit}
+            title='submit'
+          />
+        </ScrollView>
+      );
+    } else {
+      return (
+        <View></View>
+      );
+    }
+  };
+
+  return (
+    <SafeAreaView>
+      <Text>Forage Quantity</Text>
+
+      {/* TODO: Should be a dropdown */}
+      <Text>paddock</Text>
+
+      <Text>what method are you using?</Text>
+      <AppButton
+        onPress={() => setPageType('eyeball')}
+        title='eyeballing'
+      />
+      <AppButton
+        onPress={() => setPageType('stac')}
+        title='STAC'
+      />
+
+      <MethodView />
     </SafeAreaView>
   );
 };

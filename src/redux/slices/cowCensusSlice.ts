@@ -5,10 +5,27 @@ import axios from 'axios';
 export interface ICowCensus {
   id: string,
   herdId: string,
+  plotId: string;
   photoId: string,
   bcs: number,
   notes: string,
   tag: string,
+}
+
+interface IPhotoInput {
+  uri: string,
+  fileName: string,
+  buffer: string, // base64
+}
+
+export interface ICreateCowCensusRequest {
+  id?: string;
+  plotId: string;
+  herdId: string;
+  bcs: number[],
+  notes: string;
+  tag: string;
+  photo?: IPhotoInput;
 }
 
 export interface CowCensusState {
@@ -16,7 +33,8 @@ export interface CowCensusState {
   all: Record<string, ICowCensus>
   indices: {
     byTag: Record<string, ICowCensus> // value => ICowCensus
-  }
+  },
+  drafts: ICreateCowCensusRequest[],
 }
 
 const initialState: CowCensusState = {
@@ -25,6 +43,7 @@ const initialState: CowCensusState = {
   indices: {
     byTag: {},
   },
+  drafts: [],
 };
 
 export const getCowCensusesByHerdId = createAsyncThunk(
@@ -43,20 +62,6 @@ export const getCowCensusesByHerdId = createAsyncThunk(
       });
   },
 );
-
-interface IPhotoInput {
-  uri: string,
-  fileName: string,
-  buffer: string, // base64
-}
-
-interface ICreateCowCensusRequest {
-  herdId: string;
-  bcs: number,
-  notes: string;
-  tag: string;
-  photo?: IPhotoInput;
-}
 
 export const createCowCensus = createAsyncThunk(
   'cowCensuses/createCowCensus',
@@ -130,6 +135,12 @@ export const cowCensusSlice = createSlice({
   name: 'cowCensuses',
   initialState,
   reducers: {
+    locallyCreateCowCensus: (state, action) => {
+      state.drafts.push(action.payload);
+    },
+    clearCowCensusDrafts: (state) => {
+      state.drafts = [];
+    },
     startCowCensusLoading: (state) => ({ ...state, loading: true }),
     stopCowCensusLoading: (state) => ({ ...state, loading: false }),
   },
@@ -168,7 +179,11 @@ export const cowCensusSlice = createSlice({
   },
 });
 
-export const { startCowCensusLoading, stopCowCensusLoading } =
-  cowCensusSlice.actions;
+export const { 
+  locallyCreateCowCensus,
+  clearCowCensusDrafts,
+  startCowCensusLoading, 
+  stopCowCensusLoading,
+} = cowCensusSlice.actions;
 
 export default cowCensusSlice.reducer;

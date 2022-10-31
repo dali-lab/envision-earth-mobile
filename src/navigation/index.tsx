@@ -158,11 +158,14 @@ const RootNavigation = () => {
     }
   }, [authenticated]);
 
+  // TODO: Delete
+  /*
   if (testing) {
     return (
       <ForageQuanPage />
     );
   }
+  */
   // if (!isConnected) return <ErrorPage />
 
   if (!authenticated) {

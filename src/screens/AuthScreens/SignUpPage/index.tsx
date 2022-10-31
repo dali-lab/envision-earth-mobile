@@ -20,6 +20,7 @@ const SignUpPage = () => {
   const [ranchInfo2, setRanchInfo2] = useState<RanchInfo2Data>();
   const [notifPrefs, setNotifPrefs] = useState<NotifPrefData>();
 
+  /*
   const handleSubmit = () => {
     const data = {
       ...emailPass,
@@ -49,11 +50,13 @@ const SignUpPage = () => {
   const handleSubmitNotifPrefs = (data: NotifPrefs) => {
     setNotifPrefs(data);
   };
+  */
   const styles = StyleSheet.create({
     pagerView: {
       flex: 1,
     },
   });
+
   return (
     <SafeAreaView style={GlobalStyle.container}>
 

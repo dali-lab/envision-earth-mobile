@@ -1,20 +1,20 @@
 import React from 'react';
 import { ScrollView, SafeAreaView, View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import AppButton from '../../../components/AppButton';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import NavType from '../../../utils/NavType';
 import { ROUTES } from '../../../utils/constants';
+import AppButton from '../../../components/AppButton';
+import GlobalStyle from '../../../utils/styles/GlobalStyle';
+import TextStyles from '../../../utils/styles/TextStyles';
 
 const FormRootPage = () => {
   const navigation = useNavigation<NavType>();
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
-      <Text>Forms</Text>
       <ScrollView>
         <View>
-          <Text>Monitor Animals</Text>
+          <Text style={TextStyles.subTitle}>Monitor Animals</Text>
           <View>
             <AppButton
               onPress={() => navigation.navigate(ROUTES.BCS_PAGE)}
@@ -28,7 +28,7 @@ const FormRootPage = () => {
         </View>
 
         <View>
-          <Text>Monitor Ecosystem</Text>
+          <Text style={TextStyles.subTitle}>Monitor Ecosystem</Text>
           <View>
             <AppButton
               onPress={() => navigation.navigate(ROUTES.FORAGE_QUALITY_PAGE)}

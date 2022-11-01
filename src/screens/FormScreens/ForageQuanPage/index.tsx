@@ -1,7 +1,9 @@
 import AppButton from '../../../components/AppButton';
 import { useState } from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import { SafeAreaView, Text, View, ScrollView } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 
+type PageType = 'stac' | 'eyeball';
 type BootData = 'bare' | 'mix' | 'grass';
 type HeightData = 't' | 's' | 'a' | 'c' | 'th' | 'p';
 interface Card {
@@ -10,8 +12,13 @@ interface Card {
 }
 
 const ForageQuanPage = () => {
+  // Page state
+  const [pageType, setPageType] = useState<PageType>('stac');
+
+  // STAC state
   const [cardData, setCardData] = useState<Card[]>([]);
-  const [cardInd, setCardInd] = useState<number>(0);
+  const [pageInd, setPageInd] = useState<number>(0);
+  const [numCards, setNumCards] = useState<number>(5);
 
   const onSetBootData = (index: number, data: BootData) => {
     setCardData(cards => {
@@ -31,36 +38,45 @@ const ForageQuanPage = () => {
     });
   };
 
+  const loadNewCard = () => {
+    setNumCards(num => num + 1);
+  };
+
   const nextCard = () => {
-    setCardInd(ind => ind + 1);
+    if (pageInd === numCards) {
+      loadNewCard();
+    }
+    setPageInd(ind => ind + 1);
     // TODO: If we're at the limit, add more
   };
 
   const prevCard = () => {
-    setCardInd(ind => ind - 1);
+    if (pageInd > 0) {
+      setPageInd(ind => ind - 1);
+    }
   };
 
   const onSubmit = () => {
 
   };
 
-  const StacCard = (props: { index: number }) => {
+  const StacCard = ({ data: Card }) => {
     return (
       <View>
-        <Text>Transect {props.index}</Text>
+        <Text>Transect {pageInd}</Text>
 
         <Text>What is your boot on?</Text>
         <View>
           <AppButton
-            onPress={() => onSetBootData(props.index, 'bare')}
+            onPress={() => onSetBootData(pageInd, 'bare')}
             title='All bare soil'
           />
           <AppButton
-            onPress={() => onSetBootData(props.index, 'mix')}
+            onPress={() => onSetBootData(pageInd, 'mix')}
             title='Bare soil and grass'
           />
           <AppButton
-            onPress={() => onSetBootData(props.index, 'grass')}
+            onPress={() => onSetBootData(pageInd, 'grass')}
             title='All grass'
           />
         </View>
@@ -68,27 +84,27 @@ const ForageQuanPage = () => {
         <Text>Rate Forage:</Text>
         <View>
           <AppButton
-            onPress={() => onSetHeightData(props.index, 't')}
+            onPress={() => onSetHeightData(pageInd, 't')}
             title='T'
           />
           <AppButton
-            onPress={() => onSetHeightData(props.index, 's')}
+            onPress={() => onSetHeightData(pageInd, 's')}
             title='S'
           />
           <AppButton
-            onPress={() => onSetHeightData(props.index, 'a')}
+            onPress={() => onSetHeightData(pageInd, 'a')}
             title='A'
           />
           <AppButton
-            onPress={() => onSetHeightData(props.index, 'c')}
+            onPress={() => onSetHeightData(pageInd, 'c')}
             title='C'
           />
           <AppButton
-            onPress={() => onSetHeightData(props.index, 'th')}
+            onPress={() => onSetHeightData(pageInd, 'th')}
             title='TH'
           />
           <AppButton
-            onPress={() => onSetHeightData(props.index, 'p')}
+            onPress={() => onSetHeightData(pageInd, 'p')}
             title='P'
           />
         </View>
@@ -96,37 +112,74 @@ const ForageQuanPage = () => {
     );
   };
 
+  const MethodView = () => {
+    if (pageType === 'stac') {
+      // STAC Method
+      return (
+        <ScrollView>
+          <Text>measurement guide</Text>
+          {/* TODO: Insert image of STAC guide */}
+          <Text>Learn more about STAC method</Text>
+
+          <Text>Score Forage</Text>
+
+          <Text>{pageInd}</Text>
+          <Text>{numCards}</Text>
+
+          {/* 
+        <FlatList
+          data={cardData}
+          renderItem={StacCard}
+          keyExtractor={(item, index) => index}
+          onEndReachedThreshold={0}
+          onEndReached={loadNewCard} />
+        */}
+
+          <StacCard data={cardData[pageInd]} />
+
+          {/* [0, 1, 2, 3, 4].map(num => <StacCard index={num} key={num} />) */}
+
+          <AppButton
+            onPress={nextCard}
+            title='Next'
+          />
+
+          <AppButton
+            onPress={prevCard}
+            title='Prev'
+          />
+
+          <AppButton
+            onPress={onSubmit}
+            title='submit'
+          />
+        </ScrollView>
+      );
+    } else {
+      return (
+        <View></View>
+      );
+    }
+  };
+
   return (
     <SafeAreaView>
       <Text>Forage Quantity</Text>
 
+      {/* TODO: Should be a dropdown */}
       <Text>paddock</Text>
 
       <Text>what method are you using?</Text>
+      <AppButton
+        onPress={() => setPageType('eyeball')}
+        title='eyeballing'
+      />
+      <AppButton
+        onPress={() => setPageType('stac')}
+        title='STAC'
+      />
 
-      {/* STAC method; eyeball method will come later */}
-      <View>
-        <Text>measurement guide</Text>
-        {/* TODO: Insert image of STAC guide */}
-        <Text>Learn more about STAC method</Text>
-
-        <Text>Score Forage</Text>
-
-        <AppButton
-          onPress={nextCard}
-          title='Next'
-        />
-
-        <AppButton
-          onPress={prevCard}
-          title='Prev'
-        />
-
-        <AppButton
-          onPress={onSubmit}
-          title='submit'
-        />
-      </View>
+      <MethodView />
     </SafeAreaView>
   );
 };

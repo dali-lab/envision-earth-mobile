@@ -161,7 +161,7 @@ const TabNavigator = () => {
             );
           },
           tabBarIcon: () => (
-            <Ionicons name='person-outline' color={Colors.secondary.white} size={28}/>
+            <Ionicons name='person-outline' color={Colors.secondary.white} size={26}/>
           ),
         }}
       />
@@ -175,7 +175,7 @@ const TabNavigator = () => {
             );
           },
           tabBarIcon: () => (
-            <Octicons name='graph' color={Colors.secondary.white} size={28}/>
+            <Octicons name='graph' color={Colors.secondary.white} size={26}/>
           ),
         }}
       />
@@ -189,7 +189,7 @@ const TabNavigator = () => {
             );
           },
           tabBarIcon: () => (
-            <Ionicons name='leaf-outline' color={Colors.secondary.white} size={28}/>
+            <Ionicons name='leaf-outline' color={Colors.secondary.white} size={26}/>
           ),
         }}
       />
@@ -203,7 +203,7 @@ const TabNavigator = () => {
             );
           },
           tabBarIcon: () => (
-            <AntDesign name='home' color={Colors.secondary.white} size={28}/>
+            <AntDesign name='home' color={Colors.secondary.white} size={26}/>
           ),
         }}
       />

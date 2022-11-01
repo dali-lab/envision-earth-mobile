@@ -1,5 +1,6 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import { ScrollView, SafeAreaView, View, Text } from 'react-native';
+import { Overlay } from 'react-native-elements';
 import { useIsConnected } from 'react-native-offline';
 import { Dropdown } from 'react-native-element-dropdown';
 import useAppSelector from '../../../hooks/useAppSelector';
@@ -48,29 +49,57 @@ const BCSPage = () => {
   };
 
   const [image, setImage] = useState<IPhotoInput>();
-  const [tag, setTag] = useState<string>('');
+  const [imageOverlay, setImageOverlay] = useState<boolean>(false);
+
+  const [tag, setTag] = useState<string>(''); // TODO: New implementation for tag
+
   const [notes, setNotes] = useState<string>('');
+  const [notesOverlay, setNotesOverlay] = useState<boolean>(false);
+
+  const [submitOverlay, setSubmitOverlay] = useState<boolean>(false);
 
   const handleCreateCowCensus = async () => {
     // TODO: which fields are necessary, and which are optional?
 
-    if (isWifi) {
-      await dispatch(createCowCensus({
-        herdId: selectedHerd?.id as string,
-        plotId: allPlots[selectedPlotId]?.id as string,
-        bcs: bcsArr,
-        notes,
-        tag,
-        photo: image,
-      }));
+    if (!selectedHerd) {
+      alert('Error: no selected herd');
+    } else if (!allPlots[selectedPlotId]?.id) {
+      alert('Error: no selected plot');
+    } else if (!bcsArr) {
+      alert('Error: no BCS arr');
+    } else if (bcsArr.length < 1) {
+      alert('Error: no elements in BCS arr');
     } else {
-      dispatch(locallyCreateCowCensus({
-        herdId: selectedHerd?.id as string,
-        bcs: bcsArr,
-        notes,
-        tag,
-        photo: image,
-      }));
+      if (isWifi) {
+        if (!selectedHerd) {
+          alert('Error: no selected herd');
+        } else if (!allPlots[selectedPlotId]?.id) {
+          alert('Error: no selected plot');
+        } else if (!bcsArr) {
+          alert('Error: no BCS arr');
+        } else if (bcsArr.length < 1) {
+          alert('Error: no elements in BCS arr');
+        } else {
+          await dispatch(createCowCensus({
+            herdId: selectedHerd?.id as string,
+            plotId: allPlots[selectedPlotId]?.id as string,
+            bcs: bcsArr,
+            notes,
+            tag,
+            photo: image,
+          })).then(() => {
+            setSubmitOverlay(true);
+          });
+        }
+      } else {
+        dispatch(locallyCreateCowCensus({
+          herdId: selectedHerd?.id as string,
+          bcs: bcsArr,
+          notes,
+          tag,
+          photo: image,
+        }));
+      }
     }
   };
 
@@ -110,7 +139,6 @@ const BCSPage = () => {
             }}
           />
         </View>
-
         {
           bcsArr.map((bcs, index) => (
             <View
@@ -126,27 +154,12 @@ const BCSPage = () => {
         }
         <AppButton
           onPress={() => handleAddBcs()}
-          title={'add more'}
+          title={'add new BCS entry'}
           backgroundColor={Colors.primary.mainOrange}
           textColor={Colors.secondary.white}
         />
-        
-        <UploadImage
-          image={image}
-          setImage={setImage as Dispatch<SetStateAction<IPhotoInput>>}
-        />
-        <AppTextInput
-          onChangeText={(text) => setTag(text)}
-          value={tag}
-          placeholder='Tag'
-        />
-        <AppTextInput
-          onChangeText={(text) => setNotes(text)}
-          value={notes}
-          placeholder='Notes'
-        />
         <AppButton
-          onPress={() => console.log()}
+          onPress={() => setImageOverlay(!notesOverlay)}
           title={'take photo'}
           backgroundColor={Colors.primary.lightGreen}
           textColor={Colors.primary.deepGreen}
@@ -154,7 +167,7 @@ const BCSPage = () => {
           height={44}
         />
         <AppButton
-          onPress={() => console.log()}
+          onPress={() => setNotesOverlay(!notesOverlay)}
           title={'add note'}
           backgroundColor={Colors.primary.lightOrange}
           textColor={Colors.primary.mainOrange}
@@ -170,6 +183,70 @@ const BCSPage = () => {
           height={51}
         />
       </ScrollView>
+      <Overlay
+        isVisible={imageOverlay}
+        onBackdropPress={() => setImageOverlay(!imageOverlay)}
+        overlayStyle={GlobalStyle.overlayModal}
+      >
+        <UploadImage
+          image={image}
+          setImage={setImage as Dispatch<SetStateAction<IPhotoInput>>}
+        />
+        <AppButton
+          onPress={() => setImageOverlay(!imageOverlay)}
+          title={'ok'}
+          backgroundColor={Colors.primary.deepGreen}
+          textColor={Colors.secondary.white}
+          width={215}
+          height={51}
+        />
+      </Overlay>
+      <Overlay
+        isVisible={notesOverlay} 
+        onBackdropPress={() => setNotesOverlay(!notesOverlay)}
+        overlayStyle={GlobalStyle.overlayModal}
+      >
+        <AppTextInput
+          onChangeText={(text) => setNotes(text)}
+          value={notes}
+          placeholder='Notes'
+          multiline={true}
+          width={250}
+        />
+        <AppButton
+          onPress={() => setNotesOverlay(!notesOverlay)}
+          title={'ok'}
+          backgroundColor={Colors.primary.deepGreen}
+          textColor={Colors.secondary.white}
+          width={215}
+          height={51}
+        />
+      </Overlay>
+      <Overlay 
+        isVisible={submitOverlay} 
+        onBackdropPress={() => setSubmitOverlay(!submitOverlay)}
+        overlayStyle={GlobalStyle.overlayModal}
+      >
+        <View>
+          <Text style={[TextStyles.title, { minWidth: 100, textAlign: 'center' }]}>Data recorded!</Text>
+          <AppButton
+            onPress={() => setSubmitOverlay(!submitOverlay)}
+            title={'enter more data'}
+            backgroundColor={Colors.primary.lightOrange}
+            textColor={Colors.primary.mainOrange}
+            width={215}
+            height={51}
+          />
+          <AppButton
+            onPress={() => setSubmitOverlay(!submitOverlay)}
+            title={'see my dashboard'}
+            backgroundColor={Colors.primary.lightOrange}
+            textColor={Colors.primary.mainOrange}
+            width={215}
+            height={51}
+          />
+        </View>
+      </Overlay>
     </SafeAreaView>
   );
 };

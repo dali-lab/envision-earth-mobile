@@ -1,12 +1,16 @@
 // Imported from old repo - major changes still needed
 
-import React, { Dispatch, SetStateAction } from 'react';
-import { Button, Text, Image, View } from 'react-native';
+import React, { Dispatch, SetStateAction, useCallback } from 'react';
+import { Text, Image, View } from 'react-native';
+import AppButton from '../../components/AppButton';
 import {
-  MediaTypeOptions,
+  useCameraPermissions,
+  launchCameraAsync,
   ImagePickerResult,
+  MediaTypeOptions,
   launchImageLibraryAsync,
 } from 'expo-image-picker';
+import Colors from '../../utils/styles/Colors';
 
 export interface IPhotoInput {
   uri: string,
@@ -20,7 +24,9 @@ interface UploadImageProps {
 }
 
 const UploadImage = ({ image, setImage }: UploadImageProps) => {
-  
+
+  const [status, requestPermission] = useCameraPermissions();
+
   const pickImage = async () => {
     let photo: ImagePickerResult;
     try {
@@ -32,12 +38,7 @@ const UploadImage = ({ image, setImage }: UploadImageProps) => {
         base64: true,
       });
     } catch (e) {
-      alert(
-        'Unable to open camera. Ensure that you\'ve given the app permission.',
-      );
-      console.warn(
-        'Unable to open camera. This may be because you\'re using the simulator.',
-      );
+      alert(e);
       return;
     }
 
@@ -52,46 +53,51 @@ const UploadImage = ({ image, setImage }: UploadImageProps) => {
     }
   };
 
+  const takeImage = useCallback(async () => {
+    let photo: ImagePickerResult;
+    try {
+      if (!status) await requestPermission();
+      photo = await launchCameraAsync({
+        base64: true,
+      });
+    } catch (e) {
+      alert(e);
+      return;
+    }
+    if (photo?.cancelled === true) return;
+    if (photo) {
+      const parsedPhoto = {
+        uri: photo.uri as string,
+        fileName: photo.fileName as string,
+        buffer: photo.base64 as string,
+      };
+      setImage(parsedPhoto);
+    }
+  }, [requestPermission, status]);
+
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text> 
-        <Button title='Pick an image from camera roll' onPress={pickImage} />
+      <Text>
+        <AppButton
+          onPress={pickImage}
+          title={'pick from library'}
+          backgroundColor={Colors.primary.lightGreen}
+          textColor={Colors.primary.deepGreen}
+          width={215}
+          height={44}
+        />
+        <AppButton
+          onPress={takeImage}
+          title={'pick from camera'}
+          backgroundColor={Colors.primary.lightOrange}
+          textColor={Colors.primary.mainOrange}
+          width={215}
+          height={44}
+        />
         {(image) && <Image source={{ uri: image.uri }} style={{ width: 200, height: 200 }} />}
       </Text>
     </View>
   );
 };
-
-/*
-const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingLeft: 8,
-  },
-  photoUploadContainer: {
-    borderRightWidth: 2,
-    borderRightColor: "#666666",
-    paddingHorizontal: 24,
-  },
-  addedPhotosContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    flex: 1,
-  },
-  photoAdder: {
-    width: 120,
-    height: 120,
-    borderRadius: 10,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    marginVertical: 10,
-    borderColor: "#666666",
-    borderWidth: 2,
-    padding: 24,
-  },
-});
-*/
 
 export default UploadImage;

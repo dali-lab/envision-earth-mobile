@@ -77,6 +77,14 @@ const GlobalStyle = StyleSheet.create({
   slider: {
     width: 329,
   },
+
+  overlayModal: {
+    minHeight: 300,
+    width: 300,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 export default GlobalStyle;

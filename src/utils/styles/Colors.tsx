@@ -40,4 +40,5 @@ export default {
     mutedRed: '#FBF1F0',
   },
   highlight: '#FFD700', // TODO: Delete
+  blurViewBackground: '#FFFFFF',
 };

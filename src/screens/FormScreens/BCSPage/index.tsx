@@ -62,23 +62,23 @@ const BCSPage = () => {
     // TODO: which fields are necessary, and which are optional?
 
     if (!selectedHerd) {
-      console.error('Error: no selected herd');
+      alert('Error: no selected herd');
     } else if (!allPlots[selectedPlotId]?.id) {
-      console.error('Error: no selected plot');
+      alert('Error: no selected plot');
     } else if (!bcsArr) {
-      console.error('Error: no BCS arr');
+      alert('Error: no BCS arr');
     } else if (bcsArr.length < 1) {
-      console.error('Error: no elements in BCS arr');
+      alert('Error: no elements in BCS arr');
     } else {
       if (isWifi) {
         if (!selectedHerd) {
-          console.error('Error: no selected herd');
+          alert('Error: no selected herd');
         } else if (!allPlots[selectedPlotId]?.id) {
-          console.error('Error: no selected plot');
+          alert('Error: no selected plot');
         } else if (!bcsArr) {
-          console.error('Error: no BCS arr');
+          alert('Error: no BCS arr');
         } else if (bcsArr.length < 1) {
-          console.error('Error: no elements in BCS arr');
+          alert('Error: no elements in BCS arr');
         } else {
           await dispatch(createCowCensus({
             herdId: selectedHerd?.id as string,

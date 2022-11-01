@@ -10,6 +10,7 @@ interface AppButtonProps {
   secureTextEntry?: boolean
   width?: number
   height?: number
+  multiline?: boolean
 }
 
 const AppTextInput = ({ 
@@ -19,6 +20,7 @@ const AppTextInput = ({
   secureTextEntry, 
   width, 
   height,
+  multiline,
 }: AppButtonProps) => (
   <TextInput
     onChangeText={onChangeText}
@@ -30,6 +32,7 @@ const AppTextInput = ({
       { width, height },
     ]}
     secureTextEntry={(secureTextEntry === null || secureTextEntry === undefined) ? false : secureTextEntry}
+    multiline={multiline}
   />
 );
 

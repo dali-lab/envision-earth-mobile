@@ -1,4 +1,4 @@
-// TODO: Adjust to new style guide
+// DEFUNCT
 
 import React, { Dispatch, SetStateAction } from 'react';
 import { 

@@ -1,5 +1,5 @@
 // With Expo Go, SERVER_URL needs to be exact IPv4 Address
-export const SERVER_URL = 'http://192.168.1.66:4000/';
+export const SERVER_URL = 'http://10.135.153.90:4000/';
 
 export const ROUTES = {
   AUTHLAUNCH: 'Welcome',

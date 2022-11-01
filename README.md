@@ -28,13 +28,12 @@ This repository is an optional frontend starter for new DALI React projects. Ins
 
 ## Setup
 
-1. clone repo and `yarn install`
-   - As of this writing there are issues with Expo and npm, so use yarn here
+1. clone repo and `npm install --legacy-peer-deps`
 2. Change `SERVER_URL` endpoint to exact IPv4 address + port
    - You can view your IPv4 address by running `ipconfig` in command terminal
    - If using the [crud-template-backend-postgres](https://github.com/dali-lab/crud-template-backend-postgres), port is `9090`
 3. App should be ready for use now
-   - `yarn start` to run with hot reloading
+   - `npm start` to run with hot reloading
       - If you are getting "This is taking much longer than it should..." error, try doing `expo start --tunnel` instead. This error happens sometimes when trying to run on Dartmouth eduroam.
 
 #### Redux Debugging
@@ -45,7 +44,7 @@ This repository is an optional frontend starter for new DALI React projects. Ins
 
 #### Linting
 
-ESLint is set up in this project. To keep code clean, always remember to run `yarn run lint` and fix any lint problems before merging into master.
+ESLint is set up in this project. To keep code clean, always remember to run `npm run lint` and fix any lint problems before merging into master.
 
 ## Authors & Credits
 - Eric Lu '25

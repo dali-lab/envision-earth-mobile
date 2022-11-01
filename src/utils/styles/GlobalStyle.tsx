@@ -9,6 +9,11 @@ const GlobalStyle = StyleSheet.create({
     justifyContent: 'center',
   },
 
+  contentContainerScroll: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   innerContainer: {
     backgroundColor: '#ffffff',
     alignItems: 'center',

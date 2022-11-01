@@ -1,12 +1,14 @@
-// Imported from old repo - major changes still needed
+// TODO: Adjust to new style guide
 
 import React, { Dispatch, SetStateAction } from 'react';
 import { 
   NativeSyntheticEvent,
   NativeScrollEvent, 
-  StyleSheet, 
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
 } from 'react-native';
-import { ScrollView, View, Text } from 'react-native';
 
 interface ScrollPickProps {
   elements: Array<number | string>,

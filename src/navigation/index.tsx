@@ -15,6 +15,7 @@ import useAppDispatch from './../hooks/useAppDispatch';
 import { checkConnection } from '../redux/slices/connectionSlice';
 import { initCredentials } from '../redux/slices/authSlice';
 import { getTeamByUserId } from '../redux/slices/teamsSlice';
+import { UserScopes } from '../redux/slices/usersSlice';
 import {
   // ErrorPage, 
   // ForbiddenPage, 
@@ -41,8 +42,6 @@ import { LaunchScreen } from '../screens/AuthScreens';
 import Colors from '../utils/styles/Colors';
 import { AntDesign, Octicons, Ionicons } from '@expo/vector-icons';
 
-const testing = true;
-
 const AuthStack = createStackNavigator();
 const SignupStack = createStackNavigator();
 const LoginStack = createStackNavigator();
@@ -62,7 +61,6 @@ const AuthStackScreen = () => {
       <AuthStack.Screen name={ROUTES.AUTHLAUNCH} component={LaunchScreen} />
       <AuthStack.Screen name={ROUTES.SIGNIN} component={SignInPage} />
       <AuthStack.Screen name={ROUTES.SIGNUP} component={SignUpPage} />
-      <AuthStack.Screen name={ROUTES.VERIFY_USER} component={VerifyUserPage} />
     </AuthStack.Navigator>
   );
 };
@@ -214,7 +212,7 @@ const TabNavigator = () => {
 const RootNavigation = () => {
   // const { isConnected } = useAppSelector((state) => state.connection);
   const { authenticated } = useAppSelector((state) => state.auth);
-  const { id } = useAppSelector((state) => state.auth); // userId
+  const { id, role } = useAppSelector((state) => state.auth); // userId
   const { selectedTeam } = useAppSelector((state) => state.teams);
   const dispatch = useAppDispatch();
 
@@ -230,20 +228,16 @@ const RootNavigation = () => {
     }
   }, [authenticated]);
 
-  // TODO: Delete
-  /*
-  if (testing) {
-    return (
-      <ForageQuanPage />
-    );
-  }
-  */
-  // if (!isConnected) return <ErrorPage />
-
   if (!authenticated) {
     return (
       <NavigationContainer>
         <AuthStackScreen />
+      </NavigationContainer>
+    );
+  } else if (authenticated && role === UserScopes.Unverified) {
+    return (
+      <NavigationContainer>
+        <VerifyUserPage />
       </NavigationContainer>
     );
   } else if (authenticated && !selectedTeam) {

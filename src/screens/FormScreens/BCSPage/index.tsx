@@ -59,8 +59,6 @@ const BCSPage = () => {
   const [submitOverlay, setSubmitOverlay] = useState<boolean>(false);
 
   const handleCreateCowCensus = async () => {
-    // TODO: which fields are necessary, and which are optional?
-
     if (!selectedHerd) {
       alert('Error: no selected herd');
     } else if (!allPlots[selectedPlotId]?.id) {
@@ -80,12 +78,21 @@ const BCSPage = () => {
         } else if (bcsArr.length < 1) {
           alert('Error: no elements in BCS arr');
         } else {
-          await dispatch(createCowCensus({
+          console.log({
             herdId: selectedHerd?.id as string,
             plotId: allPlots[selectedPlotId]?.id as string,
             bcs: bcsArr,
             notes,
             tag,
+            photo: image,
+          });
+          
+          await dispatch(createCowCensus({
+            herdId: selectedHerd?.id as string,
+            plotId: allPlots[selectedPlotId]?.id as string,
+            bcs: bcsArr,
+            notes: (notes + ' '),
+            tag: (tag + ' '),
             photo: image,
           })).then(() => {
             setSubmitOverlay(true);

@@ -4,40 +4,53 @@ import React, { useState } from 'react';
 import { SafeAreaView, Text } from 'react-native';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
-import { resendCode } from '../../../redux/slices/authSlice';
+import { createMembership } from '../../../redux/slices/membershipSlice';
+import { getTeamByUserId } from '../../../redux/slices/teamsSlice';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import TextStyles from '../../../utils/styles/TextStyles';
+import Colors from '../../../utils/styles/Colors';
 
 const JoinTeamPage = () => {
   const dispatch = useAppDispatch();
-  const { id, email } = useAppSelector((state) => state.auth);
-  const [code, setCode] = useState<string>('');
+  const { id } = useAppSelector((state) => state.auth);
+  const [teamId, setTeamId] = useState<string>('');
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Send only if all fields filled in
-    if (!code) alert('Please enter a code!');
+    if (!teamId) alert('Please enter a ranch id!');
     else {
-      // dispatch(verifyUser({ id, email, code }));
+      await dispatch(createMembership({ teamId, userId: id })).then(() => {
+        dispatch(getTeamByUserId({ userId: id }));
+      });
     }
   };
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
-      <Text style={TextStyles.title}>Input Ranch ID</Text>
+      <Text 
+        style={[
+          TextStyles.title,
+          { color: Colors.secondary.deepTeal, paddingBottom: 15 },
+        ]}
+      >
+        Join Ranch
+      </Text>
       <AppTextInput
-        onChangeText={(text) => setCode(text)}
-        value={code}
-        placeholder='Type your code'
+        onChangeText={(text) => setTeamId(text)}
+        value={teamId}
+        placeholder='Type Ranch ID'
+        width={331}
+        height={59}
       />
       <AppButton
         onPress={handleSubmit}
         title={'Submit'}
-      />
-      <AppButton
-        onPress={() => dispatch(resendCode({ id, email }))}
-        title={'Resend Code'}
+        backgroundColor={Colors.primary.mainOrange}
+        textColor={Colors.secondary.white}
+        width={331}
+        height={59}
       />
     </SafeAreaView>
   );

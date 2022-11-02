@@ -14,6 +14,7 @@ import herdReducer from './slices/herdsSlice';
 import plotReducer from './slices/plotsSlice';
 import cowCensusReducer from './slices/cowCensusSlice';
 import dungCensusReducer from './slices/dungCensusSlice';
+import membershipReducer from './slices/membershipSlice';
 
 const reducers = { 
   connection: connectionReducer,
@@ -27,6 +28,7 @@ const reducers = {
   cowCensuses: cowCensusReducer,
   dungCensuses: dungCensusReducer,
   forageQuality: forageQualityCensusReducer,
+  membersips: membershipReducer,
 };
 
 // Combine reducers from slices here, so that it can be passed to Redux Persist

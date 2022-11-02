@@ -1,100 +1,77 @@
-import React, { useRef, useState } from 'react';
-import { StyleSheet, SafeAreaView, View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { AuthStackParamList, AuthStackRoutes } from '../../../navigation/routes';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { signUp } from '../../../redux/slices/authSlice';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import TextStyles from '../../../utils/styles/TextStyles';
-import { EmailPasswordData, FirstLastNameData, NotifPrefData, RanchInfo1Data, RanchInfo2Data } from './forms';
-import PagerView from 'react-native-pager-view';
-import { EmailPasswordPage, FirstLastNamePage, RanchInfoPage, RanchInfo2Page, NotifPrefPage } from './pages';
+import Colors from '../../../utils/styles/Colors';
 
 const SignUpPage = () => {
   const dispatch = useAppDispatch();
-  const pagesRef = useRef();
 
-  const [emailPass, setEmailPass] = useState<EmailPasswordData>();
-  const [firstLastName, setFirstLastName] = useState<FirstLastNameData>();
-  const [ranchInfo1, setRanchInfo1] = useState<RanchInfo1Data>();
-  const [ranchInfo2, setRanchInfo2] = useState<RanchInfo2Data>();
-  const [notifPrefs, setNotifPrefs] = useState<NotifPrefData>();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
 
-  /*
-  const handleSubmit = () => {
-    const data = {
-      ...emailPass,
-      ...firstLastName,
-      ...ranchInfo1,
-      ...ranchInfo2,
-      ...notifPrefs,
-    };
+  const navigation =
+    useNavigation<NativeStackNavigationProp<AuthStackParamList, AuthStackRoutes.SIGNUP>>();
+
+  const handleSubmit = async () => {
+    // Send only if all fields filled in
+    if (!email) alert('Please enter an email address!');
+    else if (!password) alert('Please enter a password!');
+    else if (!name) alert('Please enter a name!');
+    else {
+      await dispatch(signUp({ email, password, name })).then(() => {
+        navigation.navigate(AuthStackRoutes.AUTHLAUNCH, {});
+      });
+    }
   };
-
-  const handleSubmitEmailPass = (data: EmailPasswordPage) => {
-    setEmailPass(data);
-  };
-
-  const handleSubmitFirstLastName = (data: FirstLastNamePage) => {
-    setFirstLastName(data);
-  };
-
-  const handleSubmitRanchInfo1 = (data: RanchInfo1) => {
-    setRanchInfo1(data);
-  };
-
-  const handleSubmitRanchInfo2 = (data: RanchInfo2) => {
-    setRanchInfo2(data);
-  };
-
-  const handleSubmitNotifPrefs = (data: NotifPrefs) => {
-    setNotifPrefs(data);
-  };
-  */
-  const styles = StyleSheet.create({
-    pagerView: {
-      flex: 1,
-    },
-  });
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
-
-      <Text>Beep</Text>
-      {/* Sign up Pages */}
-      <PagerView
-        initialPage={0}
-        style={styles.pagerView}
-        orientation='horizontal'
-      // ref={pagesRef}
+      <Text
+        style={[
+          TextStyles.title,
+          { color: Colors.secondary.deepTeal },
+        ]}
       >
-        <View key={1}>
-          <Text>1</Text>
-          <EmailPasswordPage />
-        </View>
-        <View key={2}>
-          <Text>2</Text>
-          <FirstLastNamePage />
-        </View>
-        <View key={3}>
-          <Text>3</Text>
-          <RanchInfoPage />
-        </View>
-        <View key={4}>
-          <Text>4</Text>
-          <RanchInfo2Page />
-        </View>
-        <View key={5}>
-          <Text>5</Text>
-          <NotifPrefPage />
-        </View>
-      </PagerView>
-
+        Sign Up
+      </Text>
+      <AppTextInput
+        onChangeText={(text) => setEmail(text)}
+        value={email}
+        placeholder='email'
+        width={331}
+        height={59}
+      />
+      <AppTextInput
+        onChangeText={(text) => setPassword(text)}
+        value={password}
+        placeholder='password'
+        secureTextEntry={true}
+        width={331}
+        height={59}
+      />
+      <AppTextInput
+        onChangeText={(text) => setName(text)}
+        value={name}
+        placeholder='name'
+        width={331}
+        height={59}
+      />
       <AppButton
-        onPress={() => {
-          // setPage()
-        }}
-        title={'Next'}
+        onPress={handleSubmit}
+        title={'sign up'}
+        backgroundColor={Colors.primary.mainOrange}
+        textColor={Colors.secondary.white}
+        width={331}
+        height={59}
       />
     </SafeAreaView>
   );

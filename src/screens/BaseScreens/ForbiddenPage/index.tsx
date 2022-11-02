@@ -9,7 +9,7 @@ const ForbiddenPage = () => {
       <Text style={TextStyles.title}>
         403 - Forbidden
       </Text>
-      <Text style={TextStyles.subTitle}>
+      <Text style={TextStyles.subHeading}>
         You do not have permissions to view this page.
       </Text>
     </SafeAreaView>

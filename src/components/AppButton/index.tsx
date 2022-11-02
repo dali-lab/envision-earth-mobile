@@ -8,11 +8,34 @@ interface AppButtonProps {
   onPress: (event: GestureResponderEvent) => void
   title: string
   isArrow?: boolean
+  backgroundColor?: string
+  textColor?: string
+  width?: number
+  height?: number
 }
 
-const AppButton = ({ onPress, title, isArrow }: AppButtonProps) => (
-  <TouchableOpacity onPress={onPress} style={styles.appButtonContainer}>
-    <Text style={styles.appButtonText}>{title}</Text>
+const AppButton = ({ 
+  onPress,
+  title, 
+  isArrow,
+  backgroundColor,
+  textColor,
+  width,
+  height,
+}: AppButtonProps) => (
+  <TouchableOpacity 
+    onPress={onPress} 
+    style={[
+      styles.appButtonContainer, 
+      { backgroundColor, width, height },
+    ]}
+  >
+    <Text style={[
+      styles.appButtonText, 
+      { color: textColor },
+    ]}>
+      {title}
+    </Text>
     {
       isArrow && <AntDesign name='caretright' size={25} color='white' />
     }
@@ -23,7 +46,7 @@ const styles = StyleSheet.create({
   appButtonContainer: {
     elevation: 8,
     backgroundColor: Colors.primary.normal,
-    borderRadius: 24,
+    borderRadius: 12,
     paddingVertical: 10,
     paddingHorizontal: 12,
     marginTop: 30,
@@ -36,11 +59,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   appButtonText: {
-    ...TextStyles.subTitle,
+    ...TextStyles.subHeading,
     color: 'white',
     alignSelf: 'center',
-    textTransform: 'uppercase',
   },
 });
 
 export default AppButton;
+
+// TODO: Fix arrow

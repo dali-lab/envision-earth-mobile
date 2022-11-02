@@ -70,7 +70,7 @@ const ResourcesPage = () => {
                     title={'Get All Resources'}
                   />
                   {
-                    Object.values(all).map((r: IResource) => <Text style={TextStyles.regular}>{r.id}, {r.title}, {r.description}, {r.value}</Text>)
+                    Object.values(all).map((r: IResource) => <Text style={TextStyles.body}>{r.id}, {r.title}, {r.description}, {r.value}</Text>)
                   }
                 </View>
               </Accordion>

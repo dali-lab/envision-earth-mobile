@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -14,6 +15,7 @@ import useAppDispatch from './../hooks/useAppDispatch';
 import { checkConnection } from '../redux/slices/connectionSlice';
 import { initCredentials } from '../redux/slices/authSlice';
 import { getTeamByUserId } from '../redux/slices/teamsSlice';
+import { UserScopes } from '../redux/slices/usersSlice';
 import {
   // ErrorPage, 
   // ForbiddenPage, 
@@ -37,8 +39,8 @@ import {
 } from './../screens';
 import { ROUTES } from '../utils/constants';
 import { LaunchScreen } from '../screens/AuthScreens';
-
-const testing = true;
+import Colors from '../utils/styles/Colors';
+import { AntDesign, Octicons, Ionicons } from '@expo/vector-icons';
 
 const AuthStack = createStackNavigator();
 const SignupStack = createStackNavigator();
@@ -53,18 +55,21 @@ const RootStack = createStackNavigator();
 
 const AuthStackScreen = () => {
   return (
-    <AuthStack.Navigator>
+    <AuthStack.Navigator
+      screenOptions={{ header: () => null }}
+    >
       <AuthStack.Screen name={ROUTES.AUTHLAUNCH} component={LaunchScreen} />
       <AuthStack.Screen name={ROUTES.SIGNIN} component={SignInPage} />
       <AuthStack.Screen name={ROUTES.SIGNUP} component={SignUpPage} />
-      <AuthStack.Screen name={ROUTES.VERIFY_USER} component={VerifyUserPage} />
     </AuthStack.Navigator>
   );
 };
 
 const NoTeamStackScreen = () => {
   return (
-    <AuthStack.Navigator>
+    <AuthStack.Navigator
+      screenOptions={{ header: () => null }}
+    >
       <AuthStack.Screen name={ROUTES.JOIN_TEAM} component={JoinTeamPage} />
     </AuthStack.Navigator>
   );
@@ -72,7 +77,9 @@ const NoTeamStackScreen = () => {
 
 const DashboardStackScreen = () => {
   return (
-    <DashboardStack.Navigator>
+    <DashboardStack.Navigator
+      screenOptions={{ header: () => null }}
+    >
       <DashboardStack.Screen name={ROUTES.HOME} component={FrontPage} />
       <DashboardStack.Screen name={ROUTES.USERS} component={UsersPage} />
       <DashboardStack.Screen name={ROUTES.RESOURCES} component={ResourcesPage} />
@@ -82,7 +89,9 @@ const DashboardStackScreen = () => {
 
 const FormStackScreen = () => {
   return (
-    <FormStack.Navigator>
+    <FormStack.Navigator
+      screenOptions={{ header: () => null }}
+    >
       <FormStack.Screen name={ROUTES.FORM_ROOT_PAGE} component={FormRootPage} />
       <FormStack.Screen name={ROUTES.BCS_PAGE} component={BCSPage} />
       <FormStack.Screen name={ROUTES.DUNG_PAGE} component={DungPage} />
@@ -96,7 +105,9 @@ const FormStackScreen = () => {
 
 const AnalyticsStackScreen = () => {
   return (
-    <AnalyticsStack.Navigator>
+    <AnalyticsStack.Navigator
+      screenOptions={{ header: () => null }}
+    >
       <AnalyticsStack.Screen name='Calendar Page' component={CalendarPage} />
     </AnalyticsStack.Navigator>
   );
@@ -110,6 +121,7 @@ const SettingsDrawerNavigator = () => {
       screenOptions={{
         drawerPosition: 'right',
         drawerType: 'back',
+        header: () => null,
       }}
       drawerContent={props => {
         return (
@@ -129,12 +141,70 @@ const SettingsDrawerNavigator = () => {
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      // screenOptions={{ header: () => null }}
+      screenOptions={{ 
+        header: () => null,
+        tabBarStyle: {
+          backgroundColor: Colors.secondary.darkGreen,
+        },
+      }}
+      initialRouteName='home'
     >
-      <Tab.Screen name='Home' component={DashboardStackScreen} />
-      <Tab.Screen name='Manage Forms' component={FormStackScreen} />
-      <Tab.Screen name='Data Analytics' component={AnalyticsStackScreen} />
-      <Tab.Screen name='Settings' component={SettingsDrawerNavigator} />
+      <Tab.Screen 
+        name='profile' 
+        component={SettingsDrawerNavigator}
+        options={{
+          tabBarLabel: () => {
+            return (
+              <Text style={{ color: Colors.secondary.white }}>profile</Text>
+            );
+          },
+          tabBarIcon: () => (
+            <Ionicons name='person-outline' color={Colors.secondary.white} size={26}/>
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name='data' 
+        component={AnalyticsStackScreen}
+        options={{
+          tabBarLabel: () => {
+            return (
+              <Text style={{ color: Colors.secondary.white }}>data</Text>
+            );
+          },
+          tabBarIcon: () => (
+            <Octicons name='graph' color={Colors.secondary.white} size={26}/>
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name='forms' 
+        component={FormStackScreen}
+        options={{
+          tabBarLabel: () => {
+            return (
+              <Text style={{ color: Colors.secondary.white }}>forms</Text>
+            );
+          },
+          tabBarIcon: () => (
+            <Ionicons name='leaf-outline' color={Colors.secondary.white} size={26}/>
+          ),
+        }}
+      />
+      <Tab.Screen 
+        name='home' 
+        component={DashboardStackScreen} 
+        options={{
+          tabBarLabel: () => {
+            return (
+              <Text style={{ color: Colors.secondary.white }}>home</Text>
+            );
+          },
+          tabBarIcon: () => (
+            <AntDesign name='home' color={Colors.secondary.white} size={26}/>
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
@@ -142,7 +212,7 @@ const TabNavigator = () => {
 const RootNavigation = () => {
   // const { isConnected } = useAppSelector((state) => state.connection);
   const { authenticated } = useAppSelector((state) => state.auth);
-  const { id } = useAppSelector((state) => state.auth); // userId
+  const { id, role } = useAppSelector((state) => state.auth); // userId
   const { selectedTeam } = useAppSelector((state) => state.teams);
   const dispatch = useAppDispatch();
 
@@ -158,20 +228,16 @@ const RootNavigation = () => {
     }
   }, [authenticated]);
 
-  // TODO: Delete
-  /*
-  if (testing) {
-    return (
-      <ForageQuanPage />
-    );
-  }
-  */
-  // if (!isConnected) return <ErrorPage />
-
   if (!authenticated) {
     return (
       <NavigationContainer>
         <AuthStackScreen />
+      </NavigationContainer>
+    );
+  } else if (authenticated && role === UserScopes.Unverified) {
+    return (
+      <NavigationContainer>
+        <VerifyUserPage />
       </NavigationContainer>
     );
   } else if (authenticated && !selectedTeam) {
@@ -186,7 +252,10 @@ const RootNavigation = () => {
         <RootStack.Navigator
           screenOptions={{ header: () => null }}
         >
-          <RootStack.Screen name='MainStack' component={TabNavigator} />
+          <RootStack.Screen 
+            name='MainStack' 
+            component={TabNavigator} 
+          />
         </RootStack.Navigator>
       </NavigationContainer>
     );
@@ -194,3 +263,5 @@ const RootNavigation = () => {
 };
 
 export default RootNavigation;
+
+// TODO: ative TextInput(user@gmail) is 9 events ahead of JS - try to make your JS faster.

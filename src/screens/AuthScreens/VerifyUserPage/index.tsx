@@ -7,6 +7,7 @@ import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import TextStyles from '../../../utils/styles/TextStyles';
+import Colors from '../../../utils/styles/Colors';
 
 const VerifyUserPage = () => {
   const dispatch = useAppDispatch();
@@ -23,19 +24,36 @@ const VerifyUserPage = () => {
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
-      <Text style={TextStyles.title}>Verify User</Text>
+      <Text 
+        style={[
+          TextStyles.title,
+          { color: Colors.secondary.deepTeal, paddingBottom: 15 },
+        ]}
+      >
+        Verify User
+      </Text>
       <AppTextInput
         onChangeText={(text) => setCode(text)}
         value={code}
         placeholder='Type your code'
+        width={331}
+        height={59}
       />
       <AppButton
         onPress={handleSubmit}
         title={'Submit'}
+        backgroundColor={Colors.primary.mainOrange}
+        textColor={Colors.secondary.white}
+        width={331}
+        height={59}
       />
       <AppButton
         onPress={() => dispatch(resendCode({ id, email }))}
         title={'Resend Code'}
+        backgroundColor={Colors.primary.mainOrange}
+        textColor={Colors.secondary.white}
+        width={331}
+        height={59}
       />
     </SafeAreaView>
   );

@@ -5,10 +5,25 @@ import axios from 'axios';
 export interface IDungCensus {
   id: string,
   herdId: string,
+  plotId: string;
   photoId: string,
-  bcs: number,
+  ratings: number,
   notes: string,
-  tag: string,
+}
+
+interface IPhotoInput {
+  uri: string,
+  fileName: string,
+  buffer: string, // base64
+}
+
+export interface ICreateDungCensusRequest {
+  id?: string;
+  plotId: string;
+  herdId: string;
+  ratings: number[],
+  notes: string;
+  photo?: IPhotoInput;
 }
 
 export interface DungCensusState {
@@ -43,20 +58,6 @@ export const getDungCensusesByHerdId = createAsyncThunk(
       });
   },
 );
-
-interface IPhotoInput {
-  uri: string,
-  fileName: string,
-  buffer: string, // base64
-}
-
-interface ICreateDungCensusRequest {
-  herdId: string;
-  bcs: number,
-  notes: string;
-  tag: string;
-  photo?: IPhotoInput;
-}
 
 export const createDungCensus = createAsyncThunk(
   'dungCensuses/createDungCensus',
@@ -138,31 +139,26 @@ export const dungCensusSlice = createSlice({
       const dungCensuses: IDungCensus[] = action.payload as IDungCensus[];
       dungCensuses.forEach((dungCensus: IDungCensus) => {
         state.all[dungCensus.id] = dungCensus;
-        state.indices.byTag[dungCensus.tag] = dungCensus;
       });
     });
     builder.addCase(createDungCensus.fulfilled, (state, action) => {
       const dungCensus: IDungCensus = action.payload as IDungCensus;
       state.all[dungCensus.id] = dungCensus;
-      state.indices.byTag[dungCensus.tag] = dungCensus;
       alert('Created dungCensus as: ' + JSON.stringify(action.payload));
     });
     builder.addCase(getDungCensus.fulfilled, (state, action) => {
       const dungCensus: IDungCensus = action.payload as IDungCensus;
       state.all[dungCensus.id] = dungCensus;
-      state.indices.byTag[dungCensus.tag] = dungCensus;
       alert('Retrieved dungCensus as: ' + JSON.stringify(action.payload));
     });
     builder.addCase(updateDungCensus.fulfilled, (state, action) => {
       const dungCensus: IDungCensus = action.payload as IDungCensus;
       state.all[dungCensus.id] = dungCensus;
-      state.indices.byTag[dungCensus.tag] = dungCensus;
       alert('Updated dungCensus to: ' + JSON.stringify(action.payload));
     });
     builder.addCase(deleteDungCensus.fulfilled, (state, action) => {
       const dungCensus: IDungCensus = action.payload as IDungCensus;
       delete state.all[dungCensus.id];
-      delete state.indices.byTag[dungCensus.tag];
       alert('Deleted dungCensus with id ' + dungCensus.id);
     });
   },

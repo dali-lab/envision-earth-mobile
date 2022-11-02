@@ -72,8 +72,8 @@ const UsersPage = () => {
                 <View style={GlobalStyle.innerContainer}>
                   {
                     (selectedUser != null)
-                      ? <Text style={TextStyles.regular}>Current selected user: {selectedUser.id}, {selectedUser.email}, {selectedUser.name}, {selectedUser.role}</Text>
-                      : <Text style={TextStyles.regular}>No selected user currently.</Text>
+                      ? <Text style={TextStyles.body}>Current selected user: {selectedUser.id}, {selectedUser.email}, {selectedUser.name}, {selectedUser.role}</Text>
+                      : <Text style={TextStyles.body}>No selected user currently.</Text>
                   }
 
                   <AppTextInput

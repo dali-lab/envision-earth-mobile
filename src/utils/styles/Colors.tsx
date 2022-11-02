@@ -1,52 +1,44 @@
-// const colorsOld = {
-//   primaryOld: {
-//     light: '#05C3DD',
-//     normal: '#26AADE',
-//     dark: '#0077A8',
-//   },
-//   secondaryOld: {
-//     light: '#E0F2E1',
-//     normal: '#A7DBAA',
-//     dark: '#69CD6F',
-//   },
-//   neutral: {
-//     1: '#E2E7EC',
-//     2: '#D6DDE4',
-//     3: '#CDD4DA',
-//     4: '#B1BECC',
-//     5: '#949FAF',
-//     6: '#707A89',
-//     7: '#424B59',
-//     8: '#2A2F38',
-//   },
-//   errorOld: '#FF4D3D',
-//   highlight: '#FFD700',
-// };
-
 export default {
   primary: {
-    lightestGreen: '#F1F5E8',
+    light: '#05C3DD', // TODO: Delete
+    normal: '#26AADE', // TODO: Delete
+    dark: '#0077A8', // TODO: Delete
     lightGreen: '#E0E6CE',
     vibrantGreen: '#82A920',
-    deepGreen: '#525548',
-    lightOrange: '#FAECD5',
     mainOrange: '#EDAC4B',
+    lightOrange: '#FAECD5',
+    lightestGreen: '#F1F5E8',
+    murkGreen: '#82A920',
+    deepGreen: '#525548',
   },
   secondary: {
+    light: '#E0F2E1', // TODO: Delete
+    normal: '#A7DBAA', // TODO: Delete
+    dark: '#69CD6F', // TODO: Delete
     white: '#FFFFFF',
     mediumGreen: '#AAB888',
-    brown: '#39190E',
-    teal: '#3F7788',
-    yellow: '#F2C376',
+    deepBrown: '#39190E',
+    deepTeal: '#3F7788',
+    neutralYellow: '#F2C376',
     lightTeal: '#B0D1CD',
+    mainBlue: '#00C2FF',
+    darkGreen: '#1B7E73',
   },
-  accent: {
-    blue: '#00C2FF',
-    green: '#1B7E73',
+  neutral: { // TODO: Delete
+    1: '#E2E7EC',
+    2: '#D6DDE4',
+    3: '#CDD4DA',
+    4: '#B1BECC',
+    5: '#949FAF',
+    6: '#707A89',
+    7: '#424B59',
+    8: '#2A2F38',
   },
   error: {
-    bright: '#953B24',
-    dim: '#E18D85',
-    muted: '#FBF1F0',
+    brightRed: '#953B24',
+    candyRed: '#E18D85',
+    mutedRed: '#FBF1F0',
   },
+  highlight: '#FFD700', // TODO: Delete
+  blurViewBackground: '#FFFFFF',
 };

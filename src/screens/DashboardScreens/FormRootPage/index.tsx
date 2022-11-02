@@ -6,39 +6,46 @@ import { ROUTES } from '../../../utils/constants';
 import AppButton from '../../../components/AppButton';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import TextStyles from '../../../utils/styles/TextStyles';
+import Colors from '../../../utils/styles/Colors';
 
 const FormRootPage = () => {
   const navigation = useNavigation<NavType>();
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
-      <ScrollView>
+      <ScrollView
+        contentContainerStyle={GlobalStyle.contentContainerScroll}
+      >
+        <Text style={TextStyles.subHeading}>Monitor Animals</Text>
         <View>
-          <Text style={TextStyles.subTitle}>Monitor Animals</Text>
-          <View>
-            <AppButton
-              onPress={() => navigation.navigate(ROUTES.BCS_PAGE)}
-              title='Body Condition Score'
-            />
-            <AppButton
-              onPress={() => navigation.navigate(ROUTES.DUNG_PAGE)}
-              title='Dung Condition'
-            />
-          </View>
+          <AppButton
+            onPress={() => navigation.navigate(ROUTES.BCS_PAGE)}
+            title='Body Condition Score'
+            backgroundColor={Colors.primary.lightOrange}
+            textColor={Colors.primary.mainOrange}
+          />
+          <AppButton
+            onPress={() => navigation.navigate(ROUTES.DUNG_PAGE)}
+            title='Dung Condition'
+            backgroundColor={Colors.primary.lightOrange}
+            textColor={Colors.primary.mainOrange}
+          />
         </View>
 
+        <Text style={[TextStyles.subHeading, { paddingTop: 20 }]}>Monitor Ecosystem</Text>
         <View>
-          <Text style={TextStyles.subTitle}>Monitor Ecosystem</Text>
-          <View>
-            <AppButton
-              onPress={() => navigation.navigate(ROUTES.FORAGE_QUALITY_PAGE)}
-              title='Forage Quality'
-            />
-            <AppButton
-              onPress={() => navigation.navigate(ROUTES.FORAGE_QUANTITY_PAGE)}
-              title='Forage Quantity'
-            />
-          </View>
+          <AppButton
+            onPress={() => navigation.navigate(ROUTES.FORAGE_QUALITY_PAGE)}
+            title='Log Forage Quality'
+            backgroundColor={Colors.primary.murkGreen}
+            textColor={Colors.secondary.white}
+          />
+          <AppButton
+            onPress={() => navigation.navigate(ROUTES.FORAGE_QUANTITY_PAGE)}
+            title='Log Forage Quantity'
+            backgroundColor={Colors.primary.murkGreen}
+            textColor={Colors.secondary.white}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

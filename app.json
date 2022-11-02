@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "crud-template-mobile-expo",
-    "slug": "crud-template-mobile-expo",
+    "name": "grazing-earth-mobile",
+    "slug": "grazing-earth-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,6 +28,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "d38da068-40be-41b2-9966-45476a3a45a3"
+      }
     }
   }
 }

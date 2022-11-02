@@ -2,19 +2,19 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   title: {
-    fontSize: 36,
-    fontFamily: 'Raleway_800ExtraBold',
+    fontSize: 30,
+    fontFamily: 'Inter_800ExtraBold',
   },
-  subTitle: {
-    fontSize: 22,
-    fontFamily: 'Raleway_600SemiBold',
+  subHeading: {
+    fontSize: 20,
+    fontFamily: 'Inter_600SemiBold',
   },
-  regular: {
-    fontSize: 18,
-    fontFamily: 'Raleway_400Regular',
+  body: {
+    fontSize: 17,
+    fontFamily: 'Inter_400Regular',
   },
   small: {
-    fontSize: 15,
-    fontFamily: 'Raleway_400Regular',
+    fontSize: 14,
+    fontFamily: 'Inter_400Regular',
   },
 });

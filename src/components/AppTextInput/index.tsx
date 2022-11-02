@@ -15,7 +15,7 @@ const AppTextInput = ({ onChangeText, value, placeholder, secureTextEntry }: App
     onChangeText={onChangeText}
     value={value}
     placeholder={placeholder}
-    placeholderTextColor={Colors.neutral[4]}
+    placeholderTextColor={Colors.secondary.mediumGreen}
     style={styles.appTextInputContainer}
     secureTextEntry={(secureTextEntry === null || secureTextEntry === undefined) ? false : secureTextEntry}
   />

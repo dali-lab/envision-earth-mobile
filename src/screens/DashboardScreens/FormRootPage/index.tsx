@@ -18,11 +18,11 @@ const FormRootPage = () => {
           <View>
             <AppButton
               onPress={() => navigation.navigate(ROUTES.BCS_PAGE)}
-              title='Log Body Condition Score'
+              title='Body Condition Score'
             />
             <AppButton
               onPress={() => navigation.navigate(ROUTES.DUNG_PAGE)}
-              title='Log Dung Condition'
+              title='Dung Condition'
             />
           </View>
         </View>
@@ -32,11 +32,11 @@ const FormRootPage = () => {
           <View>
             <AppButton
               onPress={() => navigation.navigate(ROUTES.FORAGE_QUALITY_PAGE)}
-              title='Log Forage Quality'
+              title='Forage Quality'
             />
             <AppButton
               onPress={() => navigation.navigate(ROUTES.FORAGE_QUANTITY_PAGE)}
-              title='Log Forage Quantity'
+              title='Forage Quantity'
             />
           </View>
         </View>

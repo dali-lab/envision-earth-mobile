@@ -1,5 +1,5 @@
 import { Slider } from '@miblanchard/react-native-slider';
-import AppButton from 'components/AppButton';
+import AppButton from '../../../components/AppButton';
 import React, { useState } from 'react';
 import { View, Image, ScrollView, SafeAreaView, Text } from 'react-native';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';

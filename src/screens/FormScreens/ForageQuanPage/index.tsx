@@ -2,6 +2,7 @@ import AppButton from '../../../components/AppButton';
 import { useState } from 'react';
 import { SafeAreaView, Text, View, ScrollView } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import AppTextInput from '../../../components/AppTextInput';
 
 type PageType = 'stac' | 'eyeball';
 type BootData = 'bare' | 'mix' | 'grass';
@@ -19,6 +20,9 @@ const ForageQuanPage = () => {
   const [cardData, setCardData] = useState<Card[]>([]);
   const [pageInd, setPageInd] = useState<number>(0);
   const [numCards, setNumCards] = useState<number>(5);
+
+  //Eyeball state
+  const [forageAmt, setForageAmt] = useState<number>(0);
 
   const onSetBootData = (index: number, data: BootData) => {
     setCardData(cards => {
@@ -157,7 +161,24 @@ const ForageQuanPage = () => {
       );
     } else {
       return (
-        <View></View>
+        <View>
+          <Text>paddock</Text>
+
+          <AppTextInput
+            onChangeText={(val) => setForageAmt(parseInt(val))}
+            value={forageAmt.toString()}
+            placeholder=''
+          />
+
+          <AppButton
+            onPress={() => { }}
+            title='take photo'
+          />
+          <AppButton
+            onPress={() => { }}
+            title='add note'
+          />
+        </View>
       );
     }
   };

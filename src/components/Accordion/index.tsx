@@ -25,9 +25,9 @@ const Accordion = ({ title, children }: AccordionProps) => {
       </TouchableOpacity>
       {
         expanded &&
-          <View style={styles.child}>
-            {children}
-          </View>
+        <View style={styles.child}>
+          {children}
+        </View>
       }
     </View>
   );
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     paddingRight: 18,
     alignItems: 'center',
     fontWeight: 'bold',
-    backgroundColor: Colors.primary.normal,
+    backgroundColor: Colors.primary.vibrantGreen,
     shadowColor: '#171717',
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.2,

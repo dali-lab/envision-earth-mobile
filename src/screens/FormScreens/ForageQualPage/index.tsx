@@ -63,8 +63,10 @@ const ForageQualPage = () => {
           rating,
           notes: (notes + ' '),
           photo: image,
-        })).then(() => {
-          setSubmitOverlay(true);
+        })).then((res) => {
+          if (res.payload) {
+            setSubmitOverlay(true);
+          }
         });
       }
     }

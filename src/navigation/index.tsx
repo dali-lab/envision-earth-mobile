@@ -43,8 +43,6 @@ import Colors from '../utils/styles/Colors';
 import { AntDesign, Octicons, Ionicons } from '@expo/vector-icons';
 
 const AuthStack = createStackNavigator();
-const SignupStack = createStackNavigator();
-const LoginStack = createStackNavigator();
 const DashboardStack = createStackNavigator();
 const FormStack = createStackNavigator();
 const AnalyticsStack = createStackNavigator();

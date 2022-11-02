@@ -76,26 +76,24 @@ const UploadImage = ({ image, setImage }: UploadImageProps) => {
   }, [requestPermission, status]);
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>
-        <AppButton
-          onPress={pickImage}
-          title={'pick from library'}
-          backgroundColor={Colors.primary.lightGreen}
-          textColor={Colors.primary.deepGreen}
-          width={215}
-          height={44}
-        />
-        <AppButton
-          onPress={takeImage}
-          title={'pick from camera'}
-          backgroundColor={Colors.primary.lightOrange}
-          textColor={Colors.primary.mainOrange}
-          width={215}
-          height={44}
-        />
-        {(image) && <Image source={{ uri: image.uri }} style={{ width: 200, height: 200 }} />}
-      </Text>
+    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+      <AppButton
+        onPress={pickImage}
+        title={'pick from library'}
+        backgroundColor={Colors.primary.lightGreen}
+        textColor={Colors.primary.deepGreen}
+        width={215}
+        height={44}
+      />
+      <AppButton
+        onPress={takeImage}
+        title={'pick from camera'}
+        backgroundColor={Colors.primary.lightOrange}
+        textColor={Colors.primary.mainOrange}
+        width={215}
+        height={44}
+      />
+      {(image) && <Image source={{ uri: image.uri }} style={{ width: 200, height: 200 }} />}
     </View>
   );
 };

@@ -86,8 +86,10 @@ const DungPage = () => {
           ratings: dungArr,
           notes: (notes + ' '),
           photo: image,
-        })).then(() => {
-          setSubmitOverlay(true);
+        })).then((res) => {
+          if (res.payload) {
+            setSubmitOverlay(true);
+          }
         });
       }
     }
@@ -170,7 +172,7 @@ const DungPage = () => {
               <DungEntry
                 rating={rating}
                 onDungEdit={(value) => handleEditDung(value, index)}
-                onDungDelete={(e) => handleDeleteDung(index)}
+                onDungDelete={() => handleDeleteDung(index)}
               />
             </View>
           ))

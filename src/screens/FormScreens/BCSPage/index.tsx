@@ -88,8 +88,10 @@ const BCSPage = () => {
           notes: (notes + ' '),
           tag: (tag + ' '),
           photo: image,
-        })).then(() => {
-          setSubmitOverlay(true);
+        })).then((res) => {
+          if (res.payload) {
+            setSubmitOverlay(true);
+          }
         });
       } else {
         dispatch(locallyCreateCowCensus({
@@ -180,7 +182,7 @@ const BCSPage = () => {
               <BCSEntry
                 bcs={bcs}
                 onBCSEdit={(value) => handleEditBcs(value, index)}
-                onBCSDelete={(e) => handleDeleteBcs(index)}
+                onBCSDelete={() => handleDeleteBcs(index)}
               />
             </View>
           ))

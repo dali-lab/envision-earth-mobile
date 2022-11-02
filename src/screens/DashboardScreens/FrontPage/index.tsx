@@ -70,7 +70,7 @@ const FrontPage = () => {
           source={{ uri: Image.resolveAssetSource(LogoImage).uri }}
         />
         <Text style={[TextStyles.body, { paddingTop: 20 }]}>
-          Page intentionally left blank for now.
+          Home page intentionally left blank for now.
         </Text>
       </ScrollView>
     </SafeAreaView>

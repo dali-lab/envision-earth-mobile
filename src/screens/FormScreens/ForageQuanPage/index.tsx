@@ -1,13 +1,15 @@
-import AppButton from '../../../components/AppButton';
+import { AppButton, AppTextInput, PaddockSelector } from '../../../components';
 import { useState } from 'react';
-import { SafeAreaView, Text, View, ScrollView } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import AppTextInput from '../../../components/AppTextInput';
+import { SafeAreaView, Text, View } from 'react-native';
+import StacPage from './StacPage';
+import GlobalStyle from '../../../utils/styles/GlobalStyle';
+import TextStyles from '../../../utils/styles/TextStyles';
+import Colors from '../../../utils/styles/Colors';
 
-type PageType = 'stac' | 'eyeball';
-type BootData = 'bare' | 'mix' | 'grass';
-type HeightData = 't' | 's' | 'a' | 'c' | 'th' | 'p';
-interface Card {
+export type PageType = 'stac' | 'eyeball';
+export type BootData = 'bare' | 'mix' | 'grass';
+export type HeightData = 't' | 's' | 'a' | 'c' | 'th' | 'p';
+export interface Card {
   boot: BootData;
   height: HeightData;
 }
@@ -15,6 +17,9 @@ interface Card {
 const ForageQuanPage = () => {
   // Page state
   const [pageType, setPageType] = useState<PageType>('stac');
+  const [selectedPlotId, setSelectedPlotId] = useState<string>('');
+  const [plotIdFocus, setPlotIdFocus] = useState(false);
+  const [plotName, setPlotName] = useState('Select paddock...');
 
   // STAC state
   const [cardData, setCardData] = useState<Card[]>([]);
@@ -64,101 +69,19 @@ const ForageQuanPage = () => {
 
   };
 
-  const StacCard = ({ data: Card }) => {
-    return (
-      <View>
-        <Text>Transect {pageInd}</Text>
-
-        <Text>What is your boot on?</Text>
-        <View>
-          <AppButton
-            onPress={() => onSetBootData(pageInd, 'bare')}
-            title='All bare soil'
-          />
-          <AppButton
-            onPress={() => onSetBootData(pageInd, 'mix')}
-            title='Bare soil and grass'
-          />
-          <AppButton
-            onPress={() => onSetBootData(pageInd, 'grass')}
-            title='All grass'
-          />
-        </View>
-
-        <Text>Rate Forage:</Text>
-        <View>
-          <AppButton
-            onPress={() => onSetHeightData(pageInd, 't')}
-            title='T'
-          />
-          <AppButton
-            onPress={() => onSetHeightData(pageInd, 's')}
-            title='S'
-          />
-          <AppButton
-            onPress={() => onSetHeightData(pageInd, 'a')}
-            title='A'
-          />
-          <AppButton
-            onPress={() => onSetHeightData(pageInd, 'c')}
-            title='C'
-          />
-          <AppButton
-            onPress={() => onSetHeightData(pageInd, 'th')}
-            title='TH'
-          />
-          <AppButton
-            onPress={() => onSetHeightData(pageInd, 'p')}
-            title='P'
-          />
-        </View>
-      </View>
-    );
-  };
-
   const MethodView = () => {
     if (pageType === 'stac') {
-      // STAC Method
-      return (
-        <ScrollView>
-          <Text>measurement guide</Text>
-          {/* TODO: Insert image of STAC guide */}
-          <Text>Learn more about STAC method</Text>
-
-          <Text>Score Forage</Text>
-
-          <Text>{pageInd}</Text>
-          <Text>{numCards}</Text>
-
-          {/* 
-        <FlatList
-          data={cardData}
-          renderItem={StacCard}
-          keyExtractor={(item, index) => index}
-          onEndReachedThreshold={0}
-          onEndReached={loadNewCard} />
-        */}
-
-          <StacCard data={cardData[pageInd]} />
-
-          {/* [0, 1, 2, 3, 4].map(num => <StacCard index={num} key={num} />) */}
-
-          <AppButton
-            onPress={nextCard}
-            title='Next'
-          />
-
-          <AppButton
-            onPress={prevCard}
-            title='Prev'
-          />
-
-          <AppButton
-            onPress={onSubmit}
-            title='submit'
-          />
-        </ScrollView>
-      );
+      // TODO: Refactor, put some of the functions in the Stac Page file
+      return <StacPage
+        cardData={cardData}
+        pageInd={pageInd}
+        numCards={numCards}
+        nextCard={nextCard}
+        prevCard={prevCard}
+        onSubmit={onSubmit}
+        onSetBootData={onSetBootData}
+        onSetHeightData={onSetHeightData}
+      />;
     } else {
       return (
         <View>
@@ -184,13 +107,28 @@ const ForageQuanPage = () => {
   };
 
   return (
-    <SafeAreaView>
-      <Text>Forage Quantity</Text>
+    <SafeAreaView style={GlobalStyle.container}>
+      <Text
+        style={[TextStyles.title, { color: Colors.primary.mainOrange }]}
+      >
+        Forage Quantity
+      </Text>
 
       {/* TODO: Should be a dropdown */}
-      <Text>paddock</Text>
+      <Text>Paddock:</Text>
+      <PaddockSelector
+        placeholder={!plotIdFocus ? plotName : '...'}
+        value={selectedPlotId}
+        focus={plotIdFocus}
+        onFocus={() => setPlotIdFocus(true)}
+        onBlur={() => setPlotIdFocus(false)}
+        onChange={item => {
+          setPlotName(item.label);
+          setSelectedPlotId(item.data);
+        }}
+      />
 
-      <Text>what method are you using?</Text>
+      <Text>What method are you using?</Text>
       <AppButton
         onPress={() => setPageType('eyeball')}
         title='eyeballing'

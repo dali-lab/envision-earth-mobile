@@ -38,12 +38,12 @@ const StacPage = (props: {
         <Text style={[TextStyles.subHeading]}>Rate Forage:</Text>
         <View>
           <AppButton
-            onPress={() => props.onSetHeightData(props.pageInd, 't')}
-            title='T'
-          />
-          <AppButton
             onPress={() => props.onSetHeightData(props.pageInd, 's')}
             title='S'
+          />
+          <AppButton
+            onPress={() => props.onSetHeightData(props.pageInd, 't')}
+            title='T'
           />
           <AppButton
             onPress={() => props.onSetHeightData(props.pageInd, 'a')}

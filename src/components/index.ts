@@ -5,7 +5,7 @@ import PaddockSelector from './PaddockSelect';
 import ScrollPick from './ScrollPick';
 import UploadImage from './UploadImage';
 
-export default {
+export {
   Accordion,
   AppButton,
   AppTextInput,

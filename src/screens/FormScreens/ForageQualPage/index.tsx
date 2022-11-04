@@ -6,8 +6,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { createForageQualityCensus } from '../../../redux/slices/forageQualityCensusSlice';
-import AppButton from '../../../components/AppButton';
-import AppTextInput from '../../../components/AppTextInput';
+import { AppButton, AppTextInput, PaddockSelector } from '../../../components';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import Slider from '@react-native-community/slider';
@@ -82,19 +81,11 @@ const ForageQualPage = () => {
             width: 310,
           }}
         >
-          <Dropdown
-            style={[GlobalStyle.dropdown, plotIdFocus && { borderColor: 'blue' }]}
-            containerStyle={GlobalStyle.dropdownContainerStyle}
-            placeholderStyle={GlobalStyle.dropdownPlaceholderStyle}
-            selectedTextStyle={GlobalStyle.dropdownSelectedTextStyle}
-            itemContainerStyle={GlobalStyle.dropdownItemContainerStyle}
-            itemTextStyle={GlobalStyle.dropdownItemTextStyle}
+          <PaddockSelector
             data={plotData}
-            maxHeight={300}
-            labelField='label'
-            valueField='value'
             placeholder={!plotIdFocus ? plotName : '...'}
             value={selectedPlotId}
+            focus={plotIdFocus}
             onFocus={() => setPlotIdFocus(true)}
             onBlur={() => setPlotIdFocus(false)}
             onChange={item => {

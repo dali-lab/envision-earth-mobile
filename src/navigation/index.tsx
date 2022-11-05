@@ -33,9 +33,11 @@ import {
   SheenPage,
   SettingsPage,
   HelpGuidesPage,
+  ProfilePage,
   ForageQualPage,
   ForageQuanPage,
   CalendarPage,
+  LogPage,
 } from './../screens';
 import { ROUTES } from '../utils/constants';
 import { LaunchScreen } from '../screens/AuthScreens';
@@ -105,8 +107,10 @@ const AnalyticsStackScreen = () => {
   return (
     <AnalyticsStack.Navigator
       screenOptions={{ header: () => null }}
+      initialRouteName='Log Page'
     >
       <AnalyticsStack.Screen name='Calendar Page' component={CalendarPage} />
+      <AnalyticsStack.Screen name='Log Page' component={LogPage} />
     </AnalyticsStack.Navigator>
   );
 };
@@ -115,7 +119,7 @@ const SettingsDrawerNavigator = () => {
   return (
     <SettingsDrawer.Navigator
       useLegacyImplementation={true}
-      initialRouteName='User Settings'
+      initialRouteName='User Profile'
       screenOptions={{
         drawerPosition: 'right',
         drawerType: 'back',
@@ -130,6 +134,7 @@ const SettingsDrawerNavigator = () => {
         );
       }}
     >
+      <SettingsDrawer.Screen name='User Profile' component={ProfilePage} />
       <SettingsDrawer.Screen name='User Settings' component={SettingsPage} />
       <SettingsDrawer.Screen name='Help Guides' component={HelpGuidesPage} />
     </SettingsDrawer.Navigator>

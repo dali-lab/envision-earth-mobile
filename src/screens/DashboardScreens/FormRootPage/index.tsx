@@ -33,14 +33,14 @@ const FormRootPage = () => {
       <AppButton
         onPress={() => navigation.navigate(ROUTES.FORAGE_QUALITY_PAGE)}
         title='Forage Quality'
-        backgroundColor={Colors.primary.murkGreen}
+        backgroundColor={Colors.primary.vibrantGreen}
         textColor={Colors.secondary.white}
         width={250}
       />
       <AppButton
         onPress={() => navigation.navigate(ROUTES.FORAGE_QUANTITY_PAGE)}
         title='Forage Quantity'
-        backgroundColor={Colors.primary.murkGreen}
+        backgroundColor={Colors.primary.vibrantGreen}
         textColor={Colors.secondary.white}
         width={250}
       />

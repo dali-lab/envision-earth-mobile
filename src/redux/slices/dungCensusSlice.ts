@@ -7,7 +7,7 @@ export interface IDungCensus {
   herdId: string,
   plotId: string;
   photoId: string,
-  ratings: number,
+  ratings: number[],
   notes: string,
 }
 

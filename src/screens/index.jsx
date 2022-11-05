@@ -25,9 +25,11 @@ import {
 import {
   SettingsPage,
   HelpGuidesPage,
+  ProfilePage,
 } from './UserScreens';
 import {
   CalendarPage,
+  LogPage,
 } from './AnalyticsScreens';
 
 export {
@@ -49,5 +51,7 @@ export {
   ForageQuanPage,
   SettingsPage,
   HelpGuidesPage,
+  ProfilePage,
   CalendarPage,
+  LogPage,
 };

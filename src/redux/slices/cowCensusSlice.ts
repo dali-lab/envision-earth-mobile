@@ -7,7 +7,7 @@ export interface ICowCensus {
   herdId: string,
   plotId: string;
   photoId: string,
-  bcs: number,
+  bcs: number[],
   notes: string,
   tag: string,
 }

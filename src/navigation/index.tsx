@@ -47,6 +47,7 @@ import { AntDesign, Octicons, Ionicons } from '@expo/vector-icons';
 
 const AuthStack = createStackNavigator();
 const DashboardStack = createStackNavigator();
+const ProfileStack = createStackNavigator();
 const FormStack = createStackNavigator();
 const AnalyticsStack = createStackNavigator();
 const SettingsDrawer = createDrawerNavigator();
@@ -83,6 +84,16 @@ const DashboardStackScreen = () => {
     >
       <DashboardStack.Screen name={ROUTES.HOME} component={FrontPage} />
     </DashboardStack.Navigator>
+  );
+};
+
+const ProfileStackScreen = () => {
+  return (
+    <ProfileStack.Navigator
+      screenOptions={{ header: () => null }}
+    >
+      <ProfileStack.Screen name={ROUTES.PROFILE} component={ProfilePage} />
+    </ProfileStack.Navigator>
   );
 };
 
@@ -144,7 +155,7 @@ const SettingsDrawerNavigator = () => {
 const TabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={{ 
+      screenOptions={{
         header: () => null,
         tabBarStyle: {
           backgroundColor: Colors.secondary.darkGreen,
@@ -154,9 +165,9 @@ const TabNavigator = () => {
       }}
       initialRouteName='home'
     >
-      <Tab.Screen 
-        name='profile' 
-        component={SettingsDrawerNavigator}
+      <Tab.Screen
+        name='profile'
+        component={ProfileStackScreen}
         options={{
           tabBarLabel: (props) => {
             return (
@@ -164,13 +175,13 @@ const TabNavigator = () => {
             );
           },
           tabBarIcon: (props) => (
-            <Ionicons name='person-outline' color={props.color} size={26}/>
+            <Ionicons name='person-outline' color={props.color} size={26} />
           ),
           tabBarActiveTintColor: Colors.primary.mainOrange,
         }}
       />
-      <Tab.Screen 
-        name='data' 
+      <Tab.Screen
+        name='data'
         component={AnalyticsStackScreen}
         options={{
           tabBarLabel: (props) => {
@@ -179,12 +190,12 @@ const TabNavigator = () => {
             );
           },
           tabBarIcon: (props) => (
-            <Octicons name='graph' color={props.color} size={26}/>
+            <Octicons name='graph' color={props.color} size={26} />
           ),
         }}
       />
-      <Tab.Screen 
-        name='forms' 
+      <Tab.Screen
+        name='forms'
         component={FormStackScreen}
         options={{
           tabBarLabel: (props) => {
@@ -193,13 +204,13 @@ const TabNavigator = () => {
             );
           },
           tabBarIcon: (props) => (
-            <Ionicons name='leaf-outline' color={props.color} size={26}/>
+            <Ionicons name='leaf-outline' color={props.color} size={26} />
           ),
         }}
       />
-      <Tab.Screen 
-        name='home' 
-        component={DashboardStackScreen} 
+      <Tab.Screen
+        name='home'
+        component={DashboardStackScreen}
         options={{
           tabBarLabel: (props) => {
             return (
@@ -207,7 +218,7 @@ const TabNavigator = () => {
             );
           },
           tabBarIcon: (props) => (
-            <AntDesign name='home' color={props.color} size={26}/>
+            <AntDesign name='home' color={props.color} size={26} />
           ),
         }}
       />
@@ -258,9 +269,9 @@ const RootNavigation = () => {
         <RootStack.Navigator
           screenOptions={{ header: () => null }}
         >
-          <RootStack.Screen 
-            name='MainStack' 
-            component={TabNavigator} 
+          <RootStack.Screen
+            name='MainStack'
+            component={TabNavigator}
           />
         </RootStack.Navigator>
       </NavigationContainer>

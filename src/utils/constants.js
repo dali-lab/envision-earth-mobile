@@ -15,6 +15,8 @@ export const ROUTES = {
 
   HOME: 'Front Page',
 
+  PROFILE: 'User Profile',
+
   FORM_ROOT_PAGE: 'Forms',
   BCS_PAGE: 'BCS Form',
   DUNG_PAGE: 'Dung Form',

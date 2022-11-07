@@ -28,8 +28,9 @@ import {
   ProfilePage,
 } from './UserScreens';
 import {
-  CalendarPage,
   LogPage,
+  PaddockPage,
+  SelectedPaddockPage,
 } from './AnalyticsScreens';
 
 export {
@@ -52,6 +53,7 @@ export {
   SettingsPage,
   HelpGuidesPage,
   ProfilePage,
-  CalendarPage,
   LogPage,
+  PaddockPage,
+  SelectedPaddockPage,
 };

@@ -1,19 +1,18 @@
 import React from 'react';
 import { ScrollView, SafeAreaView, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import { ICowCensus } from '../../../redux/slices/cowCensusSlice';
 import { IDungCensus } from '../../../redux/slices/dungCensusSlice';
 import { IForageQualityCensus } from '../../../redux/slices/forageQualityCensusSlice';
-import AppButton from '../../../components/AppButton';
 import NavType from '../../../utils/NavType';
 import LogEntry from '../../../components/Entries/LogEntry';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import TextStyles from '../../../utils/styles/TextStyles';
 import Colors from '../../../utils/styles/Colors';
-import { ROUTES } from '../../../utils/constants';
 
 function average(arr: number[]) {
   let sum = 0;
@@ -24,10 +23,10 @@ function average(arr: number[]) {
   return sum / arr.length;
 }
 
-const LogPage = () => {
+const SelectedPaddockPage = () => {
   const dispatch = useAppDispatch();
-
   const allPlots: Record<string, IPlot> = useAppSelector((state) => state.plots.allPlots);
+  const selectedPlotId: string = useAppSelector((state) => state.plots.selectedPlotId);
   const allCowCensuses: Record<string, ICowCensus> = useAppSelector((state) => state.cowCensuses.all);
   const allDungCensuses: Record<string, IDungCensus> = useAppSelector((state) => state.dungCensuses.all);
   const allForageQualityCensuses: Record<string, IForageQualityCensus> = useAppSelector((state) => state.forageQuality.all);
@@ -40,43 +39,69 @@ const LogPage = () => {
         horizontal={false}
         contentContainerStyle={GlobalStyle.contentContainerScroll}
       >
-        <Text
-          style={[TextStyles.title, { color: Colors.primary.mainOrange }]}
+        <View 
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
         >
-          Logs By Form
-        </Text>
-        <AppButton
-          onPress={() => navigation.navigate(ROUTES.PADDOCK_PAGE)}
-          title='By Paddock'
-          backgroundColor={Colors.primary.lightOrange}
-          textColor={Colors.primary.mainOrange}
-          width={250}
-        />
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+            }}
+          >
+            <Ionicons
+              name='ios-arrow-back'
+              size={32}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          </View>
+          <Text
+            style={[TextStyles.title, { color: Colors.primary.mainOrange }]}
+          >
+            {allPlots[selectedPlotId].name}
+          </Text>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+            }}
+          >
+          </View>
+        </View>
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Text style={[TextStyles.subHeading, { paddingTop: 10, paddingBottom: 10 }]}>
             BCS Scores
           </Text>
           <View style={GlobalStyle.horizontalLine} />
-          <View style={{ 
-            flexDirection: 'row', 
-            flexWrap: 'wrap', 
-            alignItems: 'center', 
+          <View style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            alignItems: 'center',
             justifyContent: 'center',
           }}>
             {
               Object.keys(allCowCensuses).map((id, idx) => {
-                return (
-                  <View 
-                    key={idx} 
-                    style={{ 
-                      padding: 5,
-                    }}
-                  >
-                    <LogEntry
-                      value={average(allCowCensuses[id].bcs).toFixed(2)}
-                    />
-                  </View>
-                );
+                if (selectedPlotId === allCowCensuses[id].plotId) {
+                  return (
+                    <View
+                      key={idx}
+                      style={{
+                        padding: 5,
+                      }}
+                    >
+                      <LogEntry
+                        value={average(allCowCensuses[id].bcs).toFixed(2)}
+                      />
+                    </View>
+                  );
+                }
               })
             }
           </View>
@@ -86,26 +111,28 @@ const LogPage = () => {
             Dung Condition
           </Text>
           <View style={GlobalStyle.horizontalLine} />
-          <View style={{ 
-            flexDirection: 'row', 
-            flexWrap: 'wrap', 
-            alignItems: 'center', 
+          <View style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            alignItems: 'center',
             justifyContent: 'center',
           }}>
             {
               Object.keys(allDungCensuses).map((id, idx) => {
-                return (
-                  <View 
-                    key={idx} 
-                    style={{ 
-                      padding: 5,
-                    }}
-                  >
-                    <LogEntry
-                      value={average(allDungCensuses[id].ratings).toFixed(2)}
-                    />
-                  </View>
-                );
+                if (selectedPlotId === allDungCensuses[id].plotId) {
+                  return (
+                    <View
+                      key={idx}
+                      style={{
+                        padding: 5,
+                      }}
+                    >
+                      <LogEntry
+                        value={average(allDungCensuses[id].ratings).toFixed(2)}
+                      />
+                    </View>
+                  );
+                }
               })
             }
           </View>
@@ -115,26 +142,28 @@ const LogPage = () => {
             Forage Quality Census
           </Text>
           <View style={GlobalStyle.horizontalLine} />
-          <View style={{ 
-            flexDirection: 'row', 
-            flexWrap: 'wrap', 
-            alignItems: 'center', 
+          <View style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            alignItems: 'center',
             justifyContent: 'center',
           }}>
             {
               Object.keys(allForageQualityCensuses).map((id, idx) => {
-                return (
-                  <View 
-                    key={idx} 
-                    style={{ 
-                      padding: 5,
-                    }}
-                  >
-                    <LogEntry
-                      value={allForageQualityCensuses[id].rating}
-                    />
-                  </View>
-                );
+                if (selectedPlotId === allForageQualityCensuses[id].plotId) {
+                  return (
+                    <View
+                      key={idx}
+                      style={{
+                        padding: 5,
+                      }}
+                    >
+                      <LogEntry
+                        value={allForageQualityCensuses[id].rating}
+                      />
+                    </View>
+                  );
+                }
               })
             }
           </View>
@@ -144,4 +173,4 @@ const LogPage = () => {
   );
 };
 
-export default LogPage;
+export default SelectedPaddockPage;

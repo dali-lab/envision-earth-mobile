@@ -19,8 +19,8 @@ import { UserScopes } from '../redux/slices/usersSlice';
 import {
   // ErrorPage, 
   // ForbiddenPage, 
-  ResourcesPage,
-  UsersPage,
+  ResourcesPage,  // deprecated
+  UsersPage,      // deprecated
   SignInPage,
   SignUpPage,
   VerifyUserPage,
@@ -36,8 +36,9 @@ import {
   ProfilePage,
   ForageQualPage,
   ForageQuanPage,
-  CalendarPage,
   LogPage,
+  PaddockPage,
+  SelectedPaddockPage,
 } from './../screens';
 import { ROUTES } from '../utils/constants';
 import { LaunchScreen } from '../screens/AuthScreens';
@@ -81,8 +82,6 @@ const DashboardStackScreen = () => {
       screenOptions={{ header: () => null }}
     >
       <DashboardStack.Screen name={ROUTES.HOME} component={FrontPage} />
-      <DashboardStack.Screen name={ROUTES.USERS} component={UsersPage} />
-      <DashboardStack.Screen name={ROUTES.RESOURCES} component={ResourcesPage} />
     </DashboardStack.Navigator>
   );
 };
@@ -107,10 +106,11 @@ const AnalyticsStackScreen = () => {
   return (
     <AnalyticsStack.Navigator
       screenOptions={{ header: () => null }}
-      initialRouteName='Log Page'
+      initialRouteName={ROUTES.LOG_PAGE}
     >
-      <AnalyticsStack.Screen name='Calendar Page' component={CalendarPage} />
-      <AnalyticsStack.Screen name='Log Page' component={LogPage} />
+      <AnalyticsStack.Screen name={ROUTES.LOG_PAGE} component={LogPage} />
+      <AnalyticsStack.Screen name={ROUTES.PADDOCK_PAGE} component={PaddockPage} />
+      <AnalyticsStack.Screen name={ROUTES.SELECTED_PADDOCK_PAGE} component={SelectedPaddockPage} />
     </AnalyticsStack.Navigator>
   );
 };
@@ -119,7 +119,7 @@ const SettingsDrawerNavigator = () => {
   return (
     <SettingsDrawer.Navigator
       useLegacyImplementation={true}
-      initialRouteName='User Profile'
+      initialRouteName={ROUTES.USER_PROFILE}
       screenOptions={{
         drawerPosition: 'right',
         drawerType: 'back',
@@ -134,9 +134,9 @@ const SettingsDrawerNavigator = () => {
         );
       }}
     >
-      <SettingsDrawer.Screen name='User Profile' component={ProfilePage} />
-      <SettingsDrawer.Screen name='User Settings' component={SettingsPage} />
-      <SettingsDrawer.Screen name='Help Guides' component={HelpGuidesPage} />
+      <SettingsDrawer.Screen name={ROUTES.USER_PROFILE} component={ProfilePage} />
+      <SettingsDrawer.Screen name={ROUTES.USER_SETTINGS} component={SettingsPage} />
+      <SettingsDrawer.Screen name={ROUTES.HELP_GUIDES} component={HelpGuidesPage} />
     </SettingsDrawer.Navigator>
   );
 };
@@ -149,6 +149,8 @@ const TabNavigator = () => {
         tabBarStyle: {
           backgroundColor: Colors.secondary.darkGreen,
         },
+        tabBarActiveTintColor: Colors.primary.mainOrange,
+        tabBarInactiveTintColor: Colors.secondary.white,
       }}
       initialRouteName='home'
     >
@@ -156,27 +158,28 @@ const TabNavigator = () => {
         name='profile' 
         component={SettingsDrawerNavigator}
         options={{
-          tabBarLabel: () => {
+          tabBarLabel: (props) => {
             return (
-              <Text style={{ color: Colors.secondary.white }}>profile</Text>
+              <Text style={{ color: props.color }}>profile</Text>
             );
           },
-          tabBarIcon: () => (
-            <Ionicons name='person-outline' color={Colors.secondary.white} size={26}/>
+          tabBarIcon: (props) => (
+            <Ionicons name='person-outline' color={props.color} size={26}/>
           ),
+          tabBarActiveTintColor: Colors.primary.mainOrange,
         }}
       />
       <Tab.Screen 
         name='data' 
         component={AnalyticsStackScreen}
         options={{
-          tabBarLabel: () => {
+          tabBarLabel: (props) => {
             return (
-              <Text style={{ color: Colors.secondary.white }}>data</Text>
+              <Text style={{ color: props.color }}>data</Text>
             );
           },
-          tabBarIcon: () => (
-            <Octicons name='graph' color={Colors.secondary.white} size={26}/>
+          tabBarIcon: (props) => (
+            <Octicons name='graph' color={props.color} size={26}/>
           ),
         }}
       />
@@ -184,13 +187,13 @@ const TabNavigator = () => {
         name='forms' 
         component={FormStackScreen}
         options={{
-          tabBarLabel: () => {
+          tabBarLabel: (props) => {
             return (
-              <Text style={{ color: Colors.secondary.white }}>forms</Text>
+              <Text style={{ color: props.color }}>forms</Text>
             );
           },
-          tabBarIcon: () => (
-            <Ionicons name='leaf-outline' color={Colors.secondary.white} size={26}/>
+          tabBarIcon: (props) => (
+            <Ionicons name='leaf-outline' color={props.color} size={26}/>
           ),
         }}
       />
@@ -198,13 +201,13 @@ const TabNavigator = () => {
         name='home' 
         component={DashboardStackScreen} 
         options={{
-          tabBarLabel: () => {
+          tabBarLabel: (props) => {
             return (
-              <Text style={{ color: Colors.secondary.white }}>home</Text>
+              <Text style={{ color: props.color }}>home</Text>
             );
           },
-          tabBarIcon: () => (
-            <AntDesign name='home' color={Colors.secondary.white} size={26}/>
+          tabBarIcon: (props) => (
+            <AntDesign name='home' color={props.color} size={26}/>
           ),
         }}
       />

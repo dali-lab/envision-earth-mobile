@@ -3,13 +3,16 @@ import { ScrollView, SafeAreaView, View, Text } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import { useIsConnected } from 'react-native-offline';
 import { Dropdown } from 'react-native-element-dropdown';
+import { useNavigation } from '@react-navigation/native';
+import Slider from '@react-native-community/slider';
+import { Ionicons } from '@expo/vector-icons';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { createForageQualityCensus } from '../../../redux/slices/forageQualityCensusSlice';
 import { AppButton, AppTextInput, PaddockSelector } from '../../../components';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
-import Slider from '@react-native-community/slider';
+import NavType from '../../../utils/NavType';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import Colors from '../../../utils/styles/Colors';
 import TextStyles from '../../../utils/styles/TextStyles';
@@ -59,23 +62,58 @@ const ForageQualPage = () => {
           rating,
           notes: (notes + ' '),
           photo: image,
-        })).then(() => {
-          setSubmitOverlay(true);
+        })).then((res) => {
+          if (res.payload) {
+            setSubmitOverlay(true);
+          }
         });
       }
     }
   };
+
+  const navigation = useNavigation<NavType>();
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
       <ScrollView
         contentContainerStyle={GlobalStyle.contentContainerScroll}
       >
-        <Text
-          style={[TextStyles.title, { color: Colors.primary.mainOrange }]}
+        <View 
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
         >
-          Forage Quality
-        </Text>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+            }}
+          >
+            <Ionicons
+              name='ios-arrow-back'
+              size={32}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          </View>
+          <Text
+            style={[TextStyles.title, { color: Colors.primary.mainOrange }]}
+          >
+            Forage Quality
+          </Text>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+            }}
+          >
+          </View>
+        </View>
         <View
           style={{
             width: 310,

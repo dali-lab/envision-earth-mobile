@@ -85,6 +85,12 @@ const GlobalStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
+  horizontalLine: {
+    borderBottomColor: 'black', 
+    borderBottomWidth: 1,
+    width: Dimensions.get('window').width,
+  },
 });
 
 export default GlobalStyle;

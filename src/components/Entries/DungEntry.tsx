@@ -19,8 +19,13 @@ const DungEntry = ({ rating, onDungEdit, onDungDelete }: IDungEntry) => {
         justifyContent: 'center',
       }}
     >
-      <Ionicons name='trash-outline' size={26} onPress={onDungDelete}/>
-      <Text style={[TextStyles.subHeading, { minWidth: 100, textAlign: 'center' }]}>Dung Entry: {rating}</Text>
+      <Ionicons name='trash-outline' size={26} onPress={onDungDelete} />
+      <Text style={[
+        TextStyles.subHeading,
+        { minWidth: 100, textAlign: 'center' }]}
+      >
+        Dung Entry: {rating.toFixed(1)}
+      </Text>
       <Slider
         style={GlobalStyle.slider}
         minimumValue={-1}

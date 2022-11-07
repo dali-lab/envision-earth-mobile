@@ -25,9 +25,12 @@ import {
 import {
   SettingsPage,
   HelpGuidesPage,
+  ProfilePage,
 } from './UserScreens';
 import {
-  CalendarPage,
+  LogPage,
+  PaddockPage,
+  SelectedPaddockPage,
 } from './AnalyticsScreens';
 
 export {
@@ -49,5 +52,8 @@ export {
   ForageQuanPage,
   SettingsPage,
   HelpGuidesPage,
-  CalendarPage,
+  ProfilePage,
+  LogPage,
+  PaddockPage,
+  SelectedPaddockPage,
 };

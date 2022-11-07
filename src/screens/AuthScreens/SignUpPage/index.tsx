@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { SafeAreaView, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { AuthStackParamList, AuthStackRoutes } from '../../../navigation/routes';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { signUp } from '../../../redux/slices/authSlice';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
+import NavType from '../../../utils/NavType';
+import { ROUTES } from '../../../utils/constants';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import TextStyles from '../../../utils/styles/TextStyles';
 import Colors from '../../../utils/styles/Colors';
@@ -18,8 +18,7 @@ const SignUpPage = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
-  const navigation =
-    useNavigation<NativeStackNavigationProp<AuthStackParamList, AuthStackRoutes.SIGNUP>>();
+  const navigation = useNavigation<NavType>();
 
   const handleSubmit = async () => {
     // Send only if all fields filled in
@@ -28,7 +27,7 @@ const SignUpPage = () => {
     else if (!name) alert('Please enter a name!');
     else {
       await dispatch(signUp({ email, password, name })).then(() => {
-        navigation.navigate(AuthStackRoutes.AUTHLAUNCH, {});
+        navigation.navigate(ROUTES.AUTHLAUNCH);
       });
     }
   };

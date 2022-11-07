@@ -3,6 +3,8 @@ import { ScrollView, SafeAreaView, View, Text } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import { useIsConnected } from 'react-native-offline';
 import { Dropdown } from 'react-native-element-dropdown';
+import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { createCowCensus, locallyCreateCowCensus } from '../../../redux/slices/cowCensusSlice';
@@ -11,6 +13,7 @@ import AppTextInput from '../../../components/AppTextInput';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import BCSEntry from '../../../components/Entries/BCSEntry';
+import NavType from '../../../utils/NavType';
 import GlobalStyle from '../../../utils/styles/GlobalStyle';
 import Colors from '../../../utils/styles/Colors';
 import TextStyles from '../../../utils/styles/TextStyles';
@@ -69,35 +72,27 @@ const BCSPage = () => {
       alert('Error: no elements in BCS arr');
     } else {
       if (isWifi) {
-        if (!selectedHerd) {
-          alert('Error: no selected herd');
-        } else if (!allPlots[selectedPlotId]?.id) {
-          alert('Error: no selected plot');
-        } else if (!bcsArr) {
-          alert('Error: no BCS arr');
-        } else if (bcsArr.length < 1) {
-          alert('Error: no elements in BCS arr');
-        } else {
-          console.log({
-            herdId: selectedHerd?.id as string,
-            plotId: allPlots[selectedPlotId]?.id as string,
-            bcs: bcsArr,
-            notes,
-            tag,
-            photo: image,
-          });
-          
-          await dispatch(createCowCensus({
-            herdId: selectedHerd?.id as string,
-            plotId: allPlots[selectedPlotId]?.id as string,
-            bcs: bcsArr,
-            notes: (notes + ' '),
-            tag: (tag + ' '),
-            photo: image,
-          })).then(() => {
+        console.log({
+          herdId: selectedHerd?.id as string,
+          plotId: allPlots[selectedPlotId]?.id as string,
+          bcs: bcsArr,
+          notes,
+          tag,
+          photo: image,
+        });
+
+        await dispatch(createCowCensus({
+          herdId: selectedHerd?.id as string,
+          plotId: allPlots[selectedPlotId]?.id as string,
+          bcs: bcsArr,
+          notes: (notes + ' '),
+          tag: (tag + ' '),
+          photo: image,
+        })).then((res) => {
+          if (res.payload) {
             setSubmitOverlay(true);
-          });
-        }
+          }
+        });
       } else {
         dispatch(locallyCreateCowCensus({
           herdId: selectedHerd?.id as string,
@@ -110,17 +105,50 @@ const BCSPage = () => {
     }
   };
 
+  const navigation = useNavigation<NavType>();
+
   return (
     <SafeAreaView style={GlobalStyle.container}>
       <ScrollView
         contentContainerStyle={GlobalStyle.contentContainerScroll}
       >
-        <Text
-          style={[TextStyles.title, { color: Colors.primary.mainOrange }]}
-        >
-          BCS
-        </Text>
         <View 
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+            }}
+          >
+            <Ionicons
+              name='ios-arrow-back'
+              size={32}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          </View>
+          <Text
+            style={[TextStyles.title, { color: Colors.primary.mainOrange }]}
+          >
+            BCS
+          </Text>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+            }}
+          >
+          </View>
+        </View>
+        <View
           style={{
             width: 310,
           }}
@@ -154,7 +182,7 @@ const BCSPage = () => {
               <BCSEntry
                 bcs={bcs}
                 onBCSEdit={(value) => handleEditBcs(value, index)}
-                onBCSDelete={(e) => handleDeleteBcs(index)}
+                onBCSDelete={() => handleDeleteBcs(index)}
               />
             </View>
           ))
@@ -209,7 +237,7 @@ const BCSPage = () => {
         />
       </Overlay>
       <Overlay
-        isVisible={notesOverlay} 
+        isVisible={notesOverlay}
         onBackdropPress={() => setNotesOverlay(!notesOverlay)}
         overlayStyle={GlobalStyle.overlayModal}
       >
@@ -229,8 +257,8 @@ const BCSPage = () => {
           height={51}
         />
       </Overlay>
-      <Overlay 
-        isVisible={submitOverlay} 
+      <Overlay
+        isVisible={submitOverlay}
         onBackdropPress={() => setSubmitOverlay(!submitOverlay)}
         overlayStyle={GlobalStyle.overlayModal}
       >

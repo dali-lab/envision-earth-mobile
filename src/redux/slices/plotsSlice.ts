@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SERVER_URL } from '../../utils/constants.js';
 import axios from 'axios';
 
@@ -16,11 +16,13 @@ export interface IPlot {
 export interface PlotsState {
   loading: boolean
   allPlots: Record<string, IPlot>
+  selectedPlotId: string,
 }
 
 const initialState: PlotsState = {
   loading: false,
   allPlots: {},
+  selectedPlotId: '',
 };
 
 export const getPlotsByTeamId = createAsyncThunk(
@@ -128,6 +130,7 @@ export const plotSlice = createSlice({
   reducers: {
     startPlotsLoading: (state) => ({ ...state, loading: true }),
     stopPlotsLoading: (state) => ({ ...state, loading: false }),
+    setSelectedPlotId: (state, action: PayloadAction<string>) => ({ ...state, selectedPlotId: action.payload }),
   },
   extraReducers: (builder) => {
     builder.addCase(getPlotsByTeamId.fulfilled, (state, action) => {
@@ -159,7 +162,7 @@ export const plotSlice = createSlice({
   },
 });
 
-export const { startPlotsLoading, stopPlotsLoading } =
+export const { startPlotsLoading, stopPlotsLoading, setSelectedPlotId } =
   plotSlice.actions;
 
 export default plotSlice.reducer;

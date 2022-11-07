@@ -8,7 +8,6 @@ export default {
     mainOrange: '#EDAC4B',
     lightOrange: '#FAECD5',
     lightestGreen: '#F1F5E8',
-    murkGreen: '#82A920',
     deepGreen: '#525548',
   },
   secondary: {

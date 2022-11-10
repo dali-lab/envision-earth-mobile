@@ -18,7 +18,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "buildNumber": "1"
+      "buildNumber": "1",
+      "bundleIdentifier": "com.grazingearth"
     },
     "android": {
       "adaptiveIcon": {
@@ -31,7 +32,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "d38da068-40be-41b2-9966-45476a3a45a3"
+        "projectId": "c5872fa3-3143-48d0-946a-23aeca397fae"
       }
     }
   }

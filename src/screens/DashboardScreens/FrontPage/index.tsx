@@ -14,7 +14,7 @@ import { getHerdByTeamId } from '../../../redux/slices/herdsSlice';
 import { getCowCensusesByHerdId } from '../../../redux/slices/cowCensusSlice';
 import { getDungCensusesByHerdId } from '../../../redux/slices/dungCensusSlice';
 import { getForageQualityCensusesByPlotId } from '../../../redux/slices/forageQualityCensusSlice';
-import { Global, TextStyles } from '../../../utils/styles';
+import { GlobalStyle, TextStyles } from '../../../utils/styles';
 
 const FrontPage = () => {
   const navigation = useNavigation<NavType>();
@@ -108,23 +108,26 @@ const FrontPage = () => {
   }) => {
     return <View>
       <Text>{props.title}</Text>
-      <View> {/* vertical stack */}
-        <View> {/* horizontal */}
+      <View>
+
+        <View>
           <Text>{props.days}</Text>
           <Text>days grazing/acre</Text>
         </View>
-        <View> {/* horizontal */}
+
+        <View>
           <Text>{props.forage}</Text>
           <Text>forage quality</Text>
         </View>
+
       </View>
     </View>;
   };
 
   return (
-    <SafeAreaView style={Global.container}>
+    <SafeAreaView style={GlobalStyle.container}>
       <ScrollView
-        contentContainerStyle={Global.contentContainerScroll}
+        contentContainerStyle={GlobalStyle.contentContainerScroll}
       >
         <View>
           <Text>Welcome, {name}</Text>
@@ -189,6 +192,7 @@ const FrontPage = () => {
 
           </ScrollView>
         </View>
+
       </ScrollView>
     </SafeAreaView>
   );

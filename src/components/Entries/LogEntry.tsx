@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Colors from '../../utils/styles/Colors';
-import TextStyles from '../../utils/styles/TextStyles';
+import { Colors, TextStyles } from '../../styles';
 
 export interface ILogEntry {
   value: number | string,
@@ -11,9 +10,9 @@ const LogEntry = ({ value }: ILogEntry) => {
   return (
     <View
       style={localStyles.logContainer}
-    > 
+    >
       <Text style={[TextStyles.title, { color: Colors.primary.vibrantGreen }]}>
-        { value }
+        {value}
       </Text>
     </View>
   );

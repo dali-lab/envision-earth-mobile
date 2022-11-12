@@ -8,9 +8,7 @@ import { createMembership } from '../../../redux/slices/membershipSlice';
 import { getTeamByUserId } from '../../../redux/slices/teamsSlice';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
-import TextStyles from '../../../utils/styles/TextStyles';
-import Colors from '../../../utils/styles/Colors';
+import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 
 const JoinTeamPage = () => {
   const dispatch = useAppDispatch();
@@ -29,7 +27,7 @@ const JoinTeamPage = () => {
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
-      <Text 
+      <Text
         style={[
           TextStyles.title,
           { color: Colors.secondary.deepTeal, paddingBottom: 15 },

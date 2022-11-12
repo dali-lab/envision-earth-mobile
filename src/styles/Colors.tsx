@@ -1,4 +1,4 @@
-export default {
+const Colors = {
   primary: {
     light: '#05C3DD', // TODO: Delete
     normal: '#26AADE', // TODO: Delete
@@ -41,3 +41,5 @@ export default {
   highlight: '#FFD700', // TODO: Delete
   blurViewBackground: '#FFFFFF',
 };
+
+export default Colors;

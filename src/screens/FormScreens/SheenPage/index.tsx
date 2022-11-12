@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, SafeAreaView } from 'react-native';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
+import { GlobalStyle } from '../../../styles';
 
 const SheenPage = () => {
   return (

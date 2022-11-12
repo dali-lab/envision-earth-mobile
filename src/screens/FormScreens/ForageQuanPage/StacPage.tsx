@@ -1,7 +1,7 @@
 import { View, ScrollView, Text, Button } from 'react-native';
 import AppButton from '../../../components/AppButton';
 import { Card, PageType, BootData, HeightData } from '.';
-import TextStyles from '../../../utils/styles/TextStyles';
+import { TextStyles } from '../../../styles';
 
 const StacPage = (props: {
   cardData: Card[],
@@ -38,12 +38,12 @@ const StacPage = (props: {
         <Text style={[TextStyles.subHeading]}>Rate Forage:</Text>
         <View>
           <AppButton
-            onPress={() => props.onSetHeightData(props.pageInd, 't')}
-            title='T'
-          />
-          <AppButton
             onPress={() => props.onSetHeightData(props.pageInd, 's')}
             title='S'
+          />
+          <AppButton
+            onPress={() => props.onSetHeightData(props.pageInd, 't')}
+            title='T'
           />
           <AppButton
             onPress={() => props.onSetHeightData(props.pageInd, 'a')}

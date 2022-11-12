@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { Image, ScrollView, SafeAreaView, Dimensions, Text } from 'react-native';
+import { Image, ScrollView, View, SafeAreaView, Dimensions, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { logout } from '../../../redux/slices/authSlice';
 import AppButton from '../../../components/AppButton';
 import NavType from '../../../utils/NavType';
-import { ROUTES } from '../../../utils/constants';
+import { ROUTES, DAYS_OF_WEEK } from '../../../utils/constants';
 import LogoImage from '../../../assets/dali_dark.png';
 import { getTeamByUserId } from '../../../redux/slices/teamsSlice';
 import { getPlotsByTeamId } from '../../../redux/slices/plotsSlice';
@@ -14,17 +14,19 @@ import { getHerdByTeamId } from '../../../redux/slices/herdsSlice';
 import { getCowCensusesByHerdId } from '../../../redux/slices/cowCensusSlice';
 import { getDungCensusesByHerdId } from '../../../redux/slices/dungCensusSlice';
 import { getForageQualityCensusesByPlotId } from '../../../redux/slices/forageQualityCensusSlice';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
-import TextStyles from '../../../utils/styles/TextStyles';
+import { GlobalStyle, TextStyles } from '../../../styles';
+import { LivestockStatusCard, PaddockStatusCard } from '../../../components/Dashboard';
+import DashboardStyle from '../../../styles/pages/dashboard';
 
 const FrontPage = () => {
   const navigation = useNavigation<NavType>();
   const dispatch = useAppDispatch();
 
-  const { id }  = useAppSelector((state) => state.auth); // userId
-  const { selectedTeam } = useAppSelector((state) => state.teams); 
+  const { id } = useAppSelector((state) => state.auth); // userId
+  const { selectedTeam } = useAppSelector((state) => state.teams);
   const { allPlots } = useAppSelector((state) => state.plots);
   const { selectedHerd } = useAppSelector((state) => state.herds);
+  const { name } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getTeamByUserId({ userId: id }));
@@ -62,16 +64,75 @@ const FrontPage = () => {
       <ScrollView
         contentContainerStyle={GlobalStyle.contentContainerScroll}
       >
-        <Image
-          style={{
-            width: Dimensions.get('window').width,
-            height: Dimensions.get('window').width * (3 / 7),
-          }}
-          source={{ uri: Image.resolveAssetSource(LogoImage).uri }}
-        />
-        <Text style={[TextStyles.body, { paddingTop: 20 }]}>
-          Home page intentionally left blank for now.
-        </Text>
+        <View style={DashboardStyle.sectionWelcome}>
+          <Text style={DashboardStyle.title}>Welcome, {name}</Text>
+          <Text style={DashboardStyle.date}>
+            {DAYS_OF_WEEK[new Date().getDay()]}, {new Date().getMonth() + 1}/{new Date().getDate()}
+          </Text>
+        </View>
+
+        <View>
+          <Text style={DashboardStyle.subtitle}>Your Ranch</Text>
+
+          <View style={DashboardStyle.section}>
+            <Text style={DashboardStyle.sectionTitle}>Critical Period Countdown</Text>
+
+            <View style={DashboardStyle.critPeriodLayout}>
+              {/* Cow Image */}
+
+              <View>
+                <Text style={DashboardStyle.critDays}>{} days</Text>
+                <Text style={DashboardStyle.critText}>to calving</Text>
+              </View>
+            </View>
+
+            <View style={DashboardStyle.critPeriodLayout}>
+              {/* Cow Image */}
+
+              <View>
+                <Text style={DashboardStyle.critDays}>{} days</Text>
+                <Text style={DashboardStyle.critText}>to breeding</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={DashboardStyle.section}>
+            <Text style={DashboardStyle.sectionTitle}>Livestock status</Text>
+
+            <View>
+              <LivestockStatusCard
+                type='bcs'
+                score={5}
+              />
+              <LivestockStatusCard
+                type='dung'
+                score={0}
+              />
+            </View>
+          </View>
+        </View>
+
+        <View style={DashboardStyle.sectionPaddockStatus}>
+          <Text style={DashboardStyle.paddockStatusTitle}>Paddock Status</Text>
+
+          <ScrollView
+            horizontal={true}
+            contentContainerStyle={DashboardStyle.cardLayout}
+          >
+            {
+              ['West Field', 'DALI Paddock', 'Appa Poddock', 'Momo Poddock'].map(
+                (paddock: string) =>
+                  <PaddockStatusCard
+                    title={paddock}
+                    forage={4}
+                    days={69}
+                  />,
+              )
+            }
+
+          </ScrollView>
+        </View>
+
       </ScrollView>
     </SafeAreaView>
   );

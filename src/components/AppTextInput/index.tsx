@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, TextInput } from 'react-native';
-import Colors from '../../utils/styles/Colors';
-import TextStyles from '../../utils/styles/TextStyles';
+import { Colors, TextStyles } from '../../styles';
 
 interface AppButtonProps {
   onChangeText: (text: string) => void
@@ -13,12 +12,12 @@ interface AppButtonProps {
   multiline?: boolean
 }
 
-const AppTextInput = ({ 
-  onChangeText, 
-  value, 
-  placeholder, 
-  secureTextEntry, 
-  width, 
+const AppTextInput = ({
+  onChangeText,
+  value,
+  placeholder,
+  secureTextEntry,
+  width,
   height,
   multiline,
 }: AppButtonProps) => (
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
     padding: 10,
     textAlign: 'center',
     backgroundColor: Colors.secondary.white,
-    textColor:Colors.primary.deepGreen,
+    textColor: Colors.primary.deepGreen,
   },
 });
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import AppTextInput from '../../../components/AppTextInput';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
+import { GlobalStyle } from '../../../styles';
 // import NumberSlider from 'react-native-number-slider';
 // This external NumberSlider repo is super sketch
 
@@ -11,7 +11,7 @@ const RanchInfo2Page = () => {
   const [herdSize, setHerdSize] = useState<number>(0);
 
   const handleSubmit = () => {
-    
+
   };
 
   return (

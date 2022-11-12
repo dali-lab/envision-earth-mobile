@@ -2,8 +2,7 @@ import React from 'react';
 import { View, Text, GestureResponderEvent } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Ionicons } from '@expo/vector-icons';
-import GlobalStyle from '../../utils/styles/GlobalStyle';
-import TextStyles from '../../utils/styles/TextStyles';
+import { GlobalStyle, TextStyles } from '../../styles';
 
 export interface IDungEntry {
   rating: number,

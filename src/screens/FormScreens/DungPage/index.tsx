@@ -14,9 +14,7 @@ import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import DungEntry from '../../../components/Entries/DungEntry';
 import NavType from '../../../utils/NavType';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
-import Colors from '../../../utils/styles/Colors';
-import TextStyles from '../../../utils/styles/TextStyles';
+import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 
 const DungPage = () => {
   const isWifi = useIsConnected();
@@ -79,7 +77,7 @@ const DungPage = () => {
           notes,
           photo: image,
         });
-          
+
         await dispatch(createDungCensus({
           herdId: selectedHerd?.id as string,
           plotId: allPlots[selectedPlotId]?.id as string,
@@ -102,7 +100,7 @@ const DungPage = () => {
       <ScrollView
         contentContainerStyle={GlobalStyle.contentContainerScroll}
       >
-        <View 
+        <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -138,7 +136,7 @@ const DungPage = () => {
           >
           </View>
         </View>
-        <View 
+        <View
           style={{
             width: 310,
           }}
@@ -227,7 +225,7 @@ const DungPage = () => {
         />
       </Overlay>
       <Overlay
-        isVisible={notesOverlay} 
+        isVisible={notesOverlay}
         onBackdropPress={() => setNotesOverlay(!notesOverlay)}
         overlayStyle={GlobalStyle.overlayModal}
       >
@@ -247,8 +245,8 @@ const DungPage = () => {
           height={51}
         />
       </Overlay>
-      <Overlay 
-        isVisible={submitOverlay} 
+      <Overlay
+        isVisible={submitOverlay}
         onBackdropPress={() => setSubmitOverlay(!submitOverlay)}
         overlayStyle={GlobalStyle.overlayModal}
       >

@@ -14,7 +14,9 @@ import { getHerdByTeamId } from '../../../redux/slices/herdsSlice';
 import { getCowCensusesByHerdId } from '../../../redux/slices/cowCensusSlice';
 import { getDungCensusesByHerdId } from '../../../redux/slices/dungCensusSlice';
 import { getForageQualityCensusesByPlotId } from '../../../redux/slices/forageQualityCensusSlice';
-import { GlobalStyle, TextStyles } from '../../../utils/styles';
+import { GlobalStyle, TextStyles } from '../../../styles';
+import { LivestockStatusCard, PaddockStatusCard } from '../../../components/Dashboard';
+import DashboardStyle from '../../../styles/pages/dashboard';
 
 const FrontPage = () => {
   const navigation = useNavigation<NavType>();
@@ -57,110 +59,45 @@ const FrontPage = () => {
     }
   }, [allPlots]);
 
-  // TODO: Move these card components to a separate file
-  const LivestockStatusMessages = {
-    dung: {
-      low: 'score too low',
-      medium: 'score just right, keep it up!',
-      high: 'score too high',
-    },
-    bcs: {
-      low: 'score too low, see recommended nutrient cycle',
-      medlow: 'score average, increase for optimal BCS',
-      medium: 'optimal BCS score, keep it up!',
-      medhigh: 'score approaching too high, see recommended cycle',
-      high: 'score too high, see recommended nutrient cycle',
-    },
-  };
-  const LivestockStatusCard = (props: {
-    type: 'dung' | 'bcs',
-    score: number,
-  }) => {
-    const title = props.type === 'dung' ? 'Dung' : 'BCS';
-    let message: string;
-    if (props.type === 'dung') {
-      const scoreInterval =
-        props.score < -0.5 ? 'low' :
-          props.score > 0.5 ? 'high' :
-            'medium';
-      message = LivestockStatusMessages.dung[scoreInterval];
-    } else {
-      const scoreInterval =
-        props.score < 4 ? 'low' :
-          props.score == 4 ? 'medlow' :
-            props.score == 5 ? 'medium' :
-              props.score == 6 ? 'medhigh' :
-                'high';
-      message = LivestockStatusMessages.bcs[scoreInterval];
-    }
-
-    return <View>
-      <Text>{title}:</Text>
-      <Text>{props.score}</Text>
-      <Text>{message}</Text>
-    </View>;
-  };
-
-  const PaddockStatusCard = (props: {
-    title: string,
-    days: number,
-    forage: number,
-  }) => {
-    return <View>
-      <Text>{props.title}</Text>
-      <View>
-
-        <View>
-          <Text>{props.days}</Text>
-          <Text>days grazing/acre</Text>
-        </View>
-
-        <View>
-          <Text>{props.forage}</Text>
-          <Text>forage quality</Text>
-        </View>
-
-      </View>
-    </View>;
-  };
-
   return (
     <SafeAreaView style={GlobalStyle.container}>
       <ScrollView
         contentContainerStyle={GlobalStyle.contentContainerScroll}
       >
-        <View>
-          <Text>Welcome, {name}</Text>
-          <Text>{DAYS_OF_WEEK[new Date().getDay()]}, {new Date().getMonth() + 1}/{new Date().getDate()}</Text>
+        <View style={DashboardStyle.sectionWelcome}>
+          <Text style={DashboardStyle.title}>Welcome, {name}</Text>
+          <Text style={DashboardStyle.date}>
+            {DAYS_OF_WEEK[new Date().getDay()]}, {new Date().getMonth() + 1}/{new Date().getDate()}
+          </Text>
         </View>
 
         <View>
-          <Text>Your Ranch</Text>
+          <Text style={DashboardStyle.subtitle}>Your Ranch</Text>
 
-          <View>
-            <Text>Critical Period Countdown</Text>
+          <View style={DashboardStyle.section}>
+            <Text style={DashboardStyle.sectionTitle}>Critical Period Countdown</Text>
 
-            <View>
+            <View style={DashboardStyle.critPeriodLayout}>
               {/* Cow Image */}
 
               <View>
-                <Text>{} days</Text>
-                <Text>to calving</Text>
+                <Text style={DashboardStyle.critDays}>{} days</Text>
+                <Text style={DashboardStyle.critText}>to calving</Text>
               </View>
             </View>
 
-            <View>
+            <View style={DashboardStyle.critPeriodLayout}>
               {/* Cow Image */}
 
               <View>
-                <Text>{} days</Text>
-                <Text>to breeding</Text>
+                <Text style={DashboardStyle.critDays}>{} days</Text>
+                <Text style={DashboardStyle.critText}>to breeding</Text>
               </View>
             </View>
           </View>
 
-          <View>
-            <Text>Livestock status</Text>
+          <View style={DashboardStyle.section}>
+            <Text style={DashboardStyle.sectionTitle}>Livestock status</Text>
 
             <View>
               <LivestockStatusCard
@@ -175,10 +112,13 @@ const FrontPage = () => {
           </View>
         </View>
 
-        <View>
-          <Text>Paddock Status</Text>
+        <View style={DashboardStyle.sectionPaddockStatus}>
+          <Text style={DashboardStyle.paddockStatusTitle}>Paddock Status</Text>
 
-          <ScrollView>
+          <ScrollView
+            horizontal={true}
+            contentContainerStyle={DashboardStyle.cardLayout}
+          >
             {
               ['West Field', 'DALI Paddock', 'Appa Poddock', 'Momo Poddock'].map(
                 (paddock: string) =>

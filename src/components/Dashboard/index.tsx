@@ -38,10 +38,10 @@ const LivestockStatusCard = (props: {
     message = LivestockStatusMessages.bcs[scoreInterval];
   }
 
-  return <View>
-    <Text>{title}:</Text>
-    <Text>{props.score}</Text>
-    <Text>{message}</Text>
+  return <View style={DashboardStyle.livestockLayout}>
+    <Text style={DashboardStyle.livestockStatTitle}>{title}:</Text>
+    <Text style={DashboardStyle.livestockStatScore}>{props.score}</Text>
+    <Text style={DashboardStyle.livestockStatMsg}>{message}</Text>
   </View>;
 };
 

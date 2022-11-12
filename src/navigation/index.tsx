@@ -42,7 +42,7 @@ import {
 } from './../screens';
 import { ROUTES } from '../utils/constants';
 import { LaunchScreen } from '../screens/AuthScreens';
-import Colors from '../utils/styles/Colors';
+import { Colors } from '../styles';
 import { AntDesign, Octicons, Ionicons } from '@expo/vector-icons';
 
 const AuthStack = createStackNavigator();

@@ -12,8 +12,7 @@ import {
 import Accordion from '../../../components/Accordion';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
-import TextStyles from '../../../utils/styles/TextStyles';
+import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 
 const ResourcesPage = () => {
   const { loading, all } = useAppSelector((state) => state.resources);
@@ -57,7 +56,7 @@ const ResourcesPage = () => {
   return (
     <SafeAreaView style={GlobalStyle.container}>
       <ScrollView>
-        { loading
+        {loading
           ? <Text>Loading...</Text>
           : (
             <>

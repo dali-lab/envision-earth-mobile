@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import AppTextInput from '../../../components/AppTextInput';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
+import { GlobalStyle } from '../../../styles';
 
 const EmailPasswordPage = () => {
   const [email, setEmail] = useState<string>('');
@@ -14,7 +14,7 @@ const EmailPasswordPage = () => {
 
     if (missingFields.length === 0) {
     } else {
-      const missingFormatted = 
+      const missingFormatted =
         !email && !password ? 'email and password' :
           !email ? 'email' :
             'password';

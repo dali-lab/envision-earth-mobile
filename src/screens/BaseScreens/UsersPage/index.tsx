@@ -7,8 +7,7 @@ import { Picker } from '@react-native-picker/picker';
 import Accordion from '../../../components/Accordion';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
-import TextStyles from '../../../utils/styles/TextStyles';
+import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 
 const UsersPage = () => {
   const { loading, selectedUser } = useAppSelector((state) => state.users);
@@ -62,7 +61,7 @@ const UsersPage = () => {
   return (
     <SafeAreaView style={GlobalStyle.container}>
       <ScrollView>
-        { loading
+        {loading
           ? <Text>Loading...</Text>
           : (
             <>

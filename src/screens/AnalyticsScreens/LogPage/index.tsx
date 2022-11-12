@@ -10,9 +10,7 @@ import { IForageQualityCensus } from '../../../redux/slices/forageQualityCensusS
 import AppButton from '../../../components/AppButton';
 import NavType from '../../../utils/NavType';
 import LogEntry from '../../../components/Entries/LogEntry';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
-import TextStyles from '../../../utils/styles/TextStyles';
-import Colors from '../../../utils/styles/Colors';
+import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 import { ROUTES } from '../../../utils/constants';
 
 function average(arr: number[]) {
@@ -57,18 +55,18 @@ const LogPage = () => {
             BCS Scores
           </Text>
           <View style={GlobalStyle.horizontalLine} />
-          <View style={{ 
-            flexDirection: 'row', 
-            flexWrap: 'wrap', 
-            alignItems: 'center', 
+          <View style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            alignItems: 'center',
             justifyContent: 'center',
           }}>
             {
               Object.keys(allCowCensuses).map((id, idx) => {
                 return (
-                  <View 
-                    key={idx} 
-                    style={{ 
+                  <View
+                    key={idx}
+                    style={{
                       padding: 5,
                     }}
                   >
@@ -86,18 +84,18 @@ const LogPage = () => {
             Dung Condition
           </Text>
           <View style={GlobalStyle.horizontalLine} />
-          <View style={{ 
-            flexDirection: 'row', 
-            flexWrap: 'wrap', 
-            alignItems: 'center', 
+          <View style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            alignItems: 'center',
             justifyContent: 'center',
           }}>
             {
               Object.keys(allDungCensuses).map((id, idx) => {
                 return (
-                  <View 
-                    key={idx} 
-                    style={{ 
+                  <View
+                    key={idx}
+                    style={{
                       padding: 5,
                     }}
                   >
@@ -115,18 +113,18 @@ const LogPage = () => {
             Forage Quality Census
           </Text>
           <View style={GlobalStyle.horizontalLine} />
-          <View style={{ 
-            flexDirection: 'row', 
-            flexWrap: 'wrap', 
-            alignItems: 'center', 
+          <View style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            alignItems: 'center',
             justifyContent: 'center',
           }}>
             {
               Object.keys(allForageQualityCensuses).map((id, idx) => {
                 return (
-                  <View 
-                    key={idx} 
-                    style={{ 
+                  <View
+                    key={idx}
+                    style={{
                       padding: 5,
                     }}
                   >

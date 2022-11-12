@@ -13,9 +13,7 @@ import { AppButton, AppTextInput, PaddockSelector } from '../../../components';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import NavType from '../../../utils/NavType';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
-import Colors from '../../../utils/styles/Colors';
-import TextStyles from '../../../utils/styles/TextStyles';
+import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 
 const ForageQualPage = () => {
   const isWifi = useIsConnected();
@@ -78,7 +76,7 @@ const ForageQualPage = () => {
       <ScrollView
         contentContainerStyle={GlobalStyle.contentContainerScroll}
       >
-        <View 
+        <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',

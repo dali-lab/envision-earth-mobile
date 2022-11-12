@@ -10,7 +10,7 @@ import {
   MediaTypeOptions,
   launchImageLibraryAsync,
 } from 'expo-image-picker';
-import Colors from '../../utils/styles/Colors';
+import { Colors } from '../../styles';
 
 export interface IPhotoInput {
   uri: string,

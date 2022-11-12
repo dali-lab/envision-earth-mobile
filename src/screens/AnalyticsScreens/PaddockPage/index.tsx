@@ -7,9 +7,7 @@ import useAppDispatch from '../../../hooks/useAppDispatch';
 import { IPlot, setSelectedPlotId } from '../../../redux/slices/plotsSlice';
 import PaddockEntry from '../../../components/Entries/PaddockEntry';
 import NavType from '../../../utils/NavType';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
-import TextStyles from '../../../utils/styles/TextStyles';
-import Colors from '../../../utils/styles/Colors';
+import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 import { ROUTES } from '../../../utils/constants';
 
 const PaddockPage = () => {
@@ -25,7 +23,7 @@ const PaddockPage = () => {
         horizontal={false}
         contentContainerStyle={GlobalStyle.contentContainerScroll}
       >
-        <View 
+        <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',

@@ -14,9 +14,7 @@ import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import BCSEntry from '../../../components/Entries/BCSEntry';
 import NavType from '../../../utils/NavType';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
-import Colors from '../../../utils/styles/Colors';
-import TextStyles from '../../../utils/styles/TextStyles';
+import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 
 const BCSPage = () => {
   const isWifi = useIsConnected();
@@ -112,7 +110,7 @@ const BCSPage = () => {
       <ScrollView
         contentContainerStyle={GlobalStyle.contentContainerScroll}
       >
-        <View 
+        <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',

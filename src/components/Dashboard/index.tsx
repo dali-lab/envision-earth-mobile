@@ -1,4 +1,5 @@
 import { View, Text } from 'react-native';
+import { DashboardStyle } from '../../styles';
 
 // TODO: Move these card components to a separate file
 const LivestockStatusMessages = {
@@ -49,16 +50,35 @@ const PaddockStatusCard = (props: {
   days: number,
   forage: number,
 }) => {
-  return <View>
-    <Text>{props.title}</Text>
-    <View> {/* vertical stack */}
-      <View> {/* horizontal */}
-        <Text>{props.days}</Text>
-        <Text>days grazing/acre</Text>
+  return <View style={DashboardStyle.card}>
+    <Text style={DashboardStyle.cardTitle}>{props.title}</Text>
+    <View>
+      <View style={DashboardStyle.cardRowLayout}>
+        <Text style={[
+          DashboardStyle.cardRowItem, DashboardStyle.cardNumber,
+        ]}>
+          {props.days}
+        </Text>
+        <Text style={[
+          DashboardStyle.cardRowItem, DashboardStyle.cardText,
+        ]}>
+          days grazing/acre
+        </Text>
       </View>
-      <View> {/* horizontal */}
-        <Text>{props.forage}</Text>
-        <Text>forage quality</Text>
+
+      <View style={DashboardStyle.cardRowLayout}>
+
+        <Text style={[
+          DashboardStyle.cardRowItem, DashboardStyle.cardNumber,
+        ]}>
+          {props.forage}
+        </Text>
+        <Text style={[
+          DashboardStyle.cardRowItem, DashboardStyle.cardText,
+        ]}>
+          forage quality
+        </Text>
+
       </View>
     </View>
   </View>;

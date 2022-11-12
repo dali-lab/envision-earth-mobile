@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import Colors from '../../utils/styles/Colors';
-import TextStyles from '../../utils/styles/TextStyles';
+import Colors from '../styles/Colors';
+import TextStyles from '../styles/TextStyles';
 
 const GlobalStyle = StyleSheet.create({
   container: {
@@ -49,33 +49,13 @@ const GlobalStyle = StyleSheet.create({
     fontSize: 27.5,
   },
 
-  dropdown: {
-    height: 50,
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    backgroundColor: Colors.primary.lightOrange,
-  },
-  dropdownContainerStyle: {
-    backgroundColor: Colors.primary.lightOrange,
-  },
-  dropdownPlaceholderStyle: {
-    ...TextStyles.body,
-    color: Colors.primary.mainOrange,
-  },
-  dropdownSelectedTextStyle: {
-    ...TextStyles.body,
-    color: Colors.primary.mainOrange,
-  },
-  dropdownItemContainerStyle: {
-    backgroundColor: Colors.primary.lightOrange,
-  },
-  dropdownItemTextStyle: {
-    ...TextStyles.body,
-    color: Colors.primary.mainOrange,
-  },
-
   slider: {
     width: 329,
+  },
+
+  title: {
+    color: Colors.secondary.deepTeal,
+    ...TextStyles.title,
   },
 
   overlayModal: {
@@ -87,7 +67,7 @@ const GlobalStyle = StyleSheet.create({
   },
 
   horizontalLine: {
-    borderBottomColor: 'black', 
+    borderBottomColor: 'black',
     borderBottomWidth: 1,
     width: Dimensions.get('window').width,
   },

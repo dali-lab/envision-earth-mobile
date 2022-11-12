@@ -10,9 +10,7 @@ import { IDungCensus } from '../../../redux/slices/dungCensusSlice';
 import { IForageQualityCensus } from '../../../redux/slices/forageQualityCensusSlice';
 import NavType from '../../../utils/NavType';
 import LogEntry from '../../../components/Entries/LogEntry';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
-import TextStyles from '../../../utils/styles/TextStyles';
-import Colors from '../../../utils/styles/Colors';
+import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 
 function average(arr: number[]) {
   let sum = 0;
@@ -39,7 +37,7 @@ const SelectedPaddockPage = () => {
         horizontal={false}
         contentContainerStyle={GlobalStyle.contentContainerScroll}
       >
-        <View 
+        <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',

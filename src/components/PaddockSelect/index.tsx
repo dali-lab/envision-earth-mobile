@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
-import GlobalStyle from '../../utils/styles/GlobalStyle';
+import { DropdownStyle } from '../../styles';
 
 const PaddockSelector = (props: {
   data?: any,
@@ -12,12 +12,12 @@ const PaddockSelector = (props: {
   onChange: (item: any) => void,
 }) => {
   return <Dropdown
-    style={[GlobalStyle.dropdown, props.focus && { borderColor: 'blue' }]}
-    containerStyle={GlobalStyle.dropdownContainerStyle}
-    placeholderStyle={GlobalStyle.dropdownPlaceholderStyle}
-    selectedTextStyle={GlobalStyle.dropdownSelectedTextStyle}
-    itemContainerStyle={GlobalStyle.dropdownItemContainerStyle}
-    itemTextStyle={GlobalStyle.dropdownItemTextStyle}
+    style={[DropdownStyle.dropdown, props.focus && { borderColor: 'blue' }]}
+    containerStyle={DropdownStyle.dropdownContainerStyle}
+    placeholderStyle={DropdownStyle.dropdownPlaceholderStyle}
+    selectedTextStyle={DropdownStyle.dropdownSelectedTextStyle}
+    itemContainerStyle={DropdownStyle.dropdownItemContainerStyle}
+    itemTextStyle={DropdownStyle.dropdownItemTextStyle}
     data={props.data}
     maxHeight={300}
     labelField='label'

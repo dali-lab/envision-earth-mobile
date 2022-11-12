@@ -4,9 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import NavType from '../../../utils/NavType';
 import { ROUTES } from '../../../utils/constants';
 import AppButton from '../../../components/AppButton';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
-import TextStyles from '../../../utils/styles/TextStyles';
-import Colors from '../../../utils/styles/Colors';
+import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 
 const FormRootPage = () => {
   const navigation = useNavigation<NavType>();

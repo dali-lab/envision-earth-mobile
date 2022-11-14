@@ -1,5 +1,4 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import forageQualityCensusReducer from './slices/forageQualityCensusSlice';
 import { RootState } from './util';
 import { persistStore, persistReducer } from 'redux-persist';
 import ExpoFileSystemStorage from 'redux-persist-expo-filesystem';
@@ -14,6 +13,8 @@ import herdReducer from './slices/herdsSlice';
 import plotReducer from './slices/plotsSlice';
 import cowCensusReducer from './slices/cowCensusSlice';
 import dungCensusReducer from './slices/dungCensusSlice';
+import forageQualityCensusReducer from './slices/forageQualityCensusSlice';
+import forageQuantityCensusReducer from './slices/forageQuantityCensusSlice';
 import membershipReducer from './slices/membershipSlice';
 
 const reducers = { 
@@ -28,6 +29,7 @@ const reducers = {
   cowCensuses: cowCensusReducer,
   dungCensuses: dungCensusReducer,
   forageQuality: forageQualityCensusReducer,
+  forageQuantity: forageQuantityCensusReducer,
   membersips: membershipReducer,
 };
 

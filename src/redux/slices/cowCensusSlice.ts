@@ -10,6 +10,8 @@ export interface ICowCensus {
   bcs: number[],
   notes: string,
   tag: string,
+  createdAt: Date,
+  updatedAt: Date,
 }
 
 interface IPhotoInput {

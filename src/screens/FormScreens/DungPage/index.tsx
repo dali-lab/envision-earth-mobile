@@ -14,7 +14,7 @@ import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import DungEntry from '../../../components/Entries/DungEntry';
 import NavType from '../../../utils/NavType';
-import { GlobalStyle, TextStyles, Colors } from '../../../styles';
+import { GlobalStyle, TextStyles, Colors, DropdownStyle } from '../../../styles';
 
 const DungPage = () => {
   const isWifi = useIsConnected();
@@ -142,12 +142,12 @@ const DungPage = () => {
           }}
         >
           <Dropdown
-            style={[GlobalStyle.dropdown, plotIdFocus && { borderColor: 'blue' }]}
-            containerStyle={GlobalStyle.dropdownContainerStyle}
-            placeholderStyle={GlobalStyle.dropdownPlaceholderStyle}
-            selectedTextStyle={GlobalStyle.dropdownSelectedTextStyle}
-            itemContainerStyle={GlobalStyle.dropdownItemContainerStyle}
-            itemTextStyle={GlobalStyle.dropdownItemTextStyle}
+            style={[DropdownStyle.dropdown, plotIdFocus && { borderColor: 'blue' }]}
+            containerStyle={DropdownStyle.dropdownContainerStyle}
+            placeholderStyle={DropdownStyle.dropdownPlaceholderStyle}
+            selectedTextStyle={DropdownStyle.dropdownSelectedTextStyle}
+            itemContainerStyle={DropdownStyle.dropdownItemContainerStyle}
+            itemTextStyle={DropdownStyle.dropdownItemTextStyle}
             data={plotData}
             maxHeight={300}
             labelField='label'

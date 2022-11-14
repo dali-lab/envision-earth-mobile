@@ -9,6 +9,8 @@ export interface IDungCensus {
   photoId: string,
   ratings: number[],
   notes: string,
+  createdAt: Date,
+  updatedAt: Date,
 }
 
 interface IPhotoInput {

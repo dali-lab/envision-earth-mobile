@@ -40,6 +40,7 @@ const DashboardStyle = StyleSheet.create({
   sectionPaddockStatus: {
     backgroundColor: Colors.secondary.mediumGreen,
     padding: 20,
+    height: 300,
   },
 
   sectionTitle: {

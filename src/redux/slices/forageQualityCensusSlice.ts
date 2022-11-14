@@ -8,6 +8,8 @@ export interface IForageQualityCensus {
   photoId: string | null;
   rating: number;
   notes: string;
+  createdAt: Date,
+  updatedAt: Date,
 }
 
 export interface ForageQualityCensusState {

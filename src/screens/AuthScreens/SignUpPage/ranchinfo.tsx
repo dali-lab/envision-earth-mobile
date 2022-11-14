@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View } from 'react-native';
 import AppTextInput from '../../../components/AppTextInput';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
+import { GlobalStyle } from '../../../styles';
 
 const RanchInfoPage = () => {
   const [ranchId, setRanchId] = useState<string>('');

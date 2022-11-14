@@ -1,7 +1,7 @@
 import { View, ScrollView, Text, Button } from 'react-native';
 import AppButton from '../../../components/AppButton';
 import { Card, PageType, BootData, HeightData } from '.';
-import TextStyles from '../../../utils/styles/TextStyles';
+import { TextStyles } from '../../../styles';
 
 const StacPage = (props: {
   cardData: Card[],

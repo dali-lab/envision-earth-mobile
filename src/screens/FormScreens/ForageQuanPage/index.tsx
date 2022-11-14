@@ -2,9 +2,7 @@ import { AppButton, AppTextInput, PaddockSelector } from '../../../components';
 import { useState } from 'react';
 import { SafeAreaView, Text, View } from 'react-native';
 import StacPage from './StacPage';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
-import TextStyles from '../../../utils/styles/TextStyles';
-import Colors from '../../../utils/styles/Colors';
+import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 
 export type PageType = 'stac' | 'eyeball';
 export type BootData = 'bare' | 'mix' | 'grass';

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Colors from '../../utils/styles/Colors';
-import TextStyles from '../../utils/styles/TextStyles';
+import { Colors, TextStyles } from '../../styles';
 
 export interface ILogEntry {
   value: string,
@@ -11,9 +10,9 @@ const PaddockEntry = ({ value }: ILogEntry) => {
   return (
     <View
       style={localStyles.paddockContainer}
-    > 
+    >
       <Text style={[TextStyles.body, { color: Colors.primary.deepGreen }]}>
-        { value }
+        {value}
       </Text>
     </View>
   );

@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "buildNumber": "1",
-      "bundleIdentifier": "com.grazingearth"
+      "bundleIdentifier": "host.exp.grazing-earth-mobile"
     },
     "android": {
       "adaptiveIcon": {

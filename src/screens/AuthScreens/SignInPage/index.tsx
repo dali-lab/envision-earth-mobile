@@ -4,9 +4,7 @@ import useAppDispatch from '../../../hooks/useAppDispatch';
 import { signIn } from '../../../redux/slices/authSlice';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
-import TextStyles from '../../../utils/styles/TextStyles';
-import Colors from '../../../utils/styles/Colors';
+import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 
 const SignInPage = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +23,7 @@ const SignInPage = () => {
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
-      <Text 
+      <Text
         style={[
           TextStyles.title,
           { color: Colors.secondary.deepTeal },

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, SafeAreaView } from 'react-native';
-import GlobalStyle from '../../../utils/styles/GlobalStyle';
-import TextStyles from '../../../utils/styles/TextStyles';
+import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 
 const ForbiddenPage = () => {
   return (

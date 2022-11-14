@@ -1,8 +1,7 @@
 import React from 'react';
 import { GestureResponderEvent, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import Colors from '../../utils/styles/Colors';
-import TextStyles from '../../utils/styles/TextStyles';
+import { Colors, TextStyles } from '../../styles';
 
 interface AppButtonProps {
   onPress: (event: GestureResponderEvent) => void
@@ -14,24 +13,24 @@ interface AppButtonProps {
   height?: number
 }
 
-const AppButton = ({ 
+const AppButton = ({
   onPress,
-  title, 
+  title,
   isArrow,
   backgroundColor,
   textColor,
   width,
   height,
 }: AppButtonProps) => (
-  <TouchableOpacity 
-    onPress={onPress} 
+  <TouchableOpacity
+    onPress={onPress}
     style={[
-      styles.appButtonContainer, 
+      styles.appButtonContainer,
       { backgroundColor, width, height },
     ]}
   >
     <Text style={[
-      styles.appButtonText, 
+      styles.appButtonText,
       { color: textColor },
     ]}>
       {title}

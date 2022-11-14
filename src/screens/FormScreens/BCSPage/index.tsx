@@ -1,5 +1,5 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
-import { ScrollView, SafeAreaView, View, Text } from 'react-native';
+import React, { useState, Dispatch, SetStateAction, ReactNode } from 'react';
+import { ScrollView, SafeAreaView, View, Text, Dimensions, Image } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import { useIsConnected } from 'react-native-offline';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -8,13 +8,17 @@ import { Ionicons } from '@expo/vector-icons';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { createCowCensus, locallyCreateCowCensus } from '../../../redux/slices/cowCensusSlice';
+import Accordion from '../../../components/Accordion';
 import AppButton from '../../../components/AppButton';
 import AppTextInput from '../../../components/AppTextInput';
+import ScrollPick from '../../../components/ScrollPick';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import BCSEntry from '../../../components/Entries/BCSEntry';
 import NavType from '../../../utils/NavType';
-import { GlobalStyle, TextStyles, Colors } from '../../../styles';
+import { GlobalStyle, TextStyles, Colors, DropdownStyle } from '../../../styles';
+import { BCS_TEXT, IBCSText } from '../../../utils/sampleInfo/BCSInfo/BCSText';
+
 
 const BCSPage = () => {
   const isWifi = useIsConnected();
@@ -31,6 +35,21 @@ const BCSPage = () => {
   const [selectedPlotId, setSelectedPlotId] = useState<string>('');
   const [plotIdFocus, setPlotIdFocus] = useState(false);
   const [plotName, setPlotName] = useState('Select paddock...');
+
+  const bcsDisplayElements: Array<ReactNode> = [];
+  BCS_TEXT.forEach((e: IBCSText) => {
+    bcsDisplayElements.push(
+      <Image
+        style={{
+          width: Dimensions.get('window').width * (2 / 7),
+          height: Dimensions.get('window').width * (2 / 7),
+        }}
+        source={{ uri: e.imageUri }}
+      />,
+    );
+  });
+
+  const [selectedIdx, setSelectedIdx] = useState<number>(0);
 
   const [bcsArr, setBcsArr] = useState<number[]>([5]);
   const handleAddBcs = () => {
@@ -109,6 +128,9 @@ const BCSPage = () => {
     <SafeAreaView style={GlobalStyle.container}>
       <ScrollView
         contentContainerStyle={GlobalStyle.contentContainerScroll}
+        style={{
+          width: Dimensions.get('window').width,
+        }}
       >
         <View
           style={{
@@ -152,12 +174,12 @@ const BCSPage = () => {
           }}
         >
           <Dropdown
-            style={[GlobalStyle.dropdown, plotIdFocus && { borderColor: 'blue' }]}
-            containerStyle={GlobalStyle.dropdownContainerStyle}
-            placeholderStyle={GlobalStyle.dropdownPlaceholderStyle}
-            selectedTextStyle={GlobalStyle.dropdownSelectedTextStyle}
-            itemContainerStyle={GlobalStyle.dropdownItemContainerStyle}
-            itemTextStyle={GlobalStyle.dropdownItemTextStyle}
+            style={[DropdownStyle.dropdown, plotIdFocus && { borderColor: 'blue' }]}
+            containerStyle={DropdownStyle.dropdownContainerStyle}
+            placeholderStyle={DropdownStyle.dropdownPlaceholderStyle}
+            selectedTextStyle={DropdownStyle.dropdownSelectedTextStyle}
+            itemContainerStyle={DropdownStyle.dropdownItemContainerStyle}
+            itemTextStyle={DropdownStyle.dropdownItemTextStyle}
             data={plotData}
             maxHeight={300}
             labelField='label'
@@ -171,6 +193,36 @@ const BCSPage = () => {
               setSelectedPlotId(item.data);
             }}
           />
+        </View>
+        <ScrollPick
+          elements={bcsDisplayElements}
+          selectedIdx={selectedIdx}
+          setSelectedIdx={setSelectedIdx}
+          offsetWidth={Dimensions.get('window').width * (2 / 7)}
+        />
+        <Text style={TextStyles.subHeading}>
+          See identifiers
+        </Text>
+        <View>
+          <Accordion
+            title={'BCS ' + (selectedIdx + 1)}
+          >
+            <Text style={TextStyles.small}>
+              { BCS_TEXT[selectedIdx].description }
+            </Text>
+            <Text style={TextStyles.small}>
+              { BCS_TEXT[selectedIdx].tail }
+            </Text>
+            <Text style={TextStyles.small}>
+              { BCS_TEXT[selectedIdx].ribs }
+            </Text>
+            <Text style={TextStyles.small}>
+              { BCS_TEXT[selectedIdx].shoulder }
+            </Text>
+            <Text style={TextStyles.small}>
+              { BCS_TEXT[selectedIdx].brisket }
+            </Text>
+          </Accordion>
         </View>
         {
           bcsArr.map((bcs, index) => (

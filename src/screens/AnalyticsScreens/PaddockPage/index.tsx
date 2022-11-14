@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, SafeAreaView, Text, View, TouchableOpacity } from 'react-native';
+import { ScrollView, SafeAreaView, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import useAppSelector from '../../../hooks/useAppSelector';
@@ -22,6 +22,9 @@ const PaddockPage = () => {
       <ScrollView
         horizontal={false}
         contentContainerStyle={GlobalStyle.contentContainerScroll}
+        style={{
+          width: Dimensions.get('window').width,
+        }}
       >
         <View
           style={{

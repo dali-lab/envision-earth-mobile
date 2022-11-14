@@ -1,6 +1,6 @@
 // Pages index
-import AuthStyle from './auth';
-import DashboardStyle from './dashboard';
+import AuthStyle from './AuthStyle';
+import DashboardStyle from './DashboardStyle';
 
 export {
   AuthStyle,

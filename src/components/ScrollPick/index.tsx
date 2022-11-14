@@ -1,41 +1,40 @@
-// DEFUNCT
+// TODO: Fix offsets
 
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, ReactNode } from 'react';
 import { 
   NativeSyntheticEvent,
   NativeScrollEvent, 
-  StyleSheet,
   ScrollView,
   View,
-  Text,
 } from 'react-native';
+import ScrollPickStyle from '../../styles/components/ScrollPickStyle';
 
 interface ScrollPickProps {
-  elements: Array<number | string>,
+  elements: Array<ReactNode>,
   selectedIdx: number,
   setSelectedIdx: Dispatch<SetStateAction<number>>
+  offsetWidth: number,
 }
 
-// eslint-disable-next-line @typescript-eslint/comma-dangle
-const ScrollPick = ({ elements, selectedIdx, setSelectedIdx }: ScrollPickProps) => {
+const ScrollPick = ({ elements, selectedIdx, setSelectedIdx, offsetWidth }: ScrollPickProps) => {
   const offsets = new Array(elements.length);
-  const startOffset = 45;
-  const diffOffset = 68;
+  const startOffset = 0;
+  const diffOffset = 120;
   const originalOffset = startOffset + diffOffset * 3;
   for ( let i = 0; i < offsets.length; i++) {
     offsets[i] = startOffset + diffOffset * i;
   }
 
   const entrySelections = (idx: number) => {
-    const allTextComponents = new Array(elements.length);
+    const allComponents = new Array<ReactNode>(elements.length);
     for (let i = 0; i < elements.length; i++) {
       if (idx == i) {
-        allTextComponents[i] = <Text key={i} style={styles.selectedOption}>{elements[i]}</Text>;
+        allComponents[i] = elements[i];
       } else {
-        allTextComponents[i] = <Text key={i} style={styles.unselectedOption}>{elements[i]}</Text>;
+        allComponents[i] = elements[i];
       }
     }
-    return allTextComponents;
+    return allComponents;
   };
   let moved = false;
   const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -60,27 +59,11 @@ const ScrollPick = ({ elements, selectedIdx, setSelectedIdx }: ScrollPickProps) 
       snapToStart={false}
       contentOffset={{ x: originalOffset, y: 0 }}
     >
-      <View style={styles.buffer}></View>
+      <View style={ScrollPickStyle.buffer}></View>
       {entrySelections(selectedIdx)}
-      <View style={styles.buffer}></View>
+      <View style={ScrollPickStyle.buffer}></View>
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  unselectedOption: {
-    fontSize: 44,
-    fontWeight: 'bold',
-    margin: 20,
-  },
-  selectedOption: {
-    fontSize: 54,
-    fontWeight: 'bold',
-    margin: 15,
-  },
-  buffer: {
-    width: 200,
-  },
-});
 
 export default ScrollPick;

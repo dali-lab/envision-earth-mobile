@@ -1,98 +1,194 @@
-import { View, ScrollView, Text, Button } from 'react-native';
-import AppButton from '../../../components/AppButton';
-import { Card, PageType, BootData, HeightData } from '.';
-import { TextStyles } from '../../../styles';
+import React, { useState, Dispatch, SetStateAction } from 'react';
+import { ScrollView, SafeAreaView, View, Text } from 'react-native';
+import { Overlay } from 'react-native-elements';
+import { useIsConnected } from 'react-native-offline';
+import { Dropdown } from 'react-native-element-dropdown';
+import { useNavigation } from '@react-navigation/native';
+import Slider from '@react-native-community/slider';
+import { Ionicons } from '@expo/vector-icons';
+import useAppSelector from '../../../hooks/useAppSelector';
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import { createForageQuantityCensus } from '../../../redux/slices/forageQuantityCensusSlice';
+import { AppButton, AppTextInput, PaddockSelector } from '../../../components';
+import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
+import { IPlot } from '../../../redux/slices/plotsSlice';
+import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 
-const StacPage = (props: {
-  cardData: Card[],
-  pageInd: number,
-  numCards: number,
-  nextCard: () => void,
-  prevCard: () => void,
-  onSubmit: () => void,
-  onSetBootData: (index: number, data: BootData) => void,
-  onSetHeightData: (index: number, data: HeightData) => void,
-}) => {
+const StacPage = () => {
+  const isWifi = useIsConnected();
+  const dispatch = useAppDispatch();
 
-  const StacCard = ({ data: Card }) => {
-    return (
-      <View>
-        <Text>Transect {props.pageInd}</Text>
+  const { selectedHerd } = useAppSelector((state) => state.herds);
+  const allPlots: Record<string, IPlot> = useAppSelector((state) => state.plots.allPlots);
 
-        <Text style={[TextStyles.subHeading]}>What is your boot on?</Text>
-        <View>
-          <AppButton
-            onPress={() => props.onSetBootData(props.pageInd, 'bare')}
-            title='All bare soil'
-          />
-          <AppButton
-            onPress={() => props.onSetBootData(props.pageInd, 'mix')}
-            title='Bare soil and grass'
-          />
-          <AppButton
-            onPress={() => props.onSetBootData(props.pageInd, 'grass')}
-            title='All grass'
-          />
-        </View>
+  // TODO: Need to update this?
+  const plotData = Object.keys(allPlots).map((plotId: string) => ({
+    label: allPlots[plotId].name,
+    data: plotId,
+  }));
+  const [selectedPlotId, setSelectedPlotId] = useState<string>('');
+  const [plotIdFocus, setPlotIdFocus] = useState(false);
+  const [plotName, setPlotName] = useState('Select paddock...');
 
-        <Text style={[TextStyles.subHeading]}>Rate Forage:</Text>
-        <View>
-          <AppButton
-            onPress={() => props.onSetHeightData(props.pageInd, 's')}
-            title='S'
-          />
-          <AppButton
-            onPress={() => props.onSetHeightData(props.pageInd, 't')}
-            title='T'
-          />
-          <AppButton
-            onPress={() => props.onSetHeightData(props.pageInd, 'a')}
-            title='A'
-          />
-          <AppButton
-            onPress={() => props.onSetHeightData(props.pageInd, 'c')}
-            title='C'
-          />
-          <AppButton
-            onPress={() => props.onSetHeightData(props.pageInd, 'th')}
-            title='TH'
-          />
-          <AppButton
-            onPress={() => props.onSetHeightData(props.pageInd, 'p')}
-            title='P'
-          />
-        </View>
-      </View>
-    );
+  const [rating, setRating] = useState<number>(0);
+
+  const [image, setImage] = useState<IPhotoInput>();
+  const [imageOverlay, setImageOverlay] = useState<boolean>(false);
+
+  const [notes, setNotes] = useState<string>('');
+  const [notesOverlay, setNotesOverlay] = useState<boolean>(false);
+
+  const [submitOverlay, setSubmitOverlay] = useState<boolean>(false);
+
+  const handleCreateForageQualityCensus = async () => {
+    if (!selectedHerd) {
+      alert('Error: no selected herd');
+    } else if (!allPlots[selectedPlotId]?.id) {
+      alert('Error: no selected plot');
+    } else {
+      if (isWifi) {
+        console.log({
+          plotId: allPlots[selectedPlotId]?.id as string,
+          rating,
+          notes: (notes + ' '),
+          photo: image,
+        });
+
+        await dispatch(createForageQuantityCensus({
+          plotId: allPlots[selectedPlotId]?.id as string,
+          rating,
+          notes: (notes + ' '),
+          photo: image,
+        })).then((res) => {
+          if (res.payload) {
+            setSubmitOverlay(true);
+          }
+        });
+      }
+    }
   };
-  return (<ScrollView>
-    <Text>measurement guide</Text>
-    <Text>Learn more about STAC method</Text>
 
-    <Text>Score Forage</Text>
-
-    <Text>{props.pageInd}</Text>
-    <Text>{props.numCards}</Text>
-
-    <StacCard data={props.cardData[props.pageInd]} />
-
-    {/* [0, 1, 2, 3, 4].map(num => <StacCard index={num} key={num} />) */}
-
-    <AppButton
-      onPress={props.nextCard}
-      title='Next'
-    />
-
-    <AppButton
-      onPress={props.prevCard}
-      title='Prev'
-    />
-
-    <AppButton
-      onPress={props.onSubmit}
-      title='submit'
-    />
-  </ScrollView>);
+  return (
+    <>
+      <>
+        <View
+          style={{
+            width: 310,
+          }}
+        >
+          <PaddockSelector
+            data={plotData}
+            placeholder={!plotIdFocus ? plotName : '...'}
+            value={selectedPlotId}
+            focus={plotIdFocus}
+            onFocus={() => setPlotIdFocus(true)}
+            onBlur={() => setPlotIdFocus(false)}
+            onChange={item => {
+              setPlotName(item.label);
+              setSelectedPlotId(item.data);
+            }}
+          />
+        </View>
+        <Text style={[TextStyles.subHeading, { minWidth: 100, textAlign: 'center' }]}>Rate Forage: {rating}</Text>
+        <Slider
+          style={GlobalStyle.slider}
+          minimumValue={1}
+          maximumValue={9}
+          onValueChange={(val) => setRating(val)}
+          step={1}
+          value={rating}
+        />
+        <AppButton
+          onPress={() => setImageOverlay(!notesOverlay)}
+          title={'take photo'}
+          backgroundColor={Colors.primary.lightGreen}
+          textColor={Colors.primary.deepGreen}
+          width={215}
+          height={44}
+        />
+        <AppButton
+          onPress={() => setNotesOverlay(!notesOverlay)}
+          title={'add note'}
+          backgroundColor={Colors.primary.lightOrange}
+          textColor={Colors.primary.mainOrange}
+          width={215}
+          height={44}
+        />
+        <AppButton
+          onPress={handleCreateForageQualityCensus}
+          title={'submit'}
+          backgroundColor={Colors.primary.deepGreen}
+          textColor={Colors.secondary.white}
+          width={215}
+          height={51}
+        />
+      </>
+      <Overlay
+        isVisible={imageOverlay}
+        onBackdropPress={() => setImageOverlay(!imageOverlay)}
+        overlayStyle={GlobalStyle.overlayModal}
+      >
+        <UploadImage
+          image={image}
+          setImage={setImage as Dispatch<SetStateAction<IPhotoInput>>}
+        />
+        <AppButton
+          onPress={() => setImageOverlay(!imageOverlay)}
+          title={'ok'}
+          backgroundColor={Colors.primary.deepGreen}
+          textColor={Colors.secondary.white}
+          width={215}
+          height={51}
+        />
+      </Overlay>
+      <Overlay
+        isVisible={notesOverlay}
+        onBackdropPress={() => setNotesOverlay(!notesOverlay)}
+        overlayStyle={GlobalStyle.overlayModal}
+      >
+        <AppTextInput
+          onChangeText={(text) => setNotes(text)}
+          value={notes}
+          placeholder='Notes'
+          multiline={true}
+          width={250}
+        />
+        <AppButton
+          onPress={() => setNotesOverlay(!notesOverlay)}
+          title={'ok'}
+          backgroundColor={Colors.primary.deepGreen}
+          textColor={Colors.secondary.white}
+          width={215}
+          height={51}
+        />
+      </Overlay>
+      <Overlay
+        isVisible={submitOverlay}
+        onBackdropPress={() => setSubmitOverlay(!submitOverlay)}
+        overlayStyle={GlobalStyle.overlayModal}
+      >
+        <View>
+          <Text style={[TextStyles.title, { minWidth: 100, textAlign: 'center' }]}>Data recorded!</Text>
+          <AppButton
+            onPress={() => setSubmitOverlay(!submitOverlay)}
+            title={'enter more data'}
+            backgroundColor={Colors.primary.lightOrange}
+            textColor={Colors.primary.mainOrange}
+            width={215}
+            height={51}
+          />
+          <AppButton
+            onPress={() => setSubmitOverlay(!submitOverlay)}
+            title={'see my dashboard'}
+            backgroundColor={Colors.primary.lightOrange}
+            textColor={Colors.primary.mainOrange}
+            width={215}
+            height={51}
+          />
+        </View>
+      </Overlay>
+    </>
+  );
 };
 
 export default StacPage;

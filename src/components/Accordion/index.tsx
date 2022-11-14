@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Dimensions, Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-
-import { Colors, TextStyles } from '../../styles';
+import AccordionStyle from '../../styles/components/AccordionStyle';
 
 interface AccordionProps {
   title: string
@@ -17,60 +16,19 @@ const Accordion = ({ title, children }: AccordionProps) => {
   };
 
   return (
-    <View style={styles.outer}>
-      <TouchableOpacity style={styles.row} onPress={() => toggleExpand()}>
-        <Text style={styles.title}>{title}</Text>
+    <View style={AccordionStyle.outer}>
+      <TouchableOpacity style={AccordionStyle.row} onPress={() => toggleExpand()}>
+        <Text style={AccordionStyle.title}>{title}</Text>
         <AntDesign name={expanded ? 'minuscircleo' : 'pluscircleo'} size={30} color='white' />
       </TouchableOpacity>
       {
         expanded &&
-        <View style={styles.child}>
+        <View style={AccordionStyle.child}>
           {children}
         </View>
       }
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  title: {
-    ...TextStyles.subHeading,
-    // fontSize: 18,
-    // fontWeight:'bold',
-    color: 'white',
-    textTransform: 'uppercase',
-  },
-  outer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  row: {
-    marginTop: 10,
-    marginBottom: 10,
-    borderRadius: 24,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    height: 56,
-    width: Dimensions.get('window').width * 0.9,
-    paddingLeft: 25,
-    paddingRight: 18,
-    alignItems: 'center',
-    fontWeight: 'bold',
-    backgroundColor: Colors.primary.vibrantGreen,
-    shadowColor: '#171717',
-    shadowOffset: { width: -2, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-  },
-  parentHr: {
-    height: 1,
-    color: 'white',
-    width: '100%',
-  },
-  child: {
-    backgroundColor: 'white',
-    padding: 16,
-  },
-});
 
 export default Accordion;

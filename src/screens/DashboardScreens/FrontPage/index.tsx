@@ -7,16 +7,16 @@ import { logout } from '../../../redux/slices/authSlice';
 import AppButton from '../../../components/AppButton';
 import NavType from '../../../utils/NavType';
 import { ROUTES, DAYS_OF_WEEK } from '../../../utils/constants';
-import LogoImage from '../../../assets/dali_dark.png';
 import { getTeamByUserId } from '../../../redux/slices/teamsSlice';
 import { getPlotsByTeamId } from '../../../redux/slices/plotsSlice';
 import { getHerdByTeamId } from '../../../redux/slices/herdsSlice';
 import { getCowCensusesByHerdId } from '../../../redux/slices/cowCensusSlice';
 import { getDungCensusesByHerdId } from '../../../redux/slices/dungCensusSlice';
 import { getForageQualityCensusesByPlotId } from '../../../redux/slices/forageQualityCensusSlice';
+import { getForageQuantityCensusesByPlotId } from '../../../redux/slices/forageQuantityCensusSlice';
 import { GlobalStyle, TextStyles } from '../../../styles';
 import { LivestockStatusCard, PaddockStatusCard } from '../../../components/Dashboard';
-import DashboardStyle from '../../../styles/pages/dashboard';
+import DashboardStyle from '../../../styles/pages/DashboardStyle';
 
 const FrontPage = () => {
   const navigation = useNavigation<NavType>();
@@ -58,6 +58,13 @@ const FrontPage = () => {
       });
     }
   }, [allPlots]);
+  useEffect(() => {
+    if (allPlots) {
+      Object.keys(allPlots).forEach((plotId: string) => {
+        dispatch(getForageQuantityCensusesByPlotId({ plotId }));
+      });
+    }
+  }, [allPlots]);
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
@@ -81,7 +88,7 @@ const FrontPage = () => {
               {/* Cow Image */}
 
               <View>
-                <Text style={DashboardStyle.critDays}>{} days</Text>
+                <Text style={DashboardStyle.critDays}>{ } days</Text>
                 <Text style={DashboardStyle.critText}>to calving</Text>
               </View>
             </View>
@@ -90,7 +97,7 @@ const FrontPage = () => {
               {/* Cow Image */}
 
               <View>
-                <Text style={DashboardStyle.critDays}>{} days</Text>
+                <Text style={DashboardStyle.critDays}>{ } days</Text>
                 <Text style={DashboardStyle.critText}>to breeding</Text>
               </View>
             </View>
@@ -114,22 +121,24 @@ const FrontPage = () => {
 
         <View style={DashboardStyle.sectionPaddockStatus}>
           <Text style={DashboardStyle.paddockStatusTitle}>Paddock Status</Text>
-
           <ScrollView
             horizontal={true}
             contentContainerStyle={DashboardStyle.cardLayout}
           >
             {
-              ['West Field', 'DALI Paddock', 'Appa Poddock', 'Momo Poddock'].map(
-                (paddock: string) =>
-                  <PaddockStatusCard
-                    title={paddock}
-                    forage={4}
-                    days={69}
-                  />,
+              allPlots && (
+                Object.keys(allPlots).map((plotId, idx) => {
+                  return (
+                    <PaddockStatusCard
+                      key={idx}
+                      title={allPlots[plotId].name}
+                      forage={-404} // TBD
+                      days={-404} // TBD
+                    />
+                  );
+                })
               )
             }
-
           </ScrollView>
         </View>
 

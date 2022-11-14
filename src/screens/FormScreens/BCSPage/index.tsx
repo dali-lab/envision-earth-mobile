@@ -19,6 +19,7 @@ import NavType from '../../../utils/NavType';
 import { GlobalStyle, TextStyles, Colors, DropdownStyle } from '../../../styles';
 import { BCS_TEXT, IBCSText } from '../../../utils/sampleInfo/BCSInfo/BCSText';
 
+
 const BCSPage = () => {
   const isWifi = useIsConnected();
   const dispatch = useAppDispatch();

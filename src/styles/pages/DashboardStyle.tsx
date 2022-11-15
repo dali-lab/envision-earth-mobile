@@ -9,6 +9,7 @@ const DashboardStyle = StyleSheet.create({
   },
 
   subtitle: {
+    color: Colors.primary.deepGreen,
     ...TextStyles.subHeading,
   },
 
@@ -44,6 +45,7 @@ const DashboardStyle = StyleSheet.create({
   },
 
   sectionTitle: {
+    color: Colors.primary.deepGreen,
     ...TextStyles.subHeading,
   },
 
@@ -58,30 +60,47 @@ const DashboardStyle = StyleSheet.create({
   },
 
   critText: {
+    color: Colors.primary.deepGreen,
     ...TextStyles.body,
   },
 
   livestockLayout: {
     flex: 1,
     flexDirection: 'row',
+    alignItems: 'center',
+
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    marginVertical: 7,
+    borderRadius: 10,
   },
 
   livestockStatTitle: {
-    color: Colors.secondary.neutralYellow,
-    textAlignVertical: 'center',
     ...TextStyles.body,
   },
 
   livestockStatScore: {
-    color: Colors.primary.mainOrange,
-    textAlignVertical: 'center',
     ...TextStyles.subHeading,
   },
 
   livestockStatMsg: {
-    color: Colors.secondary.neutralYellow,
-    textAlignVertical: 'center',
     ...TextStyles.small,
+  },
+
+  livestockNutriToggle: {
+    textDecorationLine: 'underline',
+    color: Colors.secondary.deepTeal,
+    marginTop: 10,
+  },
+
+  livestockNutriContainer: {
+    backgroundColor: '#B0D1CD28',
+    borderRadius: 5,
+    padding: 10,
+  },
+
+  livestockNutriText: {
+    color: Colors.secondary.deepTeal,
   },
 
   paddockStatusTitle: {
@@ -92,6 +111,7 @@ const DashboardStyle = StyleSheet.create({
 
   cardLayout: {
     height: 'auto',
+    width: '100%',
     paddingHorizontal: 10,
     paddingVertical: 10,
   },

@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native';
-import { DashboardStyle } from '../../styles';
+import { Colors, DashboardStyle } from '../../styles';
 
 // TODO: Move these card components to a separate file
 const LivestockStatusMessages = {
@@ -16,18 +16,116 @@ const LivestockStatusMessages = {
     high: 'score too high, see recommended nutrient cycle',
   },
 };
+const Dunginfo = {
+  low: {
+    number: Colors.error.brightRed,
+    title: Colors.error.brightRed,
+    text: Colors.error.candyRed,
+    bg: Colors.error.mutedRed,
+    desc: 'score too low',
+  },
+  medium: {
+    number: Colors.primary.mainOrange,
+    title: Colors.secondary.neutralYellow,
+    text: Colors.secondary.neutralYellow,
+    bg: Colors.primary.lightOrange,
+    desc: 'score just right, keep it up!',
+  },
+  high: {
+    number: Colors.error.brightRed,
+    title: Colors.error.brightRed,
+    text: Colors.error.candyRed,
+    bg: Colors.error.mutedRed,
+    desc: 'score too high',
+  }
+}
+const BCSinfo = [
+  {},
+  {
+    number: Colors.error.brightRed,
+    title: Colors.error.brightRed,
+    text: Colors.error.candyRed,
+    bg: Colors.error.mutedRed,
+    desc: 'score too low',
+  },
+  {
+    number: Colors.error.brightRed,
+    title: Colors.error.brightRed,
+    text: Colors.error.candyRed,
+    bg: Colors.error.mutedRed,
+    desc: 'score too low',
+  },
+  {
+    number: Colors.primary.deepGreen,
+    title: Colors.primary.deepGreen,
+    text: Colors.primary.deepGreen,
+    bg: Colors.neutral[1],
+    desc: 'consult graph for ideal score',
+  },
+  {
+    number: Colors.primary.deepGreen,
+    title: Colors.primary.deepGreen,
+    text: Colors.primary.deepGreen,
+    bg: Colors.neutral[1],
+    desc: 'consult graph for ideal score',
+  },
+  {
+    number: Colors.primary.deepGreen,
+    title: Colors.primary.deepGreen,
+    text: Colors.primary.deepGreen,
+    bg: Colors.neutral[1],
+    desc: 'consult graph for ideal score',
+  },
+  {
+    number: Colors.primary.deepGreen,
+    title: Colors.primary.deepGreen,
+    text: Colors.primary.deepGreen,
+    bg: Colors.neutral[1],
+    desc: 'consult graph for ideal score',
+  },
+  {
+    number: Colors.primary.mainOrange,
+    title: Colors.secondary.neutralYellow,
+    text: Colors.secondary.neutralYellow,
+    bg: Colors.primary.lightOrange,
+    desc: 'score approaching too high',
+  },
+  {
+    number: Colors.error.brightRed,
+    title: Colors.error.brightRed,
+    text: Colors.error.candyRed,
+    bg: Colors.error.mutedRed,
+    desc: 'score too high',
+  },
+  {
+    number: Colors.error.brightRed,
+    title: Colors.error.brightRed,
+    text: Colors.error.candyRed,
+    bg: Colors.error.mutedRed,
+    desc: 'score too high',
+  },
+];
 const LivestockStatusCard = (props: {
   type: 'dung' | 'bcs',
   score: number,
 }) => {
   const title = props.type === 'dung' ? 'Dung' : 'BCS';
   let message: string;
+  let scoreStyle: any;
   if (props.type === 'dung') {
     const scoreInterval =
       props.score < -0.5 ? 'low' :
         props.score > 0.5 ? 'high' :
           'medium';
     message = LivestockStatusMessages.dung[scoreInterval];
+    const scoreInfo = Dunginfo[scoreInterval];
+    scoreStyle = {
+      title: { color: scoreInfo.title },
+      scoreNumber: { color: scoreInfo.number },
+      desc: { color: scoreInfo.text },
+      container: { backgroundColor: scoreInfo.bg },
+    };
+    message = Dunginfo[scoreInterval].desc;
   } else {
     const scoreInterval =
       props.score < 4 ? 'low' :
@@ -35,13 +133,20 @@ const LivestockStatusCard = (props: {
           props.score == 5 ? 'medium' :
             props.score == 6 ? 'medhigh' :
               'high';
-    message = LivestockStatusMessages.bcs[scoreInterval];
+    const scoreInfo = BCSinfo[Math.round(props.score)];
+    scoreStyle = {
+      title: { color: scoreInfo.title },
+      scoreNumber: { color: scoreInfo.number },
+      desc: { color: scoreInfo.text },
+      container: { backgroundColor: scoreInfo.bg },
+    };
+    message = BCSinfo[Math.round(props.score)].desc;
   }
 
-  return <View style={DashboardStyle.livestockLayout}>
-    <Text style={DashboardStyle.livestockStatTitle}>{title}:</Text>
-    <Text style={DashboardStyle.livestockStatScore}>{props.score}</Text>
-    <Text style={DashboardStyle.livestockStatMsg}>{message}</Text>
+  return <View style={[DashboardStyle.livestockLayout, scoreStyle.container]}>
+    <Text style={[DashboardStyle.livestockStatTitle, scoreStyle.title]}>{title}:</Text>
+    <Text style={[DashboardStyle.livestockStatScore, scoreStyle.scoreNumber]}>{props.score}</Text>
+    <Text style={[DashboardStyle.livestockStatMsg, scoreStyle.desc]}>{message}</Text>
   </View>;
 };
 

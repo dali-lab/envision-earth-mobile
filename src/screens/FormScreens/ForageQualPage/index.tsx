@@ -53,13 +53,6 @@ const ForageQualPage = () => {
       alert('Error: no selected plot');
     } else {
       if (isWifi) {
-        console.log({
-          plotId: allPlots[selectedPlotId]?.id as string,
-          rating,
-          notes: (notes + ' '),
-          photo: image,
-        });
-
         await dispatch(createForageQualityCensus({
           plotId: allPlots[selectedPlotId]?.id as string,
           rating,

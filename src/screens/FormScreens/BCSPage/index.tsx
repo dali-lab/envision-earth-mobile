@@ -95,15 +95,6 @@ const BCSPage = () => {
       alert('Error: no elements in BCS arr');
     } else {
       if (isWifi) {
-        console.log({
-          herdId: selectedHerd?.id as string,
-          plotId: allPlots[selectedPlotId]?.id as string,
-          bcs: bcsArr,
-          notes,
-          tag,
-          photo: image,
-        });
-
         await dispatch(createCowCensus({
           herdId: selectedHerd?.id as string,
           plotId: allPlots[selectedPlotId]?.id as string,

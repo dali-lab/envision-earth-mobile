@@ -75,14 +75,6 @@ const DungPage = () => {
       alert('Error: no elements in dung arr');
     } else {
       if (isWifi) {
-        console.log({
-          herdId: selectedHerd?.id as string,
-          plotId: allPlots[selectedPlotId]?.id as string,
-          ratings: dungArr,
-          notes,
-          photo: image,
-        });
-
         await dispatch(createDungCensus({
           herdId: selectedHerd?.id as string,
           plotId: allPlots[selectedPlotId]?.id as string,

@@ -55,13 +55,6 @@ const EyeballPage = () => {
       alert('Error: rating can\'t be empty');
     } else {
       if (isWifi) {
-        console.log({
-          plotId: allPlots[selectedPlotId]?.id as string,
-          rating,
-          notes: (notes + ' '),
-          photo: image,
-        });
-
         await dispatch(createForageQuantityCensus({
           plotId: allPlots[selectedPlotId]?.id as string,
           rating: parseInt(rating),

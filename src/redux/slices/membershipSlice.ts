@@ -49,7 +49,7 @@ export const membershipSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(createMembership.fulfilled, (state, action) => {
-      alert('Created membership as: ' + JSON.stringify(action.payload));
+      alert('Created membership!');
     });
   },
 });

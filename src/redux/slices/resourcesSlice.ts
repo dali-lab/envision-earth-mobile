@@ -129,25 +129,25 @@ export const resourceSlice = createSlice({
       const resource: IResource = action.payload as IResource;
       state.all[resource.id] = resource;
       state.indices.byValue[resource.value] = resource.id;
-      alert('Created resource as: ' + JSON.stringify(action.payload));
+      alert('Created resource!');
     });
     builder.addCase(getResource.fulfilled, (state, action) => {
       const resource: IResource = action.payload as IResource;
       state.all[resource.id] = resource;
       state.indices.byValue[resource.value] = resource.id;
-      alert('Retrieved resource as: ' + JSON.stringify(action.payload));
+      alert('Retrieved resource!');
     });
     builder.addCase(updateResource.fulfilled, (state, action) => {
       const resource: IResource = action.payload as IResource;
       state.all[resource.id] = resource;
       state.indices.byValue[resource.value] = resource.id;
-      alert('Updated resource to: ' + JSON.stringify(action.payload));
+      alert('Updated resource!');
     });
     builder.addCase(deleteResource.fulfilled, (state, action) => {
       const resource: IResource = action.payload as IResource;
       delete state.all[resource.id];
       delete state.indices.byValue[resource.value];
-      alert('Deleted resource with id ' + resource.id);
+      alert('Deleted resource!');
     });
   },
 });

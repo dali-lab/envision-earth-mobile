@@ -142,22 +142,22 @@ export const plotSlice = createSlice({
     builder.addCase(createPlots.fulfilled, (state, action) => {
       const plot: IPlot = action.payload as IPlot;
       state.allPlots[plot.id] = plot;
-      alert('Created plot as: ' + JSON.stringify(action.payload));
+      alert('Created plot!');
     });
     builder.addCase(getPlots.fulfilled, (state, action) => {
       const plot: IPlot = action.payload as IPlot;
       state.allPlots[plot.id] = plot;
-      alert('Retrieved plot as: ' + JSON.stringify(action.payload));
+      alert('Retrieved plot!');
     });
     builder.addCase(updatePlots.fulfilled, (state, action) => {
       const plot: IPlot = action.payload as IPlot;
       state.allPlots[plot.id] = plot;
-      alert('Updated plot to: ' + JSON.stringify(action.payload));
+      alert('Updated plot!');
     });
     builder.addCase(deletePlots.fulfilled, (state, action) => {
       const plot: IPlot = action.payload as IPlot;
       delete state.allPlots[plot.id];
-      alert('Deleted plot with id ' + plot.id);
+      alert('Deleted plot!');
     });
   },
 });

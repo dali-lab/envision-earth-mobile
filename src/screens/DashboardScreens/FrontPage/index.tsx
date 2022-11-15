@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, View, SafeAreaView, Dimensions, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import useAppSelector from '../../../hooks/useAppSelector';
@@ -14,9 +14,10 @@ import { getCowCensusesByHerdId } from '../../../redux/slices/cowCensusSlice';
 import { getDungCensusesByHerdId } from '../../../redux/slices/dungCensusSlice';
 import { getForageQualityCensusesByPlotId } from '../../../redux/slices/forageQualityCensusSlice';
 import { getForageQuantityCensusesByPlotId } from '../../../redux/slices/forageQuantityCensusSlice';
-import { GlobalStyle, TextStyles } from '../../../styles';
+import { Colors, GlobalStyle } from '../../../styles';
 import { LivestockStatusCard, PaddockStatusCard } from '../../../components/Dashboard';
 import DashboardStyle from '../../../styles/pages/DashboardStyle';
+
 
 const FrontPage = () => {
   const navigation = useNavigation<NavType>();
@@ -27,6 +28,8 @@ const FrontPage = () => {
   const { allPlots } = useAppSelector((state) => state.plots);
   const { selectedHerd } = useAppSelector((state) => state.herds);
   const { name } = useAppSelector((state) => state.auth);
+
+  const [isOpenGraph, setIsOpenGraph] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(getTeamByUserId({ userId: id }));
@@ -86,18 +89,18 @@ const FrontPage = () => {
 
             <View style={DashboardStyle.critPeriodLayout}>
               {/* Cow Image */}
-
+              <Image source={require('../../../assets/cow1.png')} />
               <View>
-                <Text style={DashboardStyle.critDays}>{ } days</Text>
+                <Text style={DashboardStyle.critDays}>{} days</Text>
                 <Text style={DashboardStyle.critText}>to calving</Text>
               </View>
             </View>
 
             <View style={DashboardStyle.critPeriodLayout}>
               {/* Cow Image */}
-
+              <Image source={require('../../../assets/cow2.png')} />
               <View>
-                <Text style={DashboardStyle.critDays}>{ } days</Text>
+                <Text style={DashboardStyle.critDays}>{} days</Text>
                 <Text style={DashboardStyle.critText}>to breeding</Text>
               </View>
             </View>
@@ -116,6 +119,30 @@ const FrontPage = () => {
                 score={0}
               />
             </View>
+
+            <Text
+              onPress={() => setIsOpenGraph(val => !val)}
+              style={DashboardStyle.livestockNutriToggle}
+            >See Nutrition Graph</Text>
+            {isOpenGraph && <View>
+              <Image
+                source={require('../../../assets/NutritionGraph.png')}
+                style={{ marginTop: 20 }}
+              />
+              <Text
+                style={[
+                  DashboardStyle.livestockNutriText,
+                  { paddingVertical: 10 },
+                ]}
+              >
+                Key Reminders
+              </Text>
+              <View style={DashboardStyle.livestockNutriContainer}>
+                <Text style={DashboardStyle.livestockNutriText}>Reach BCS 5 by calving time</Text>
+                <Text style={DashboardStyle.livestockNutriText}>Then BCS can fall to 3 by breeding</Text>
+                <Text style={DashboardStyle.livestockNutriText}>Rising plane of nutrition at breeding</Text>
+              </View>
+            </View>}
           </View>
         </View>
 

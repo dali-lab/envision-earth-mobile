@@ -10,6 +10,7 @@ import BCS_8 from './BCS_8.png';
 import BCS_9 from './BCS_9.png';
 
 export interface IBCSText {
+  val: number,
   imageUri: string,
   description: string,
   tail: string,
@@ -20,6 +21,7 @@ export interface IBCSText {
 
 export const BCS_TEXT: IBCSText[] = [
   {
+    val: 1,
     imageUri: Image.resolveAssetSource(BCS_1).uri,
     description: 'Severely emaciated; difficulty standing or walking. BCS 1 is very rare and is usually caused by disease or parasitism.',
     tail: 'Tailhead projects quite prominently\n' + 
@@ -32,6 +34,7 @@ export const BCS_TEXT: IBCSText[] = [
     brisket: 'No palpable fat',
   },
   {
+    val: 2,
     imageUri: Image.resolveAssetSource(BCS_2).uri,
     description: 'Emaciated, similar to BCS 1, but not weakened. All fat and most muscle has been depleted.',
     tail: 'Tailhead is less prominent, but still easily visible with space on either side\n' + 
@@ -44,6 +47,7 @@ export const BCS_TEXT: IBCSText[] = [
     brisket: 'No palpable fat',
   },
   {
+    val: 3,
     imageUri: Image.resolveAssetSource(BCS_3).uri,
     description: 'Fat is depleted, along with a slight bit of muscle',
     tail: 'Areas on either side of tailhead are partially filled\n' + 
@@ -57,6 +61,7 @@ export const BCS_TEXT: IBCSText[] = [
     brisket: 'No palpable fat',
   },
   {
+    val: 4,
     imageUri: Image.resolveAssetSource(BCS_4).uri,
     description: 'Full musculature but minimal fat cover',
     tail: 'Areas on either side of tailhead are almost filled\n' + 
@@ -69,6 +74,7 @@ export const BCS_TEXT: IBCSText[] = [
     brisket: 'No palpable fat',
   },
   {
+    val: 5,
     imageUri: Image.resolveAssetSource(BCS_5).uri,
     description: '',
     tail: 'Each side of the tail head is filled with palpable fat cover, but not mounded.\n' + 
@@ -81,6 +87,7 @@ export const BCS_TEXT: IBCSText[] = [
     brisket: 'Little fat cover in the brisket',
   },
   {
+    val: 6,
     imageUri: Image.resolveAssetSource(BCS_6).uri,
     description: '',
     tail: 'Tailhead slightly rounded. High degree of fat is palpable on either side with noticeable springiness/sponginess.\n' + 
@@ -94,6 +101,7 @@ export const BCS_TEXT: IBCSText[] = [
               'Fat cover is smooth to the look with no developing fat pockets yet.',
   },
   {
+    val: 7,
     imageUri: Image.resolveAssetSource(BCS_7).uri,
     description: '',
     tail: 'Tailhead rounded on either side by abundant fat cover. Very spongy.\n' + 
@@ -104,6 +112,7 @@ export const BCS_TEXT: IBCSText[] = [
     brisket: 'Brisket is full with spongy fat deposits.',
   },
   {
+    val: 8,
     imageUri: Image.resolveAssetSource(BCS_8).uri,
     description: 'Very fleshy and over-conditioned; more weight than is healthy.',
     tail: 'Heavy fat pockets around the tail head.\n' + 
@@ -114,6 +123,7 @@ export const BCS_TEXT: IBCSText[] = [
     brisket: 'Brisket is distended with spongy fat deposits.',
   },
   {
+    val: 9,
     imageUri: Image.resolveAssetSource(BCS_9).uri,
     description: 'Extremely obese; may have problems with mobility due to excessive weight and restriction of limbs.',
     tail: 'The tailhead, hips are buried in fatty tissue and are no longer visible.\n' + 

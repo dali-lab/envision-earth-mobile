@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { ScrollView, SafeAreaView, View, Text, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+import EyeballPage from './EyeballPage';
 import StacPage from './StacPage';
-import { AppButton  } from '../../../components';
+import { AppButton } from '../../../components';
 import NavType from '../../../utils/NavType';
 import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 
@@ -65,23 +66,32 @@ const ForageQuanPage = () => {
           }}
         >
           <AppButton
-            onPress={() => console.log('hi1')}
+            onPress={() => {
+              setIsEyeballPage(true);
+            }}
             title={'Eyeballing'}
-            backgroundColor={Colors.primary.lightGreen}
-            textColor={Colors.primary.deepGreen}
+            backgroundColor={isEyeballPage ? Colors.primary.mainOrange : Colors.secondary.white}
+            textColor={isEyeballPage ? Colors.secondary.white : Colors.primary.mainOrange}
             width={150}
             height={50}
           />
           <AppButton
-            onPress={() => console.log('hi2')}
+            onPress={() => {
+              setIsEyeballPage(false);
+            }}
             title={'STAC'}
-            backgroundColor={Colors.primary.lightGreen}
-            textColor={Colors.primary.deepGreen}
+            backgroundColor={isEyeballPage ? Colors.secondary.white : Colors.primary.mainOrange}
+            textColor={isEyeballPage ? Colors.primary.mainOrange : Colors.secondary.white}
             width={150}
             height={50}
           />
         </View>
-        <StacPage />
+        {
+          isEyeballPage ?
+            <EyeballPage />
+            : 
+            <StacPage />
+        }
       </ScrollView>
     </SafeAreaView>
   );

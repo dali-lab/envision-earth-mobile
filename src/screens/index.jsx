@@ -15,10 +15,9 @@ import {
   FormRootPage,
 } from './DashboardScreens';
 import {
+  AboutStacPage,
   BCSPage,
   DungPage,
-  RumenPage,
-  SheenPage,
   ForageQuanPage,
   ForageQualPage,
 } from './FormScreens';
@@ -29,7 +28,6 @@ import {
 } from './UserScreens';
 import {
   LogPage,
-  PaddockPage,
   SelectedPaddockPage,
 } from './AnalyticsScreens';
 
@@ -44,16 +42,14 @@ export {
   JoinTeamPage,
   FrontPage,
   FormRootPage,
+  AboutStacPage,
   BCSPage,
   DungPage,
-  RumenPage,
-  SheenPage,
   ForageQualPage,
   ForageQuanPage,
   SettingsPage,
   HelpGuidesPage,
   ProfilePage,
   LogPage,
-  PaddockPage,
   SelectedPaddockPage,
 };

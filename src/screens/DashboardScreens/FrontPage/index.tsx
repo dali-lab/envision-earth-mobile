@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Image, ScrollView, View, SafeAreaView, Dimensions, Text } from 'react-native';
+import { ScrollView, View, SafeAreaView, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';

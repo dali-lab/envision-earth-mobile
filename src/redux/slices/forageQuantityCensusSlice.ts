@@ -137,22 +137,22 @@ export const forageQuantityCensusSlice = createSlice({
     builder.addCase(createForageQuantityCensus.fulfilled, (state, action) => {
       const forageQuantityCensus: IForageQuantityCensus = action.payload as IForageQuantityCensus;
       state.all[forageQuantityCensus.id] = forageQuantityCensus;
-      alert('Created forageQuantityCensus as: ' + JSON.stringify(action.payload));
+      alert('Created forageQuantityCensus!');
     });
     builder.addCase(getForageQuantityCensus.fulfilled, (state, action) => {
       const forageQuantityCensus: IForageQuantityCensus = action.payload as IForageQuantityCensus;
       state.all[forageQuantityCensus.id] = forageQuantityCensus;
-      alert('Retrieved forageQuantityCensus as: ' + JSON.stringify(action.payload));
+      alert('Retrieved forageQuantityCensus!');
     });
     builder.addCase(updateForageQuantityCensus.fulfilled, (state, action) => {
       const forageQuantityCensus: IForageQuantityCensus = action.payload as IForageQuantityCensus;
       state.all[forageQuantityCensus.id] = forageQuantityCensus;
-      alert('Updated forageQuantityCensus to: ' + JSON.stringify(action.payload));
+      alert('Updated forageQuantityCensus!');
     });
     builder.addCase(deleteForageQuantityCensus.fulfilled, (state, action) => {
       const forageQuantityCensus: IForageQuantityCensus = action.payload as IForageQuantityCensus;
       delete state.all[forageQuantityCensus.id];
-      alert('Deleted forageQuantityCensus with id ' + forageQuantityCensus.id);
+      alert('Deleted forageQuantityCensus!');
     });
   },
 });

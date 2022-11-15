@@ -26,6 +26,7 @@ const BCSPage = () => {
 
   const { selectedHerd } = useAppSelector((state) => state.herds);
   const allPlots: Record<string, IPlot> = useAppSelector((state) => state.plots.allPlots);
+  const loading: boolean = useAppSelector((state) => state.cowCensuses.loading);
 
   // TODO: Need to update this?
   const plotData = Object.keys(allPlots).map((plotId: string) => ({
@@ -40,6 +41,7 @@ const BCSPage = () => {
   BCS_TEXT.forEach((e: IBCSText) => {
     bcsDisplayElements.push(
       <Image
+        key={e.val}
         style={{
           width: Dimensions.get('window').width * (2 / 7),
           height: Dimensions.get('window').width * (2 / 7),
@@ -79,6 +81,10 @@ const BCSPage = () => {
   const [submitOverlay, setSubmitOverlay] = useState<boolean>(false);
 
   const handleCreateCowCensus = async () => {
+    if (loading) {
+      return;
+    }
+    
     if (!selectedHerd) {
       alert('Error: no selected herd');
     } else if (!allPlots[selectedPlotId]?.id) {
@@ -89,15 +95,6 @@ const BCSPage = () => {
       alert('Error: no elements in BCS arr');
     } else {
       if (isWifi) {
-        console.log({
-          herdId: selectedHerd?.id as string,
-          plotId: allPlots[selectedPlotId]?.id as string,
-          bcs: bcsArr,
-          notes,
-          tag,
-          photo: image,
-        });
-
         await dispatch(createCowCensus({
           herdId: selectedHerd?.id as string,
           plotId: allPlots[selectedPlotId]?.id as string,
@@ -266,6 +263,7 @@ const BCSPage = () => {
           textColor={Colors.secondary.white}
           width={215}
           height={51}
+          disabled={loading}
         />
       </ScrollView>
       <Overlay

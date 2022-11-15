@@ -1,142 +1,74 @@
-import React from 'react';
-import { ScrollView, SafeAreaView, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView, SafeAreaView, View, Text, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import useAppSelector from '../../../hooks/useAppSelector';
-import useAppDispatch from '../../../hooks/useAppDispatch';
-import { IPlot } from '../../../redux/slices/plotsSlice';
-import { ICowCensus } from '../../../redux/slices/cowCensusSlice';
-import { IDungCensus } from '../../../redux/slices/dungCensusSlice';
-import { IForageQualityCensus } from '../../../redux/slices/forageQualityCensusSlice';
-import AppButton from '../../../components/AppButton';
+import { Ionicons } from '@expo/vector-icons';
+import FormPage from './FormPage';
+import PaddockPage from './PaddockPage';
+import { AppButton } from '../../../components';
 import NavType from '../../../utils/NavType';
-import LogEntry from '../../../components/Entries/LogEntry';
 import { GlobalStyle, TextStyles, Colors } from '../../../styles';
-import { ROUTES } from '../../../utils/constants';
-
-function average(arr: number[]) {
-  let sum = 0;
-  arr.forEach((i) => {
-    sum += i;
-  });
-
-  return sum / arr.length;
-}
 
 const LogPage = () => {
-  const dispatch = useAppDispatch();
-
-  const allPlots: Record<string, IPlot> = useAppSelector((state) => state.plots.allPlots);
-  const allCowCensuses: Record<string, ICowCensus> = useAppSelector((state) => state.cowCensuses.all);
-  const allDungCensuses: Record<string, IDungCensus> = useAppSelector((state) => state.dungCensuses.all);
-  const allForageQualityCensuses: Record<string, IForageQualityCensus> = useAppSelector((state) => state.forageQuality.all);
-
   const navigation = useNavigation<NavType>();
+  const [isByForm, setIsByForm] = useState<boolean>(true);
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
       <ScrollView
         horizontal={false}
         contentContainerStyle={GlobalStyle.contentContainerScroll}
+        style={{
+          width: Dimensions.get('window').width,
+        }}
       >
-        <Text
-          style={[TextStyles.title, { color: Colors.primary.mainOrange }]}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
         >
-          Logs By Form
-        </Text>
-        <AppButton
-          onPress={() => navigation.navigate(ROUTES.PADDOCK_PAGE)}
-          title='By Paddock'
-          backgroundColor={Colors.primary.lightOrange}
-          textColor={Colors.primary.mainOrange}
-          width={250}
-        />
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={[TextStyles.subHeading, { paddingTop: 10, paddingBottom: 10 }]}>
-            BCS Scores
+          <Text
+            style={[TextStyles.title, { color: Colors.primary.mainOrange }]}
+          >
+            Review Old Logs
           </Text>
-          <View style={GlobalStyle.horizontalLine} />
-          <View style={{
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            {
-              Object.keys(allCowCensuses).map((id, idx) => {
-                return (
-                  <View
-                    key={idx}
-                    style={{
-                      padding: 5,
-                    }}
-                  >
-                    <LogEntry
-                      value={average(allCowCensuses[id].bcs).toFixed(2)}
-                    />
-                  </View>
-                );
-              })
-            }
-          </View>
         </View>
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={[TextStyles.subHeading, { paddingTop: 10, paddingBottom: 10 }]}>
-            Dung Condition
-          </Text>
-          <View style={GlobalStyle.horizontalLine} />
-          <View style={{
+        <View
+          style={{
             flexDirection: 'row',
-            flexWrap: 'wrap',
+            justifyContent: 'space-between',
             alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            {
-              Object.keys(allDungCensuses).map((id, idx) => {
-                return (
-                  <View
-                    key={idx}
-                    style={{
-                      padding: 5,
-                    }}
-                  >
-                    <LogEntry
-                      value={average(allDungCensuses[id].ratings).toFixed(2)}
-                    />
-                  </View>
-                );
-              })
-            }
-          </View>
+            paddingBottom: 10,
+          }}
+        >
+          <AppButton
+            onPress={() => {
+              setIsByForm(true);
+            }}
+            title={'By Form'}
+            backgroundColor={isByForm ? Colors.primary.mainOrange : Colors.secondary.white}
+            textColor={isByForm ? Colors.secondary.white : Colors.primary.mainOrange}
+            width={150}
+            height={50}
+          />
+          <AppButton
+            onPress={() => {
+              setIsByForm(false);
+            }}
+            title={'By Paddock'}
+            backgroundColor={isByForm ? Colors.secondary.white : Colors.primary.mainOrange}
+            textColor={isByForm ? Colors.primary.mainOrange : Colors.secondary.white}
+            width={150}
+            height={50}
+          />
         </View>
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={[TextStyles.subHeading, { paddingTop: 10, paddingBottom: 10 }]}>
-            Forage Quality Census
-          </Text>
-          <View style={GlobalStyle.horizontalLine} />
-          <View style={{
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            {
-              Object.keys(allForageQualityCensuses).map((id, idx) => {
-                return (
-                  <View
-                    key={idx}
-                    style={{
-                      padding: 5,
-                    }}
-                  >
-                    <LogEntry
-                      value={allForageQualityCensuses[id].rating}
-                    />
-                  </View>
-                );
-              })
-            }
-          </View>
-        </View>
+        {
+          isByForm ?
+            <FormPage />
+            : 
+            <PaddockPage />
+        }
       </ScrollView>
     </SafeAreaView>
   );

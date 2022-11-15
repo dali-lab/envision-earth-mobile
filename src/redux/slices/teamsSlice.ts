@@ -117,11 +117,11 @@ export const teamSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(createTeam.fulfilled, (state, action) => {
       state.selectedTeam = action.payload as ITeam;
-      alert('Created team as: ' + JSON.stringify(action.payload));
+      alert('Created team!');
     });
     builder.addCase(getTeam.fulfilled, (state, action) => {
       state.selectedTeam = action.payload as ITeam;
-      alert('Retrieved team as: ' + JSON.stringify(action.payload));
+      alert('Retrieved team!');
     });
     builder.addCase(getTeamByUserId.fulfilled, (state, action) => {
       state.selectedTeam = action.payload as ITeam;
@@ -129,12 +129,12 @@ export const teamSlice = createSlice({
     });
     builder.addCase(updateTeam.fulfilled, (state, action) => {
       state.selectedTeam = action.payload as ITeam;
-      alert('Updated team to: ' + JSON.stringify(action.payload));
+      alert('Updated team!');
     });
     builder.addCase(deleteTeam.fulfilled, (state, action) => {
       const team: ITeam = action.payload as ITeam;
       state.selectedTeam = undefined;
-      alert('Deleted team with id ' + team.id);
+      alert('Deleted team!');
     });
   },
 });

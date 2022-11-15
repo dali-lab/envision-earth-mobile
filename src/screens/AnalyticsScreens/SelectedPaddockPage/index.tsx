@@ -11,15 +11,7 @@ import { IForageQualityCensus } from '../../../redux/slices/forageQualityCensusS
 import NavType from '../../../utils/NavType';
 import LogEntry from '../../../components/Entries/LogEntry';
 import { GlobalStyle, TextStyles, Colors } from '../../../styles';
-
-function average(arr: number[]) {
-  let sum = 0;
-  arr.forEach((i) => {
-    sum += i;
-  });
-
-  return sum / arr.length;
-}
+import average from '../../../utils/average';
 
 const SelectedPaddockPage = () => {
   const dispatch = useAppDispatch();

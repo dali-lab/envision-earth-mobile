@@ -37,8 +37,8 @@ const Dunginfo = {
     text: Colors.error.candyRed,
     bg: Colors.error.mutedRed,
     desc: 'score too high',
-  }
-}
+  },
+};
 const BCSinfo = [
   {},
   {
@@ -112,6 +112,7 @@ const LivestockStatusCard = (props: {
   const title = props.type === 'dung' ? 'Dung' : 'BCS';
   let message: string;
   let scoreStyle: any;
+
   if (props.type === 'dung') {
     const scoreInterval =
       props.score < -0.5 ? 'low' :
@@ -140,7 +141,7 @@ const LivestockStatusCard = (props: {
       desc: { color: scoreInfo.text },
       container: { backgroundColor: scoreInfo.bg },
     };
-    message = BCSinfo[Math.round(props.score)].desc;
+    message = BCSinfo[Math.round(props.score)].desc as string;
   }
 
   return <View style={[DashboardStyle.livestockLayout, scoreStyle.container]}>
@@ -157,7 +158,7 @@ const PaddockStatusCard = (props: {
 }) => {
   return <View style={DashboardStyle.card}>
     <Text style={DashboardStyle.cardTitle}>{props.title}</Text>
-    <View>
+    <>
       <View style={DashboardStyle.cardRowLayout}>
         <Text style={[
           DashboardStyle.cardRowItem, DashboardStyle.cardNumber,
@@ -185,7 +186,7 @@ const PaddockStatusCard = (props: {
         </Text>
 
       </View>
-    </View>
+    </>
   </View>;
 };
 

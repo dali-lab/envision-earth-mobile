@@ -111,15 +111,16 @@ const DashboardStyle = StyleSheet.create({
 
   cardLayout: {
     height: 'auto',
-    width: '100%',
     paddingHorizontal: 10,
     paddingVertical: 10,
+    alignItems: 'stretch',
   },
 
   card: {
     flex: 1,
     flexDirection: 'column',
     height: 'auto',
+    width: 200,
     backgroundColor: Colors.secondary.white,
     borderRadius: 10,
     padding: 15,
@@ -144,6 +145,7 @@ const DashboardStyle = StyleSheet.create({
 
   cardRowItem: {
     flex: 1,
+    width: 100,
   },
 
   cardNumber: {
@@ -153,7 +155,7 @@ const DashboardStyle = StyleSheet.create({
 
   cardText: {
     ...TextStyles.body,
-    color: Colors.neutral[8],
+    color: Colors.primary.deepGreen,
     textAlign: 'left',
   },
 });

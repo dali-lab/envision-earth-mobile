@@ -9,6 +9,7 @@ interface AppButtonProps {
   isArrow?: boolean
   backgroundColor?: string
   textColor?: string
+  textStyle?: any
   width?: number
   height?: number
 }
@@ -19,6 +20,7 @@ const AppButton = ({
   isArrow,
   backgroundColor,
   textColor,
+  textStyle,
   width,
   height,
 }: AppButtonProps) => (
@@ -30,7 +32,7 @@ const AppButton = ({
     ]}
   >
     <Text style={[
-      styles.appButtonText,
+      textStyle || styles.appButtonText,
       { color: textColor },
     ]}>
       {title}

@@ -158,25 +158,25 @@ export const cowCensusSlice = createSlice({
       const cowCensus: ICowCensus = action.payload as ICowCensus;
       state.all[cowCensus.id] = cowCensus;
       state.indices.byTag[cowCensus.tag] = cowCensus;
-      alert('Created cowCensus as: ' + JSON.stringify(action.payload));
+      alert('Created cowCensus!');
     });
     builder.addCase(getCowCensus.fulfilled, (state, action) => {
       const cowCensus: ICowCensus = action.payload as ICowCensus;
       state.all[cowCensus.id] = cowCensus;
       state.indices.byTag[cowCensus.tag] = cowCensus;
-      alert('Retrieved cowCensus as: ' + JSON.stringify(action.payload));
+      alert('Retrieved cowCensus!');
     });
     builder.addCase(updateCowCensus.fulfilled, (state, action) => {
       const cowCensus: ICowCensus = action.payload as ICowCensus;
       state.all[cowCensus.id] = cowCensus;
       state.indices.byTag[cowCensus.tag] = cowCensus;
-      alert('Updated cowCensus to: ' + JSON.stringify(action.payload));
+      alert('Updated cowCensus!');
     });
     builder.addCase(deleteCowCensus.fulfilled, (state, action) => {
       const cowCensus: ICowCensus = action.payload as ICowCensus;
       delete state.all[cowCensus.id];
       delete state.indices.byTag[cowCensus.tag];
-      alert('Deleted cowCensus with id ' + cowCensus.id);
+      alert('Deleted cowCensus!');
     });
   },
 });

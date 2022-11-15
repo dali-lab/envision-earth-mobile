@@ -1,6 +1,6 @@
 // With Expo Go, SERVER_URL needs to be exact IPv4 Address
 export const SERVER_URL = 'https://grazing-earth-backend.onrender.com/';
-// export const SERVER_URL = 'http://10.135.158.158:4000/';
+// export const SERVER_URL = 'http://10.135.149.198:4000/';
 
 export const ROUTES = {
   AUTHLAUNCH: 'Welcome',
@@ -20,10 +20,9 @@ export const ROUTES = {
   FORM_ROOT_PAGE: 'Forms',
   BCS_PAGE: 'BCS Form',
   DUNG_PAGE: 'Dung Form',
-  RUMEN_PAGE: 'Rumen Form',
-  SHEEN_PAGE: 'Sheen Form',
   FORAGE_QUALITY_PAGE: 'Forage Quality Form',
   FORAGE_QUANTITY_PAGE: 'Forage Quantity Form',
+  ABOUT_STAC_PAGE: 'About Stac Page',
 
   LOG_PAGE: 'Log Page',
   PADDOCK_PAGE: 'Paddock Page',

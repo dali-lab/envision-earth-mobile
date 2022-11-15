@@ -1,11 +1,8 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
-import { ScrollView, SafeAreaView, View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import { useIsConnected } from 'react-native-offline';
-import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
-import Slider from '@react-native-community/slider';
-import { Ionicons } from '@expo/vector-icons';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { createForageQuantityCensus } from '../../../redux/slices/forageQuantityCensusSlice';
@@ -13,13 +10,16 @@ import { AppButton, AppTextInput, PaddockSelector } from '../../../components';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import { GlobalStyle, TextStyles, Colors } from '../../../styles';
+import NavType from '../../../utils/NavType';
+import { ROUTES } from '../../../utils/constants';
 
-const StacPage = () => {
+const EyeballPage = () => {
   const isWifi = useIsConnected();
   const dispatch = useAppDispatch();
 
   const { selectedHerd } = useAppSelector((state) => state.herds);
   const allPlots: Record<string, IPlot> = useAppSelector((state) => state.plots.allPlots);
+  const loading: boolean = useAppSelector((state) => state.forageQuantity.loading);
 
   // TODO: Need to update this?
   const plotData = Object.keys(allPlots).map((plotId: string) => ({
@@ -30,7 +30,7 @@ const StacPage = () => {
   const [plotIdFocus, setPlotIdFocus] = useState(false);
   const [plotName, setPlotName] = useState('Select paddock...');
 
-  const [rating, setRating] = useState<number>(0);
+  const [rating, setRating] = useState<string>('0');
 
   const [image, setImage] = useState<IPhotoInput>();
   const [imageOverlay, setImageOverlay] = useState<boolean>(false);
@@ -40,23 +40,24 @@ const StacPage = () => {
 
   const [submitOverlay, setSubmitOverlay] = useState<boolean>(false);
 
+  const navigation = useNavigation<NavType>();
+
   const handleCreateForageQualityCensus = async () => {
+    if (loading) {
+      return;
+    }
+    
     if (!selectedHerd) {
       alert('Error: no selected herd');
     } else if (!allPlots[selectedPlotId]?.id) {
       alert('Error: no selected plot');
+    } else if (rating == '') {
+      alert('Error: rating can\'t be empty');
     } else {
       if (isWifi) {
-        console.log({
-          plotId: allPlots[selectedPlotId]?.id as string,
-          rating,
-          notes: (notes + ' '),
-          photo: image,
-        });
-
         await dispatch(createForageQuantityCensus({
           plotId: allPlots[selectedPlotId]?.id as string,
-          rating,
+          rating: parseInt(rating),
           notes: (notes + ' '),
           photo: image,
         })).then((res) => {
@@ -89,15 +90,17 @@ const StacPage = () => {
             }}
           />
         </View>
-        <Text style={[TextStyles.subHeading, { minWidth: 100, textAlign: 'center' }]}>Rate Forage: {rating}</Text>
-        <Slider
-          style={GlobalStyle.slider}
-          minimumValue={1}
-          maximumValue={9}
-          onValueChange={(val) => setRating(val)}
-          step={1}
-          value={rating}
-        />
+        <TouchableOpacity
+          onPress={() => navigation.navigate(ROUTES.ABOUT_STAC_PAGE)}
+        >
+          <Text
+            style={[TextStyles.body, {
+              color: Colors.secondary.deepTeal,
+            }]}
+          >
+            Learn more about STAC method
+          </Text>
+        </TouchableOpacity>
         <AppButton
           onPress={() => setImageOverlay(!notesOverlay)}
           title={'take photo'}
@@ -121,6 +124,7 @@ const StacPage = () => {
           textColor={Colors.secondary.white}
           width={215}
           height={51}
+          disabled={loading}
         />
       </>
       <Overlay
@@ -191,4 +195,4 @@ const StacPage = () => {
   );
 };
 
-export default StacPage;
+export default EyeballPage;

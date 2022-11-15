@@ -29,15 +29,13 @@ import {
   FormRootPage,
   BCSPage,
   DungPage,
-  RumenPage,
-  SheenPage,
+  AboutStacPage,
   SettingsPage,
   HelpGuidesPage,
   ProfilePage,
   ForageQualPage,
   ForageQuanPage,
   LogPage,
-  PaddockPage,
   SelectedPaddockPage,
 } from './../screens';
 import { ROUTES } from '../utils/constants';
@@ -105,10 +103,9 @@ const FormStackScreen = () => {
       <FormStack.Screen name={ROUTES.FORM_ROOT_PAGE} component={FormRootPage} />
       <FormStack.Screen name={ROUTES.BCS_PAGE} component={BCSPage} />
       <FormStack.Screen name={ROUTES.DUNG_PAGE} component={DungPage} />
-      <FormStack.Screen name={ROUTES.RUMEN_PAGE} component={RumenPage} />
-      <FormStack.Screen name={ROUTES.SHEEN_PAGE} component={SheenPage} />
       <FormStack.Screen name={ROUTES.FORAGE_QUALITY_PAGE} component={ForageQualPage} />
       <FormStack.Screen name={ROUTES.FORAGE_QUANTITY_PAGE} component={ForageQuanPage} />
+      <FormStack.Screen name={ROUTES.ABOUT_STAC_PAGE} component={AboutStacPage} />
     </FormStack.Navigator>
   );
 };
@@ -120,12 +117,12 @@ const AnalyticsStackScreen = () => {
       initialRouteName={ROUTES.LOG_PAGE}
     >
       <AnalyticsStack.Screen name={ROUTES.LOG_PAGE} component={LogPage} />
-      <AnalyticsStack.Screen name={ROUTES.PADDOCK_PAGE} component={PaddockPage} />
       <AnalyticsStack.Screen name={ROUTES.SELECTED_PADDOCK_PAGE} component={SelectedPaddockPage} />
     </AnalyticsStack.Navigator>
   );
 };
 
+// Deprecated
 const SettingsDrawerNavigator = () => {
   return (
     <SettingsDrawer.Navigator

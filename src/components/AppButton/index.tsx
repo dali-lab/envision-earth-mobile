@@ -12,6 +12,7 @@ interface AppButtonProps {
   textStyle?: any
   width?: number
   height?: number
+  disabled?: boolean
 }
 
 const AppButton = ({
@@ -23,6 +24,7 @@ const AppButton = ({
   textStyle,
   width,
   height,
+  disabled,
 }: AppButtonProps) => (
   <TouchableOpacity
     onPress={onPress}
@@ -30,6 +32,7 @@ const AppButton = ({
       styles.appButtonContainer,
       { backgroundColor, width, height },
     ]}
+    disabled={disabled}
   >
     <Text style={[
       textStyle || styles.appButtonText,

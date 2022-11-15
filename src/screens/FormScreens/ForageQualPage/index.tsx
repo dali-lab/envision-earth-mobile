@@ -21,6 +21,7 @@ const ForageQualPage = () => {
 
   const { selectedHerd } = useAppSelector((state) => state.herds);
   const allPlots: Record<string, IPlot> = useAppSelector((state) => state.plots.allPlots);
+  const loading: boolean = useAppSelector((state) => state.forageQuality.loading);
 
   // TODO: Need to update this?
   const plotData = Object.keys(allPlots).map((plotId: string) => ({
@@ -42,19 +43,16 @@ const ForageQualPage = () => {
   const [submitOverlay, setSubmitOverlay] = useState<boolean>(false);
 
   const handleCreateForageQualityCensus = async () => {
+    if (loading) {
+      return;
+    }
+    
     if (!selectedHerd) {
       alert('Error: no selected herd');
     } else if (!allPlots[selectedPlotId]?.id) {
       alert('Error: no selected plot');
     } else {
       if (isWifi) {
-        console.log({
-          plotId: allPlots[selectedPlotId]?.id as string,
-          rating,
-          notes: (notes + ' '),
-          photo: image,
-        });
-
         await dispatch(createForageQualityCensus({
           plotId: allPlots[selectedPlotId]?.id as string,
           rating,
@@ -162,6 +160,7 @@ const ForageQualPage = () => {
           textColor={Colors.secondary.white}
           width={215}
           height={51}
+          disabled={loading}
         />
       </ScrollView>
       <Overlay

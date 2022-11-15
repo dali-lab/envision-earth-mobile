@@ -22,6 +22,7 @@ const DungPage = () => {
 
   const { selectedHerd } = useAppSelector((state) => state.herds);
   const allPlots: Record<string, IPlot> = useAppSelector((state) => state.plots.allPlots);
+  const loading: boolean = useAppSelector((state) => state.dungCensuses.loading);
 
   // TODO: Need to update this?
   const plotData = Object.keys(allPlots).map((plotId: string) => ({
@@ -59,7 +60,11 @@ const DungPage = () => {
 
   const [submitOverlay, setSubmitOverlay] = useState<boolean>(false);
 
-  const handleCreateCowCensus = async () => {
+  const handleCreateDungCensus = async () => {
+    if (loading) {
+      return;
+    }
+    
     if (!selectedHerd) {
       alert('Error: no selected herd');
     } else if (!allPlots[selectedPlotId]?.id) {
@@ -70,14 +75,6 @@ const DungPage = () => {
       alert('Error: no elements in dung arr');
     } else {
       if (isWifi) {
-        console.log({
-          herdId: selectedHerd?.id as string,
-          plotId: allPlots[selectedPlotId]?.id as string,
-          ratings: dungArr,
-          notes,
-          photo: image,
-        });
-
         await dispatch(createDungCensus({
           herdId: selectedHerd?.id as string,
           plotId: allPlots[selectedPlotId]?.id as string,
@@ -198,12 +195,13 @@ const DungPage = () => {
           height={44}
         />
         <AppButton
-          onPress={handleCreateCowCensus}
+          onPress={handleCreateDungCensus}
           title={'submit'}
           backgroundColor={Colors.primary.deepGreen}
           textColor={Colors.secondary.white}
           width={215}
           height={51}
+          disabled={loading}
         />
       </ScrollView>
       <Overlay

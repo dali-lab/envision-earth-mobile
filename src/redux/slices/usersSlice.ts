@@ -104,15 +104,15 @@ export const usersSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(createUser.fulfilled, (state, action) => {
       state.selectedUser = action.payload as IUser;
-      alert('Created user as: ' + JSON.stringify(action.payload));
+      alert('Created user!');
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
       state.selectedUser = action.payload as IUser;
-      alert('Retrieved user as: ' + JSON.stringify(action.payload));
+      alert('Retrieved user!');
     });
     builder.addCase(updateUser.fulfilled, (state, action) => {
       state.selectedUser = action.payload as IUser;
-      alert('Updated user to: ' + JSON.stringify(action.payload));
+      alert('Updated user!');
     });
     builder.addCase(deleteUser.fulfilled, (state, action) => {
       const user: IUser = action.payload as IUser;
@@ -120,7 +120,7 @@ export const usersSlice = createSlice({
       if (curSelectedUser.id === user.id) {
         state.selectedUser = undefined;
       }
-      alert('Deleted user with id ' + user.id);
+      alert('Deleted user!');
     });
   },
 });

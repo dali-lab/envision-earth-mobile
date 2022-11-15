@@ -146,22 +146,22 @@ export const dungCensusSlice = createSlice({
     builder.addCase(createDungCensus.fulfilled, (state, action) => {
       const dungCensus: IDungCensus = action.payload as IDungCensus;
       state.all[dungCensus.id] = dungCensus;
-      alert('Created dungCensus as: ' + JSON.stringify(action.payload));
+      alert('Created dungCensus!');
     });
     builder.addCase(getDungCensus.fulfilled, (state, action) => {
       const dungCensus: IDungCensus = action.payload as IDungCensus;
       state.all[dungCensus.id] = dungCensus;
-      alert('Retrieved dungCensus as: ' + JSON.stringify(action.payload));
+      alert('Retrieved dungCensus!');
     });
     builder.addCase(updateDungCensus.fulfilled, (state, action) => {
       const dungCensus: IDungCensus = action.payload as IDungCensus;
       state.all[dungCensus.id] = dungCensus;
-      alert('Updated dungCensus to: ' + JSON.stringify(action.payload));
+      alert('Updated dungCensus!');
     });
     builder.addCase(deleteDungCensus.fulfilled, (state, action) => {
       const dungCensus: IDungCensus = action.payload as IDungCensus;
       delete state.all[dungCensus.id];
-      alert('Deleted dungCensus with id ' + dungCensus.id);
+      alert('Deleted dungCensus!');
     });
   },
 });

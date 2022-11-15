@@ -74,7 +74,14 @@ export const getHerdByTeamId = createAsyncThunk(
 
 export const updateHerd = createAsyncThunk(
   'herds/updateHerd',
-  async (req: { id: string, name: string, }, { dispatch }) => {
+  async (req: { 
+    id: string, 
+    teamId?: string, 
+    breed?: string, 
+    count?: number, 
+    breedingDate?: Date, 
+    calvingDate?: Date 
+  }, { dispatch }) => {
     dispatch(startHerdsLoading());
     return axios
       .patch(`${SERVER_URL}herds/${req.id}`, req)

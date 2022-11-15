@@ -75,7 +75,15 @@ export const getTeamByUserId = createAsyncThunk(
 
 export const updateTeam = createAsyncThunk(
   'teams/updateTeam',
-  async (req: { id: string, name: string, }, { dispatch }) => {
+  async (req: { 
+    id: string, 
+    name?: string, 
+    acreSize?: number, 
+    address?: string,
+    yrsRanch?: number,
+    yrsHolMang?: number,
+    code?: string,
+  }, { dispatch }) => {
     dispatch(startTeamsLoading());
     return axios
       .patch(`${SERVER_URL}teams/${req.id}`, req)

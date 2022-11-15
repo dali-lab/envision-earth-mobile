@@ -7,16 +7,18 @@ import { logout } from '../../../redux/slices/authSlice';
 import AppButton from '../../../components/AppButton';
 import NavType from '../../../utils/NavType';
 import { ROUTES, DAYS_OF_WEEK } from '../../../utils/constants';
-import { getTeamByUserId } from '../../../redux/slices/teamsSlice';
+import { getTeamByUserId, ITeam } from '../../../redux/slices/teamsSlice';
 import { getPlotsByTeamId } from '../../../redux/slices/plotsSlice';
-import { getHerdByTeamId } from '../../../redux/slices/herdsSlice';
-import { getCowCensusesByHerdId } from '../../../redux/slices/cowCensusSlice';
-import { getDungCensusesByHerdId } from '../../../redux/slices/dungCensusSlice';
+import { getHerdByTeamId, IHerd } from '../../../redux/slices/herdsSlice';
+import { getCowCensusesByHerdId, ICowCensus } from '../../../redux/slices/cowCensusSlice';
+import { getDungCensusesByHerdId, IDungCensus } from '../../../redux/slices/dungCensusSlice';
 import { getForageQualityCensusesByPlotId } from '../../../redux/slices/forageQualityCensusSlice';
 import { getForageQuantityCensusesByPlotId } from '../../../redux/slices/forageQuantityCensusSlice';
 import { Colors, GlobalStyle } from '../../../styles';
 import { LivestockStatusCard, PaddockStatusCard } from '../../../components/Dashboard';
 import DashboardStyle from '../../../styles/pages/DashboardStyle';
+import average from '../../../utils/average';
+import { diffDays } from '../../../utils/dateUtil';
 
 
 const FrontPage = () => {
@@ -24,10 +26,12 @@ const FrontPage = () => {
   const dispatch = useAppDispatch();
 
   const { id } = useAppSelector((state) => state.auth); // userId
-  const { selectedTeam } = useAppSelector((state) => state.teams);
+  const selectedTeam: ITeam = useAppSelector((state) => state.teams.selectedTeam);
   const { allPlots } = useAppSelector((state) => state.plots);
-  const { selectedHerd } = useAppSelector((state) => state.herds);
+  const selectedHerd: IHerd = useAppSelector((state) => state.herds.selectedHerd);
   const { name } = useAppSelector((state) => state.auth);
+  const latestCowCensus: ICowCensus = useAppSelector((state) => state.cowCensuses.indices.latest);
+  const latestDungCensus: IDungCensus = useAppSelector((state) => state.dungCensuses.indices.latest);
 
   const [isOpenGraph, setIsOpenGraph] = useState<boolean>(false);
 
@@ -91,7 +95,7 @@ const FrontPage = () => {
               {/* Cow Image */}
               <Image source={require('../../../assets/cow1.png')} />
               <View>
-                <Text style={DashboardStyle.critDays}>{} days</Text>
+                <Text style={DashboardStyle.critDays}>{diffDays(new Date(), new Date())} days</Text>
                 <Text style={DashboardStyle.critText}>to calving</Text>
               </View>
             </View>
@@ -100,7 +104,7 @@ const FrontPage = () => {
               {/* Cow Image */}
               <Image source={require('../../../assets/cow2.png')} />
               <View>
-                <Text style={DashboardStyle.critDays}>{} days</Text>
+                <Text style={DashboardStyle.critDays}>{diffDays(new Date(), new Date())} days</Text>
                 <Text style={DashboardStyle.critText}>to breeding</Text>
               </View>
             </View>
@@ -112,11 +116,11 @@ const FrontPage = () => {
             <View>
               <LivestockStatusCard
                 type='bcs'
-                score={5}
+                score={average(latestCowCensus?.bcs)}
               />
               <LivestockStatusCard
                 type='dung'
-                score={0}
+                score={average(latestDungCensus?.ratings)}
               />
             </View>
 
@@ -159,8 +163,8 @@ const FrontPage = () => {
                     <PaddockStatusCard
                       key={idx}
                       title={allPlots[plotId].name}
-                      forage={-404} // TBD
-                      days={-404} // TBD
+                      forage={0} // TBD
+                      days={0} // TBD
                     />
                   );
                 })

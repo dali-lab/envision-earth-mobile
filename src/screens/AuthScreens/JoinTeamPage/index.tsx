@@ -13,7 +13,7 @@ import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 const JoinTeamPage = () => {
   const dispatch = useAppDispatch();
   const { id } = useAppSelector((state) => state.auth);
-  const [teamId, setTeamId] = useState<string>('');
+  const [teamId, setTeamId] = useState<string>('ab98e8aee-0f7b-4ac8-9fd5-5bb982c0367d');
 
   const handleSubmit = async () => {
     // Send only if all fields filled in

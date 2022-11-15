@@ -10,6 +10,7 @@ interface AppButtonProps {
   width?: number
   height?: number
   multiline?: boolean
+  editable?: boolean
 }
 
 const AppTextInput = ({

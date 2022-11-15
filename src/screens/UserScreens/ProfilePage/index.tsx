@@ -1,6 +1,6 @@
 import { AppButton, AppTextInput } from '../../../components';
 import { useState } from 'react';
-import { SafeAreaView, Text, TextInput, View } from 'react-native';
+import { SafeAreaView, Text, View, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useIsConnected } from 'react-native-offline';
 import useAppSelector from '../../../hooks/useAppSelector';
@@ -114,23 +114,23 @@ const ProfilePage = () => {
               <View style={ProfileStyle.fieldsContainer}>
                 <Text style={ProfileStyle.sectionHeading}>Experience</Text>
                 <Text style={ProfileStyle.fieldTitle}>Years Ranching:</Text>
-                <Text>{selectedTeam.yrsRanch}</Text>
+                <Text style={styles.textContainer}>{selectedTeam.yrsRanch}</Text>
                 <Text style={ProfileStyle.fieldTitle}>Years Holistic Ranching:</Text>
-                <Text>{selectedTeam.yrsHolMang}</Text>
+                <Text style={styles.textContainer}>{selectedTeam.yrsHolMang}</Text>
                 <Text style={ProfileStyle.sectionHeading}>Ranching Information</Text>
                 <Text style={ProfileStyle.fieldTitle}>Ranch Address:</Text>
-                <Text>{selectedTeam.address}</Text>
+                <Text style={styles.textContainer}>{selectedTeam.address}</Text>
                 <Text style={ProfileStyle.fieldTitle}>Land Area:</Text>
-                <Text>{selectedTeam.acreSize}</Text>
+                <Text style={styles.textContainer}>{selectedTeam.acreSize}</Text>
                 <Text style={ProfileStyle.fieldTitle}>Cattle Breed:</Text>
-                <Text>{selectedHerd.breed}</Text>
+                <Text style={styles.textContainer}>{selectedHerd.breed}</Text>
                 <Text style={ProfileStyle.fieldTitle}># of Cattle in Herd:</Text>
-                <Text>{selectedHerd.count}</Text>
+                <Text style={styles.textContainer}>{selectedHerd.count}</Text>
                 <Text style={ProfileStyle.sectionHeading}>Critical Dates</Text>
                 <Text style={ProfileStyle.fieldTitle}>Breeding Period:</Text>
-                <Text>{selectedHerd.breedingDate.toString()}</Text>
+                <Text style={styles.textContainer}>{selectedHerd.breedingDate.toString()}</Text>
                 <Text style={ProfileStyle.fieldTitle}>Calving Date:</Text>
-                <Text>{selectedHerd.calvingDate.toString()}</Text>
+                <Text style={styles.textContainer}>{selectedHerd.calvingDate.toString()}</Text>
               </View>
             </> 
             :
@@ -213,5 +213,18 @@ const ProfilePage = () => {
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  textContainer: {
+    ...TextStyles.body,
+    borderColor: 'lightgrey',
+    borderRadius: 12,
+    borderWidth: 1,
+    width: '100%',
+    padding: 10,
+    textAlign: 'center',
+    textColor: Colors.primary.deepGreen,
+  },
+});
 
 export default ProfilePage;

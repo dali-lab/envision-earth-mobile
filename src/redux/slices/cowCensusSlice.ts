@@ -35,6 +35,7 @@ export interface CowCensusState {
   all: Record<string, ICowCensus>
   indices: {
     byTag: Record<string, ICowCensus> // value => ICowCensus
+    latest: ICowCensus | undefined
   },
   drafts: ICreateCowCensusRequest[],
 }
@@ -44,6 +45,7 @@ const initialState: CowCensusState = {
   all: {},
   indices: {
     byTag: {},
+    latest: undefined,
   },
   drafts: [],
 };
@@ -153,11 +155,15 @@ export const cowCensusSlice = createSlice({
         state.all[cowCensus.id] = cowCensus;
         state.indices.byTag[cowCensus.tag] = cowCensus;
       });
+      if (cowCensuses.length > 0) {
+        state.indices.latest = cowCensuses.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())[0];
+      }
     });
     builder.addCase(createCowCensus.fulfilled, (state, action) => {
       const cowCensus: ICowCensus = action.payload as ICowCensus;
       state.all[cowCensus.id] = cowCensus;
       state.indices.byTag[cowCensus.tag] = cowCensus;
+      state.indices.latest = cowCensus;
       alert('Created cowCensus!');
     });
     builder.addCase(getCowCensus.fulfilled, (state, action) => {
@@ -170,12 +176,19 @@ export const cowCensusSlice = createSlice({
       const cowCensus: ICowCensus = action.payload as ICowCensus;
       state.all[cowCensus.id] = cowCensus;
       state.indices.byTag[cowCensus.tag] = cowCensus;
+      state.indices.latest = cowCensus;
       alert('Updated cowCensus!');
     });
     builder.addCase(deleteCowCensus.fulfilled, (state, action) => {
       const cowCensus: ICowCensus = action.payload as ICowCensus;
       delete state.all[cowCensus.id];
       delete state.indices.byTag[cowCensus.tag];
+      if (state.indices.latest && cowCensus.id === state.indices.latest.id) {
+        delete state.indices.latest;
+        if (Object.values(state.all).length > 0) {
+          state.indices.latest = Object.values(state.all).sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())[0];
+        }
+      }
       alert('Deleted cowCensus!');
     });
   },

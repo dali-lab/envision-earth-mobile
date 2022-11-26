@@ -67,26 +67,33 @@ const SignUpPage = () => {
     /* if (!email) alert('Please enter an email address!');
     else if (!password) alert('Please enter a password!');
     else if (!name) alert('Please enter a name!'); */
-    // email, password, name 
     await dispatch(signUp({ email: loginPageData.email, password: loginPageData.pwd, name: namePageData.fname })).then(() => {
       navigation.navigate(ROUTES.AUTHLAUNCH);
     });
   };
 
-  const nextPage = () => {
+  function onPageSubmit<Type>(data: Type, stateSet: (value: React.SetStateAction<Type>) => void): void {
+    stateSet(data);
     setPageInd(val => val + 1);
-  };
+  }
+
+  async function onFinalSubmit<Type>(data: Type, stateSet: (value: React.SetStateAction<Type>) => void): Promise<void> {
+    stateSet(data);
+    await dispatch(signUp({ email: loginPageData.email, password: loginPageData.pwd, name: namePageData.fname })).then(() => {
+      navigation.navigate(ROUTES.AUTHLAUNCH);
+    });
+  }
 
   const pages = [
-    <LoginPage onSubmit={(data: LoginData) => setLoginPageData(data)} />,
-    <RanchRolePage onSubmit={(data: RanchRoleData) => setRanchRolePageData(data)} />,
-    <FirstLastNamePage onSubmit={(data: FirstLastNameData) => setNamePageData(data)} />,
-    <RanchAddressPage onSubmit={(data: RanchAddressData) => setRanchAddrPageData(data)} />,
-    <RanchDetailsPage onSubmit={(data: RanchDetailsData) => setRanchDetailsPageData(data)} />,
-    <CattleDetailsPage onSubmit={(data: CattleDetailsData) => setCattlePageData(data)} />,
-    <PaddocksDetailsPage onSubmit={(data: PaddocksDetailsData) => setPaddockPageData(data)} />,
-    <BreedingDatePage onSubmit={(data: BreedingDateData) => setBreedingPageData(data)} />,
-    <CalvingDatePage onSubmit={(data: CalvingDateData) => setCalvingPageData(data)} />,
+    <LoginPage onSubmit={(data: LoginData) => onPageSubmit(data, setLoginPageData)} />,
+    <RanchRolePage onSubmit={(data: RanchRoleData) => onPageSubmit(data, setRanchRolePageData)} />,
+    <FirstLastNamePage onSubmit={(data: FirstLastNameData) => onPageSubmit(data, setNamePageData)} />,
+    <RanchAddressPage onSubmit={(data: RanchAddressData) => onPageSubmit(data, setRanchAddrPageData)} />,
+    <RanchDetailsPage onSubmit={(data: RanchDetailsData) => onPageSubmit(data, setRanchDetailsPageData)} />,
+    <CattleDetailsPage onSubmit={(data: CattleDetailsData) => onPageSubmit(data, setCattlePageData)} />,
+    <PaddocksDetailsPage onSubmit={(data: PaddocksDetailsData) => onPageSubmit(data, setPaddockPageData)} />,
+    <BreedingDatePage onSubmit={(data: BreedingDateData) => onPageSubmit(data, setBreedingPageData)} />,
+    <CalvingDatePage onSubmit={(data: CalvingDateData) => onFinalSubmit(data, setCalvingPageData)} />,
   ];
 
   return (
@@ -94,45 +101,6 @@ const SignUpPage = () => {
       <View>
         {pages[pageInd]}
       </View>
-
-      <Text
-        style={[
-          TextStyles.title,
-          { color: Colors.secondary.deepTeal },
-        ]}
-      >
-        Sign Up
-      </Text>
-      <AppTextInput
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-        placeholder='email'
-        width={331}
-        height={59}
-      />
-      <AppTextInput
-        onChangeText={(text) => setPassword(text)}
-        value={password}
-        placeholder='password'
-        secureTextEntry={true}
-        width={331}
-        height={59}
-      />
-      <AppTextInput
-        onChangeText={(text) => setName(text)}
-        value={name}
-        placeholder='name'
-        width={331}
-        height={59}
-      />
-      <AppButton
-        onPress={handleSubmit}
-        title={'sign up'}
-        backgroundColor={Colors.primary.mainOrange}
-        textColor={Colors.secondary.white}
-        width={331}
-        height={59}
-      />
     </SafeAreaView>
   );
 };

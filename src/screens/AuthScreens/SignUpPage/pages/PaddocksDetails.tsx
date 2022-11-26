@@ -20,6 +20,14 @@ const PaddocksDetailsPage = (props: {
     });
   };
 
+  const onPressSubmit = () => {
+    if (paddocks.length === 0) {
+      alert('Please enter at least one paddock');
+      return;
+    }
+    props.onSubmit({ paddocks });
+  };
+
   return <View>
     <View>
       {paddocks.map((paddock, idx) => <View>
@@ -42,7 +50,7 @@ const PaddocksDetailsPage = (props: {
     </View>
 
     <AppButton
-      onPress={() => props.onSubmit({ paddocks })}
+      onPress={onPressSubmit}
       title='→'
     />
   </View>;

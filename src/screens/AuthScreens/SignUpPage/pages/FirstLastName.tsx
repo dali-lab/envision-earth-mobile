@@ -9,6 +9,17 @@ const FirstLastNamePage = (props: {
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
 
+  const onPressSubmit = () => {
+    if (fname === '') {
+      alert('Please enter your first name');
+      return;
+    } else if (lname === '') {
+      alert('Please enter your last name');
+      return;
+    }
+    props.onSubmit({ fname, lname });
+  };
+
   return <View>
     <Text>Introduce yourself!</Text>
 
@@ -26,7 +37,7 @@ const FirstLastNamePage = (props: {
     </View>
 
     <AppButton
-      onPress={() => props.onSubmit({ fname, lname })}
+      onPress={onPressSubmit}
       title='→'
     />
   </View>;

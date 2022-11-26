@@ -12,6 +12,26 @@ const RanchAddressPage = (props: {
   const [zip, setZip] = useState('');
   const [country, setCountry] = useState('');
 
+  const onPressSubmit = () => {
+    if (addr === '') {
+      alert('Please enter a street address');
+      return;
+    } else if (city === '') {
+      alert('Please enter a city');
+      return;
+    } else if (state === '') {
+      alert('Please enter a state');
+      return;
+    } else if (zip === '') {
+      alert('Please enter a zip code');
+      return;
+    } else if (country === '') {
+      alert('Please enter a country');
+      return;
+    }
+    props.onSubmit({ address: addr, city, state, zip, country });
+  };
+
   return <View>
     <Text>Ranch Address</Text>
 
@@ -65,7 +85,7 @@ const RanchAddressPage = (props: {
     </View>
 
     <AppButton
-      onPress={() => props.onSubmit({ address: addr, city, state, zip, country })}
+      onPress={onPressSubmit}
       title='→'
     />
   </View>;

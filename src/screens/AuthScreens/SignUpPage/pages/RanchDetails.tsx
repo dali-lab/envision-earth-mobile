@@ -14,8 +14,19 @@ const dropdownData = Array.from(
 const RanchDetailsPage = (props: {
   onSubmit: (data: RanchDetailsData) => void,
 }) => {
-  const [yrsRanching, setYrsRanching] = useState<number>(0);
-  const [yrsHolistic, setYrsHolistic] = useState<number>(0);
+  const [yrsRanching, setYrsRanching] = useState<number>(-1);
+  const [yrsHolistic, setYrsHolistic] = useState<number>(-1);
+
+  const onPressSubmit = () => {
+    if (yrsRanching === -1) {
+      alert('Please enter the numbers of years you have been ranching');
+      return;
+    } else if (yrsHolistic === -1) {
+      alert('Please enter the number of years you have been holistic ranching');
+      return;
+    }
+    props.onSubmit({ yrsRanching, yrsHolistic });
+  };
 
   return <View>
     <Text>Ranch Details</Text>
@@ -40,7 +51,7 @@ const RanchDetailsPage = (props: {
       />
     </View>
     <AppButton
-      onPress={() => props.onSubmit({ yrsRanching, yrsHolistic })}
+      onPress={onPressSubmit}
       title='→'
     />
   </View>;

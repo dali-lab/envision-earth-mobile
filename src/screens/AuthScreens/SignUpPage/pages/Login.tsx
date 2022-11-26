@@ -12,15 +12,19 @@ const LoginPage = (props: {
   const [confirm, setConfirm] = useState('');
 
   const onPressSubmit = () => {
-    if (pwd.length < 6) {
+    if (uname === '') {
+      alert('Please enter a username');
+      return;
+    } else if (email === '') {
+      alert('Please enter an email');
+      return;
+    } else if (pwd.length < 6) {
       alert('Password must be at least 6 characters long');
       return;
-    }
-    if (pwd !== confirm) {
+    } else if (pwd !== confirm) {
       alert('Password must match password confirmation');
       return;
     }
-
     props.onSubmit({ uname, email, pwd });
   };
 

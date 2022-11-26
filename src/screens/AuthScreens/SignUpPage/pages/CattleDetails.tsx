@@ -15,7 +15,18 @@ const CattleDetailsPage = (props: {
   onSubmit: (data: CattleDetailsData) => void,
 }) => {
   const [breed, setBreed] = useState('');
-  const [numCattle, setNumCattle] = useState(0);
+  const [numCattle, setNumCattle] = useState(-1);
+
+  const onPressSubmit = () => {
+    if (breed === '') {
+      alert('Please enter a cattle breed');
+      return;
+    } else if (numCattle === -1) {
+      alert('Please enter the number of cattle');
+      return;
+    }
+    props.onSubmit({ cattleBreed: breed, numCattle });
+  };
 
   return <View>
     <Text>Cattle Details</Text>
@@ -38,7 +49,7 @@ const CattleDetailsPage = (props: {
       />
     </View>
     <AppButton
-      onPress={() => props.onSubmit({ cattleBreed: breed, numCattle })}
+      onPress={onPressSubmit}
       title='→'
     />
   </View>;

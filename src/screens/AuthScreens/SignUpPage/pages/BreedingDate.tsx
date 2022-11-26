@@ -1,9 +1,10 @@
 import { AppButton, AppTextInput } from 'components';
 import { useState } from 'react';
 import { View, Text } from 'react-native';
+import { BreedingDateData } from '../pageData';
 
 const BreedingDatePage = (props: {
-  onSubmit: (date: Date) => null,
+  onSubmit: (data: BreedingDateData) => void,
 }) => {
   const [date, setDate] = useState('');
 
@@ -12,7 +13,7 @@ const BreedingDatePage = (props: {
     if (!dateRegex.test(date) || Date.parse(date) === NaN) {
       alert('Please enter a date in the form mm/dd/yyyy');
     }
-    props.onSubmit(new Date(date));
+    props.onSubmit({ date: new Date(date) });
   };
 
   return <View>

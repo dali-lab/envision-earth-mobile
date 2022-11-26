@@ -2,6 +2,7 @@ import { AppButton } from 'components';
 import { useState } from 'react';
 import { View, Text } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import { RanchDetailsData } from '../pageData';
 
 const dropdownData = Array.from(
   { length: 50 },
@@ -11,7 +12,7 @@ const dropdownData = Array.from(
   });
 
 const RanchDetailsPage = (props: {
-  onSubmit: (yrsRanching: number, yrsHolistic: number) => null,
+  onSubmit: (data: RanchDetailsData) => void,
 }) => {
   const [yrsRanching, setYrsRanching] = useState<number>(0);
   const [yrsHolistic, setYrsHolistic] = useState<number>(0);
@@ -39,7 +40,7 @@ const RanchDetailsPage = (props: {
       />
     </View>
     <AppButton
-      onPress={() => props.onSubmit(yrsRanching, yrsHolistic)}
+      onPress={() => props.onSubmit({ yrsRanching, yrsHolistic })}
       title='→'
     />
   </View>;

@@ -1,15 +1,10 @@
 import { AppTextInput, AppButton } from 'components';
 import { useState } from 'react';
 import { View, Text } from 'react-native';
+import { RanchAddressData } from '../pageData';
 
 const RanchAddressPage = (props: {
-  onSubmit: (
-    addr: string,
-    city: string,
-    state: string,
-    zip: string,
-    country: string
-  ) => null,
+  onSubmit: (data: RanchAddressData) => void,
 }) => {
   const [addr, setAddr] = useState('');
   const [city, setCity] = useState('');
@@ -70,7 +65,7 @@ const RanchAddressPage = (props: {
     </View>
 
     <AppButton
-      onPress={() => props.onSubmit(addr, city, state, zip, country)}
+      onPress={() => props.onSubmit({ address: addr, city, state, zip, country })}
       title='→'
     />
   </View>;

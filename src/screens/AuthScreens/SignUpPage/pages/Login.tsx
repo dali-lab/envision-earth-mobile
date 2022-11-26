@@ -1,9 +1,10 @@
 import { AppButton, AppTextInput } from 'components';
 import { useState } from 'react';
 import { View, Text } from 'react-native';
+import { LoginData } from '../pageData';
 
 const LoginPage = (props: {
-  onSubmit: (uname: string, email: string, pwd: string) => null,
+  onSubmit: (data: LoginData) => void,
 }) => {
   const [uname, setUname] = useState('');
   const [email, setEmail] = useState('');
@@ -20,7 +21,7 @@ const LoginPage = (props: {
       return;
     }
 
-    props.onSubmit(uname, email, pwd);
+    props.onSubmit({ uname, email, pwd });
   };
 
   return <View>

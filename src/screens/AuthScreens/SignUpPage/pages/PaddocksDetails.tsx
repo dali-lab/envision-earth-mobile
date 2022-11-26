@@ -1,9 +1,10 @@
 import { AppButton, AppTextInput } from 'components';
 import { useState } from 'react';
 import { View, Text } from 'react-native';
+import { PaddocksDetailsData } from '../pageData';
 
 const PaddocksDetailsPage = (props: {
-  onSubmit: (paddocks: string[]) => null,
+  onSubmit: (data: PaddocksDetailsData) => void,
 }) => {
   const [paddocks, setPaddocks] = useState<string[]>([]);
   const addPaddock = () => {
@@ -41,7 +42,7 @@ const PaddocksDetailsPage = (props: {
     </View>
 
     <AppButton
-      onPress={() => props.onSubmit(paddocks)}
+      onPress={() => props.onSubmit({ paddocks })}
       title='→'
     />
   </View>;

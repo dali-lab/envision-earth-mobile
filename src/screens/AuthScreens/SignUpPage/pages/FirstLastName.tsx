@@ -1,9 +1,10 @@
 import { AppButton, AppTextInput } from 'components';
 import { useState } from 'react';
 import { View, Text } from 'react-native';
+import { FirstLastNameData } from '../pageData';
 
 const FirstLastNamePage = (props: {
-  onSubmit: (fname: string, lname: string) => null,
+  onSubmit: (data: FirstLastNameData) => void,
 }) => {
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
@@ -25,7 +26,7 @@ const FirstLastNamePage = (props: {
     </View>
 
     <AppButton
-      onPress={() => props.onSubmit(fname, lname)}
+      onPress={() => props.onSubmit({ fname, lname })}
       title='→'
     />
   </View>;

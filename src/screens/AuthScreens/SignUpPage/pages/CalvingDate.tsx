@@ -1,9 +1,10 @@
 import { AppButton, AppTextInput } from 'components';
 import { useState } from 'react';
 import { View, Text } from 'react-native';
+import { CalvingDateData } from '../pageData';
 
 const CalvingDatePage = (props: {
-  onSubmit: (date: Date) => null,
+  onSubmit: (data: CalvingDateData) => void,
 }) => {
   const [date, setDate] = useState('');
 
@@ -12,7 +13,7 @@ const CalvingDatePage = (props: {
     if (!dateRegex.test(date) || Date.parse(date) === NaN) {
       alert('Please enter a date in the form mm/dd/yyyy');
     }
-    props.onSubmit(new Date(date));
+    props.onSubmit({ date: new Date(date) });
   };
 
   return <View>
@@ -31,7 +32,6 @@ const CalvingDatePage = (props: {
       onPress={onPressSubmit}
       title='→'
     />
-
   </View>;
 };
 

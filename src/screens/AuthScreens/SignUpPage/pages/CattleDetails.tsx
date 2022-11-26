@@ -2,6 +2,7 @@ import { AppButton, AppTextInput } from 'components';
 import { useState } from 'react';
 import { Text, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import { CattleDetailsData } from '../pageData';
 
 const dropdownData = Array.from(
   { length: 100 },
@@ -11,7 +12,7 @@ const dropdownData = Array.from(
   });
 
 const CattleDetailsPage = (props: {
-  onSubmit: (breed: string, numCattle: number) => null,
+  onSubmit: (data: CattleDetailsData) => void,
 }) => {
   const [breed, setBreed] = useState('');
   const [numCattle, setNumCattle] = useState(0);
@@ -37,7 +38,7 @@ const CattleDetailsPage = (props: {
       />
     </View>
     <AppButton
-      onPress={() => props.onSubmit(breed, numCattle)}
+      onPress={() => props.onSubmit({ cattleBreed: breed, numCattle })}
       title='→'
     />
   </View>;

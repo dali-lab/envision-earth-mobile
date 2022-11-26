@@ -1,17 +1,16 @@
 import { AppButton } from 'components';
 import { View, Text } from 'react-native';
-
-type RanchRole = 'owner' | 'collaborator';
+import { RanchRoleData } from '../pageData';
 
 const RanchRolePage = (props: {
-  onSubmit: (role: RanchRole) => null,
+  onSubmit: (data: RanchRoleData) => void,
 }) => {
   const onPressOwner = () => {
-    props.onSubmit('owner');
+    props.onSubmit({ role: 'owner' });
   };
 
   const onPressCollaborator = () => {
-    props.onSubmit('collaborator');
+    props.onSubmit({ role: 'collaborator' });
   };
 
   return <View>

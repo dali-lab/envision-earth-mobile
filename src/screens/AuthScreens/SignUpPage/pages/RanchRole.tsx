@@ -1,4 +1,4 @@
-import { AppButton } from 'components';
+import { AppButton } from '../../../../components';
 import { View, Text } from 'react-native';
 import { RanchRoleData } from '../pageData';
 

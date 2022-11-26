@@ -1,4 +1,4 @@
-import { AppButton, AppTextInput } from 'components';
+import { AppButton, AppTextInput } from '../../../../components';
 import { useState } from 'react';
 import { Text, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';

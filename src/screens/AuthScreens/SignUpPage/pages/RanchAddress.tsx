@@ -1,4 +1,4 @@
-import { AppTextInput, AppButton } from 'components';
+import { AppTextInput, AppButton } from '../../../../components';
 import { useState } from 'react';
 import { View, Text } from 'react-native';
 import { RanchAddressData } from '../pageData';

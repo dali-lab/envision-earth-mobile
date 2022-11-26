@@ -1,4 +1,4 @@
-import { AppButton, AppTextInput } from 'components';
+import { AppButton, AppTextInput } from '../../../../components';
 import { useState } from 'react';
 import { View, Text } from 'react-native';
 import { CalvingDateData } from '../pageData';

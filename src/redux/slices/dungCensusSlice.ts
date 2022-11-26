@@ -32,7 +32,7 @@ export interface DungCensusState {
   loading: boolean
   all: Record<string, IDungCensus>
   indices: {
-    byTag: Record<string, IDungCensus> // value => IDungCensus
+    latest: IDungCensus | undefined
   }
 }
 
@@ -40,7 +40,7 @@ const initialState: DungCensusState = {
   loading: false,
   all: {},
   indices: {
-    byTag: {},
+    latest: undefined,
   },
 };
 
@@ -142,10 +142,14 @@ export const dungCensusSlice = createSlice({
       dungCensuses.forEach((dungCensus: IDungCensus) => {
         state.all[dungCensus.id] = dungCensus;
       });
+      if (dungCensuses.length > 0) {
+        state.indices.latest = dungCensuses.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())[0];
+      }
     });
     builder.addCase(createDungCensus.fulfilled, (state, action) => {
       const dungCensus: IDungCensus = action.payload as IDungCensus;
       state.all[dungCensus.id] = dungCensus;
+      state.indices.latest = dungCensus;
       alert('Created dungCensus!');
     });
     builder.addCase(getDungCensus.fulfilled, (state, action) => {
@@ -156,11 +160,18 @@ export const dungCensusSlice = createSlice({
     builder.addCase(updateDungCensus.fulfilled, (state, action) => {
       const dungCensus: IDungCensus = action.payload as IDungCensus;
       state.all[dungCensus.id] = dungCensus;
+      state.indices.latest = dungCensus;
       alert('Updated dungCensus!');
     });
     builder.addCase(deleteDungCensus.fulfilled, (state, action) => {
       const dungCensus: IDungCensus = action.payload as IDungCensus;
       delete state.all[dungCensus.id];
+      if (state.indices.latest && dungCensus.id === state.indices.latest.id) {
+        delete state.indices.latest;
+        if (Object.values(state.all).length > 0) {
+          state.indices.latest = Object.values(state.all).sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())[0];
+        }
+      }
       alert('Deleted dungCensus!');
     });
   },

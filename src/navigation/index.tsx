@@ -37,6 +37,7 @@ import {
   ForageQuanPage,
   LogPage,
   SelectedPaddockPage,
+  LoadingPage,
 } from './../screens';
 import { ROUTES } from '../utils/constants';
 import { LaunchScreen } from '../screens/AuthScreens';
@@ -228,6 +229,7 @@ const RootNavigation = () => {
   const { authenticated } = useAppSelector((state) => state.auth);
   const { id, role } = useAppSelector((state) => state.auth); // userId
   const { selectedTeam } = useAppSelector((state) => state.teams);
+  const { isDataLoaded } = useAppSelector((state) => state.sync);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -258,6 +260,12 @@ const RootNavigation = () => {
     return (
       <NavigationContainer>
         <NoTeamStackScreen />
+      </NavigationContainer>
+    );
+  } else if (!isDataLoaded) {
+    return (
+      <NavigationContainer>
+        <LoadingPage />
       </NavigationContainer>
     );
   } else {

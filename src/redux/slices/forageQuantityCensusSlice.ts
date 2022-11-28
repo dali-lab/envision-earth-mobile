@@ -15,11 +15,13 @@ export interface IForageQuantityCensus {
 export interface ForageQuantityCensusState {
   loading: boolean
   all: Record<string, IForageQuantityCensus>
+  byPlot: Record<string, IForageQuantityCensus[]>
 }
 
 const initialState: ForageQuantityCensusState = {
   loading: false,
   all: {},
+  byPlot: {},
 };
 
 export const getForageQuantityCensusesByPlotId = createAsyncThunk(
@@ -132,26 +134,49 @@ export const forageQuantityCensusSlice = createSlice({
       const forageQuantityCensuses: IForageQuantityCensus[] = action.payload as IForageQuantityCensus[];
       forageQuantityCensuses.forEach((forageQuantityCensus: IForageQuantityCensus) => {
         state.all[forageQuantityCensus.id] = forageQuantityCensus;
+        if (!state.byPlot[forageQuantityCensus.plotId]) {
+          state.byPlot[forageQuantityCensus.plotId] = [];
+        }
+        state.byPlot[forageQuantityCensus.plotId].push(forageQuantityCensus);
+      });
+      Object.keys(state.byPlot).forEach((plotId: string) => {
+        state.byPlot[plotId] = state.byPlot[plotId].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
       });
     });
     builder.addCase(createForageQuantityCensus.fulfilled, (state, action) => {
       const forageQuantityCensus: IForageQuantityCensus = action.payload as IForageQuantityCensus;
       state.all[forageQuantityCensus.id] = forageQuantityCensus;
+      if (!state.byPlot[forageQuantityCensus.plotId]) {
+        state.byPlot[forageQuantityCensus.plotId] = [];
+      }
+      state.byPlot[forageQuantityCensus.plotId].push(forageQuantityCensus);
+      state.byPlot[forageQuantityCensus.plotId] = state.byPlot[forageQuantityCensus.plotId].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
       alert('Created forageQuantityCensus!');
     });
     builder.addCase(getForageQuantityCensus.fulfilled, (state, action) => {
       const forageQuantityCensus: IForageQuantityCensus = action.payload as IForageQuantityCensus;
       state.all[forageQuantityCensus.id] = forageQuantityCensus;
+      if (!state.byPlot[forageQuantityCensus.plotId]) {
+        state.byPlot[forageQuantityCensus.plotId] = [];
+      }
+      state.byPlot[forageQuantityCensus.plotId].push(forageQuantityCensus);
+      state.byPlot[forageQuantityCensus.plotId] = state.byPlot[forageQuantityCensus.plotId].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
       alert('Retrieved forageQuantityCensus!');
     });
     builder.addCase(updateForageQuantityCensus.fulfilled, (state, action) => {
       const forageQuantityCensus: IForageQuantityCensus = action.payload as IForageQuantityCensus;
       state.all[forageQuantityCensus.id] = forageQuantityCensus;
+      if (!state.byPlot[forageQuantityCensus.plotId]) {
+        state.byPlot[forageQuantityCensus.plotId] = [];
+      }
+      state.byPlot[forageQuantityCensus.plotId].push(forageQuantityCensus);
+      state.byPlot[forageQuantityCensus.plotId] = state.byPlot[forageQuantityCensus.plotId].sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
       alert('Updated forageQuantityCensus!');
     });
     builder.addCase(deleteForageQuantityCensus.fulfilled, (state, action) => {
       const forageQuantityCensus: IForageQuantityCensus = action.payload as IForageQuantityCensus;
       delete state.all[forageQuantityCensus.id];
+      // TODO: Splice from byPlot
       alert('Deleted forageQuantityCensus!');
     });
   },

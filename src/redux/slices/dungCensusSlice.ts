@@ -143,7 +143,7 @@ export const dungCensusSlice = createSlice({
         state.all[dungCensus.id] = dungCensus;
       });
       if (dungCensuses.length > 0) {
-        state.indices.latest = dungCensuses.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())[0];
+        state.indices.latest = dungCensuses.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())[0];
       }
     });
     builder.addCase(createDungCensus.fulfilled, (state, action) => {
@@ -169,7 +169,7 @@ export const dungCensusSlice = createSlice({
       if (state.indices.latest && dungCensus.id === state.indices.latest.id) {
         delete state.indices.latest;
         if (Object.values(state.all).length > 0) {
-          state.indices.latest = Object.values(state.all).sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())[0];
+          state.indices.latest = Object.values(state.all).sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())[0];
         }
       }
       alert('Deleted dungCensus!');

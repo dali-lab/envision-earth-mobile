@@ -156,7 +156,7 @@ export const cowCensusSlice = createSlice({
         state.indices.byTag[cowCensus.tag] = cowCensus;
       });
       if (cowCensuses.length > 0) {
-        state.indices.latest = cowCensuses.sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())[0];
+        state.indices.latest = cowCensuses.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())[0];
       }
     });
     builder.addCase(createCowCensus.fulfilled, (state, action) => {
@@ -186,7 +186,7 @@ export const cowCensusSlice = createSlice({
       if (state.indices.latest && cowCensus.id === state.indices.latest.id) {
         delete state.indices.latest;
         if (Object.values(state.all).length > 0) {
-          state.indices.latest = Object.values(state.all).sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())[0];
+          state.indices.latest = Object.values(state.all).sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())[0];
         }
       }
       alert('Deleted cowCensus!');

@@ -13,6 +13,7 @@ import {
 import {
   FrontPage,
   FormRootPage,
+  LoadingPage,
 } from './DashboardScreens';
 import {
   AboutStacPage,
@@ -42,6 +43,7 @@ export {
   JoinTeamPage,
   FrontPage,
   FormRootPage,
+  LoadingPage,
   AboutStacPage,
   BCSPage,
   DungPage,

@@ -1,8 +1,9 @@
 import { AppButton } from '../../../../components';
 import { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Dimensions } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { RanchDetailsData } from '../pageData';
+import { Colors, SignupStyle, signupPages } from '../../../../styles';
 
 const dropdownData = Array.from(
   { length: 50 },
@@ -28,31 +29,41 @@ const RanchDetailsPage = (props: {
     props.onSubmit({ yrsRanching, yrsHolistic });
   };
 
-  return <View>
-    <Text>Ranch Details</Text>
+  return <View style={[SignupStyle.pageContainer, SignupStyle.pageContainerFlex]}>
+    <Text style={SignupStyle.pageText}>Ranch Details</Text>
 
-    <View>
-      <Text>How many years have you been at this ranch?</Text>
+    <View style={SignupStyle.pageContentContainer}>
+      <Text style={signupPages.years.fieldText}>How many years have you been at this ranch?</Text>
       <Dropdown
         data={dropdownData}
         labelField='label'
         valueField='value'
         onChange={(item) => setYrsRanching(item.value)}
         placeholder='select'
+        selectedTextStyle={SignupStyle.dropdownSelectedText}
+        placeholderStyle={SignupStyle.dropdownSelectedText}
+        style={SignupStyle.dropdown}
       />
 
-      <Text>How many years have you spent Holistic Ranching?</Text>
+      <Text style={signupPages.years.fieldText}>How many years have you spent Holistic Ranching?</Text>
       <Dropdown
         data={dropdownData}
         labelField='label'
         valueField='value'
         onChange={(item) => setYrsHolistic(item.value)}
         placeholder='select'
+        selectedTextStyle={SignupStyle.dropdownSelectedText}
+        placeholderStyle={SignupStyle.dropdownSelectedText}
+        style={SignupStyle.dropdown}
       />
     </View>
+
     <AppButton
       onPress={onPressSubmit}
-      title='→'
+      title='next →'
+      textColor={Colors.secondary.white}
+      backgroundColor={Colors.primary.vibrantGreen}
+      width={Dimensions.get('window').width * 0.35}
     />
   </View>;
 };

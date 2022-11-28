@@ -1,7 +1,8 @@
 import { AppTextInput, AppButton } from '../../../../components';
 import { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Dimensions } from 'react-native';
 import { RanchAddressData } from '../pageData';
+import { Colors, signupPages, SignupStyle } from '../../../../styles';
 
 const RanchAddressPage = (props: {
   onSubmit: (data: RanchAddressData) => void,
@@ -32,53 +33,59 @@ const RanchAddressPage = (props: {
     props.onSubmit({ address: addr, city, state, zip, country });
   };
 
-  return <View>
-    <Text>Ranch Address</Text>
+  return <View style={[SignupStyle.pageContainer, SignupStyle.pageContainerFlex]}>
+    <Text style={SignupStyle.pageText}>Ranch Address</Text>
 
-    <View>
-      <Text>Street Address</Text>
-      <AppTextInput
-        value={addr}
-        onChangeText={(val) => setAddr(val)}
-        placeholder=''
-      />
+    <View style={SignupStyle.pageContentContainer}>
+      <View style={signupPages.address.vertSpaceContainer}>
+        <Text style={signupPages.address.fieldText}>Street Address</Text>
+        <AppTextInput
+          value={addr}
+          onChangeText={(val) => setAddr(val)}
+          placeholder=''
+        />
+      </View>
 
-      <View>
+      <View style={signupPages.address.horizontalFieldContainer}>
         <View>
-          <Text>City</Text>
+          <Text style={signupPages.address.fieldText}>City</Text>
           <AppTextInput
             value={city}
             onChangeText={(val) => setCity(val)}
             placeholder=''
+            width={Dimensions.get('window').width * 0.35}
           />
         </View>
 
         <View>
-          <Text>State</Text>
+          <Text style={signupPages.address.fieldText}>State</Text>
           <AppTextInput
             value={state}
             onChangeText={(val) => setState(val)}
             placeholder=''
+            width={Dimensions.get('window').width * 0.35}
           />
         </View>
       </View>
 
-      <View>
+      <View style={signupPages.address.horizontalFieldContainer}>
         <View>
-          <Text>Zip</Text>
+          <Text style={signupPages.address.fieldText}>Zip</Text>
           <AppTextInput
             value={zip}
             onChangeText={(val) => setZip(val)}
             placeholder=''
+            width={Dimensions.get('window').width * 0.35}
           />
         </View>
 
         <View>
-          <Text>Country</Text>
+          <Text style={signupPages.address.fieldText}>Country</Text>
           <AppTextInput
             value={country}
             onChangeText={(val) => setCountry(val)}
             placeholder=''
+            width={Dimensions.get('window').width * 0.35}
           />
         </View>
       </View>
@@ -86,9 +93,12 @@ const RanchAddressPage = (props: {
 
     <AppButton
       onPress={onPressSubmit}
-      title='→'
+      title='next →'
+      textColor={Colors.secondary.white}
+      backgroundColor={Colors.primary.vibrantGreen}
+      width={Dimensions.get('window').width * 0.35}
     />
-  </View>;
+  </View >;
 };
 
 export default RanchAddressPage;

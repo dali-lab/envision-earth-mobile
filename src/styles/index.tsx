@@ -5,6 +5,8 @@ import TextStyles from './TextStyles';
 import {
   AuthStyle,
   DashboardStyle,
+  SignupStyle,
+  signupPages,
 } from './pages';
 
 import {
@@ -18,4 +20,6 @@ export {
   Dropdown as DropdownStyle,
   AuthStyle,
   DashboardStyle,
+  SignupStyle,
+  signupPages,
 };

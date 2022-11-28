@@ -1,11 +1,18 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'redux/util';
-import { clearCowCensusDrafts, ICowCensus, ICreateCowCensusRequest } from './cowCensusSlice';
 import { SERVER_URL } from '../../utils/constants.js';
+import { getTeamByUserId, ITeam } from './teamsSlice';
+import { getPlotsByTeamId, IPlot } from './plotsSlice';
+import { getHerdByTeamId, IHerd } from './herdsSlice';
+import { clearCowCensusDrafts, ICowCensus, ICreateCowCensusRequest, getCowCensusesByHerdId } from './cowCensusSlice';
+import { getDungCensusesByHerdId, IDungCensus } from './dungCensusSlice';
+import { getForageQualityCensusesByPlotId } from './forageQualityCensusSlice';
+import { getForageQuantityCensusesByPlotId } from './forageQuantityCensusSlice';
 import axios from 'axios';
 
 export type SyncState = {
   loadingTasks: Set<string>,
+  isDataLoaded: boolean,
 };
 
 interface SyncData {
@@ -20,11 +27,12 @@ interface SyncResponse {
 
 const initialState: SyncState = {
   loadingTasks: new Set([]),
+  isDataLoaded: false,
 };
 
 export const uploadCensusData = createAsyncThunk(
   'sync/uploadCensusData',
-  async (_params, { getState, dispatch }) => {
+  async (params, { getState, dispatch }) => {
     const loadMessage = 'Uploading New Census Data...';
     dispatch(startLoading(loadMessage));
     const appState = getState() as RootState;
@@ -58,6 +66,36 @@ export const uploadCensusData = createAsyncThunk(
   },
 );
 
+export const loadData = createAsyncThunk(
+  'sync/loadData',
+  async (userId: string, { dispatch }) => {
+    // TODO: Fix callback hell
+    try {
+      await dispatch(getTeamByUserId({ userId })).then(async (res) => {
+        const selectedTeam: ITeam = res.payload;
+        await dispatch(getHerdByTeamId({ teamId: selectedTeam.id })).then(async (res2) => {
+          const selectedHerd: IHerd = res2.payload;
+          await dispatch(getCowCensusesByHerdId({ herdId: selectedHerd.id }));
+          await dispatch(getDungCensusesByHerdId({ herdId: selectedHerd.id }));
+          await dispatch(getPlotsByTeamId({ teamId: selectedTeam.id })).then(async (res3) => {
+            const plots: IPlot[] = res3.payload as IPlot[];
+            plots.forEach(async (plot: IPlot) => {
+              await dispatch(getForageQualityCensusesByPlotId({ plotId: plot.id }));
+              await dispatch(getForageQuantityCensusesByPlotId({ plotId: plot.id }));
+            });
+          });
+        });
+      }).finally(() => {
+        return true;
+      });
+    } catch (e) {
+      console.error(e);
+      alert('Error while loading census data:');
+      throw e;
+    }
+  },
+);
+
 export const syncSlice = createSlice({
   name: 'sync',
   initialState,
@@ -79,6 +117,11 @@ export const syncSlice = createSlice({
       state.loadingTasks.delete(action.payload);
       return state;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(loadData.fulfilled, (state) => {
+      state.isDataLoaded = true;
+    });
   },
 });
 

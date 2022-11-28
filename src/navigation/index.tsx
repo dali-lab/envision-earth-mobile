@@ -156,10 +156,10 @@ const TabNavigator = () => {
       screenOptions={{
         header: () => null,
         tabBarStyle: {
-          backgroundColor: Colors.secondary.darkGreen,
+          backgroundColor: Colors.primary.mainOrange,
         },
-        tabBarActiveTintColor: Colors.primary.mainOrange,
-        tabBarInactiveTintColor: Colors.secondary.white,
+        tabBarActiveTintColor: Colors.primary.lightOrange,
+        tabBarInactiveTintColor: Colors.secondary.darkGreen,
       }}
       initialRouteName='home'
     >
@@ -175,7 +175,6 @@ const TabNavigator = () => {
           tabBarIcon: (props) => (
             <Ionicons name='person-outline' color={props.color} size={26} />
           ),
-          tabBarActiveTintColor: Colors.primary.mainOrange,
         }}
       />
       <Tab.Screen

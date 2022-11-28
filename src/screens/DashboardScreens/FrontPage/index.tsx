@@ -17,6 +17,11 @@ import { LivestockStatusCard, PaddockStatusCard } from '../../../components/Dash
 import DashboardStyle from '../../../styles/pages/DashboardStyle';
 import average from '../../../utils/average';
 import { diffDays } from '../../../utils/dateUtil';
+import OuterSunImage from '../../../assets/outer_sun.svg';
+import InnerSunImage from '../../../assets/inner_sun.svg';
+import DashboardHillImage from '../../../assets/dashboard_hill.svg';
+import DashboardBackgroundImage from '../../../assets/dashboard_background.svg';
+import DashboardGrassImage from '../../../assets/dashboard_grass.svg';
 
 const FrontPage = () => {
   const navigation = useNavigation<NavType>();
@@ -33,18 +38,31 @@ const FrontPage = () => {
   const [isOpenGraph, setIsOpenGraph] = useState<boolean>(false);
 
   return (
-    <SafeAreaView style={GlobalStyle.container}>
+    <SafeAreaView style={[GlobalStyle.container, { backgroundColor: Colors.secondary.white }]}>
       <ScrollView
         contentContainerStyle={GlobalStyle.contentContainerScroll}
       >
         <View style={DashboardStyle.sectionWelcome}>
           <Text style={DashboardStyle.title}>Welcome, {name}</Text>
-          <Text style={DashboardStyle.date}>
-            {DAYS_OF_WEEK[new Date().getDay()]}, {new Date().getMonth() + 1}/{new Date().getDate()}
-          </Text>
+          <View style={DashboardStyle.subSectionDate}>
+            <Text style={DashboardStyle.date}>
+              {DAYS_OF_WEEK[new Date().getDay()]}, {new Date().getMonth() + 1}/{new Date().getDate()}
+            </Text>
+          </View>
         </View>
-
-        <View>
+        <View style={DashboardStyle.outerSunView}>
+          <OuterSunImage />
+        </View>
+        <View style={DashboardStyle.innerSunView}>
+          <InnerSunImage />
+        </View>
+        <View style={DashboardStyle.backgroundHillView}>
+          <DashboardHillImage />
+        </View>
+        <DashboardBackgroundImage style={DashboardStyle.backgroundDashboard} />
+        <View style={{
+          paddingBottom: 70,
+        }}>
           <Text style={DashboardStyle.subtitle}>Your Ranch</Text>
 
           <View style={DashboardStyle.section}>
@@ -108,7 +126,9 @@ const FrontPage = () => {
             </View>}
           </View>
         </View>
-
+        <View style={DashboardStyle.backgroundGrassView}>
+          <DashboardGrassImage />
+        </View>
         <View style={DashboardStyle.sectionPaddockStatus}>
           <Text style={DashboardStyle.paddockStatusTitle}>Paddock Status</Text>
           <ScrollView

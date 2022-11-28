@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { signIn } from '../../../redux/slices/authSlice';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
 import { GlobalStyle, TextStyles, Colors } from '../../../styles';
+import { SignInPageStyle } from '../../../styles/pages';
+import LargeGlobeImage from '../../../assets/large_globe.svg';
 
 const SignInPage = () => {
   const dispatch = useAppDispatch();
@@ -23,29 +25,38 @@ const SignInPage = () => {
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
-      <Text
-        style={[
-          TextStyles.title,
-          { color: Colors.secondary.deepTeal },
-        ]}
-      >
-        Welcome Back
-      </Text>
-      <AppTextInput
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-        placeholder='email'
-        width={331}
-        height={59}
-      />
-      <AppTextInput
-        onChangeText={(text) => setPassword(text)}
-        value={password}
-        placeholder='password'
-        secureTextEntry={true}
-        width={331}
-        height={59}
-      />
+      <View style={SignInPageStyle.globeView}>
+        <LargeGlobeImage />
+      </View>
+      <View style={SignInPageStyle.titleView}>
+        <Text
+          style={[
+            TextStyles.title,
+            { color: Colors.secondary.deepTeal },
+          ]}
+        >
+          Welcome Back
+        </Text>
+      </View>
+      <View style={SignInPageStyle.emailButtonView}>
+        <AppTextInput
+          onChangeText={(text) => setEmail(text)}
+          value={email}
+          placeholder='email'
+          width={331}
+          height={59}
+        />
+      </View>
+      <View style={SignInPageStyle.passwordButtonView}>
+        <AppTextInput
+          onChangeText={(text) => setPassword(text)}
+          value={password}
+          placeholder='password'
+          secureTextEntry={true}
+          width={331}
+          height={59}
+        />
+      </View>
       <AppButton
         onPress={handleSubmit}
         title={'log in'}
@@ -59,5 +70,3 @@ const SignInPage = () => {
 };
 
 export default SignInPage;
-
-// TODO: Placeholder text color?

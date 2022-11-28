@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { SafeAreaView, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { signUp } from '../../../redux/slices/authSlice';
@@ -8,6 +8,37 @@ import AppButton from '../../../components/AppButton';
 import NavType from '../../../utils/NavType';
 import { ROUTES } from '../../../utils/constants';
 import { GlobalStyle, TextStyles, Colors } from '../../../styles';
+import {
+  BreedingDatePage,
+  CalvingDatePage,
+  CattleDetailsPage,
+  FirstLastNamePage,
+  LoginPage,
+  PaddocksDetailsPage,
+  RanchAddressPage,
+  RanchDetailsPage,
+  RanchRolePage,
+} from './pages';
+import {
+  BreedingDateData,
+  BreedingDateDefaultData,
+  CalvingDateData,
+  CalvingDateDefaultData,
+  CattleDetailsData,
+  CattleDetailsDefaultData,
+  FirstLastNameData,
+  FirstLastNameDefaultData,
+  LoginData,
+  LoginDefaultData,
+  PaddocksDetailsData,
+  PaddocksDetailsDefaultData,
+  RanchAddressData,
+  RanchAddressDefaultData,
+  RanchDetailsData,
+  RanchDetailsDefaultData,
+  RanchRoleData,
+  RanchRoleDefaultData,
+} from './pageData';
 
 const SignUpPage = () => {
   const dispatch = useAppDispatch();
@@ -16,60 +47,60 @@ const SignUpPage = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
 
+  // States from each of the pages in the signup flow 
+  const [breedingPageData, setBreedingPageData] = useState<BreedingDateData>(BreedingDateDefaultData);
+  const [calvingPageData, setCalvingPageData] = useState<CalvingDateData>(CalvingDateDefaultData);
+  const [cattlePageData, setCattlePageData] = useState<CattleDetailsData>(CattleDetailsDefaultData);
+  const [namePageData, setNamePageData] = useState<FirstLastNameData>(FirstLastNameDefaultData);
+  const [loginPageData, setLoginPageData] = useState<LoginData>(LoginDefaultData);
+  const [paddockPageData, setPaddockPageData] = useState<PaddocksDetailsData>(PaddocksDetailsDefaultData);
+  const [ranchAddrPageData, setRanchAddrPageData] = useState<RanchAddressData>(RanchAddressDefaultData);
+  const [ranchDetailsPageData, setRanchDetailsPageData] = useState<RanchDetailsData>(RanchDetailsDefaultData);
+  const [ranchRolePageData, setRanchRolePageData] = useState<RanchRoleData>(RanchRoleDefaultData);
+
+  const [pageInd, setPageInd] = useState<number>(0);
+
   const navigation = useNavigation<NavType>();
 
   const handleSubmit = async () => {
     // Send only if all fields filled in
-    if (!email) alert('Please enter an email address!');
+    /* if (!email) alert('Please enter an email address!');
     else if (!password) alert('Please enter a password!');
-    else if (!name) alert('Please enter a name!');
-    else {
-      await dispatch(signUp({ email, password, name })).then(() => {
-        navigation.navigate(ROUTES.AUTHLAUNCH);
-      });
-    }
+    else if (!name) alert('Please enter a name!'); */
+    await dispatch(signUp({ email: loginPageData.email, password: loginPageData.pwd, name: namePageData.fname })).then(() => {
+      navigation.navigate(ROUTES.AUTHLAUNCH);
+    });
   };
+
+  function onPageSubmit<Type>(data: Type, stateSet: (value: React.SetStateAction<Type>) => void): void {
+    stateSet(data);
+    setPageInd(val => val + 1);
+  }
+
+  async function onFinalSubmit<Type>(data: Type, stateSet: (value: React.SetStateAction<Type>) => void): Promise<void> {
+    stateSet(data);
+    await dispatch(signUp({ email: loginPageData.email, password: loginPageData.pwd, name: namePageData.fname })).then(() => {
+      navigation.navigate(ROUTES.AUTHLAUNCH);
+    });
+  }
+
+  const pages = [
+    <LoginPage onSubmit={(data: LoginData) => onPageSubmit(data, setLoginPageData)} />,
+    <RanchRolePage onSubmit={(data: RanchRoleData) => onPageSubmit(data, setRanchRolePageData)} />,
+    <FirstLastNamePage onSubmit={(data: FirstLastNameData) => onPageSubmit(data, setNamePageData)} />,
+    <RanchAddressPage onSubmit={(data: RanchAddressData) => onPageSubmit(data, setRanchAddrPageData)} />,
+    <RanchDetailsPage onSubmit={(data: RanchDetailsData) => onPageSubmit(data, setRanchDetailsPageData)} />,
+    <CattleDetailsPage onSubmit={(data: CattleDetailsData) => onPageSubmit(data, setCattlePageData)} />,
+    <PaddocksDetailsPage onSubmit={(data: PaddocksDetailsData) => onPageSubmit(data, setPaddockPageData)} />,
+    <BreedingDatePage onSubmit={(data: BreedingDateData) => onPageSubmit(data, setBreedingPageData)} />,
+    <CalvingDatePage onSubmit={(data: CalvingDateData) => onFinalSubmit(data, setCalvingPageData)} />,
+  ];
 
   return (
     <SafeAreaView style={GlobalStyle.container}>
-      <Text
-        style={[
-          TextStyles.title,
-          { color: Colors.secondary.deepTeal },
-        ]}
-      >
-        Sign Up
-      </Text>
-      <AppTextInput
-        onChangeText={(text) => setEmail(text)}
-        value={email}
-        placeholder='email'
-        width={331}
-        height={59}
-      />
-      <AppTextInput
-        onChangeText={(text) => setPassword(text)}
-        value={password}
-        placeholder='password'
-        secureTextEntry={true}
-        width={331}
-        height={59}
-      />
-      <AppTextInput
-        onChangeText={(text) => setName(text)}
-        value={name}
-        placeholder='name'
-        width={331}
-        height={59}
-      />
-      <AppButton
-        onPress={handleSubmit}
-        title={'sign up'}
-        backgroundColor={Colors.primary.mainOrange}
-        textColor={Colors.secondary.white}
-        width={331}
-        height={59}
-      />
+      <View>
+        {pages[pageInd]}
+      </View>
     </SafeAreaView>
   );
 };

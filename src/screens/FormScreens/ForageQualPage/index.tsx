@@ -207,11 +207,16 @@ const ForageQualPage = () => {
         onBackdropPress={() => setSubmitOverlay(!submitOverlay)}
         overlayStyle={GlobalStyle.overlayModal}
       >
-        <View>
-          <Text style={[TextStyles.title, { minWidth: 100, textAlign: 'center' }]}>Data recorded!</Text>
+        <View style={{ alignItems: 'center' }}>
+          <Text style={[TextStyles.title, 
+            { 
+              minWidth: 100, 
+              textAlign: 'center', 
+              color: Colors.secondary.deepTeal,
+            }]}>Data Recorded!</Text>
           <AppButton
             onPress={() => setSubmitOverlay(!submitOverlay)}
-            title={'enter more data'}
+            title={'Log new data'}
             backgroundColor={Colors.primary.lightOrange}
             textColor={Colors.primary.mainOrange}
             width={215}
@@ -219,7 +224,7 @@ const ForageQualPage = () => {
           />
           <AppButton
             onPress={() => setSubmitOverlay(!submitOverlay)}
-            title={'see my dashboard'}
+            title={'See my dashboard'}
             backgroundColor={Colors.primary.lightOrange}
             textColor={Colors.primary.mainOrange}
             width={215}

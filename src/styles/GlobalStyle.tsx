@@ -59,7 +59,7 @@ const GlobalStyle = StyleSheet.create({
   },
 
   overlayModal: {
-    minHeight: 300,
+    height: 350,
     width: 300,
     borderRadius: 12,
     alignItems: 'center',

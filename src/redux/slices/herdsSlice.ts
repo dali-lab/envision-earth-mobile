@@ -23,7 +23,13 @@ const initialState: HerdState = {
 
 export const createHerd = createAsyncThunk(
   'herds/createHerd',
-  async (req: { name: string }, { dispatch }) => {
+  async (req: { 
+    teamId: string, 
+    breed: string, 
+    count: number, 
+    breedingDate: Date, 
+    calvingDate: Date 
+  }, { dispatch }) => {
     dispatch(startHerdsLoading());
     return axios
       .post(`${SERVER_URL}herds/`, req)

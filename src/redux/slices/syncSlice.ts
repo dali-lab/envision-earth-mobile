@@ -69,25 +69,17 @@ export const uploadCensusData = createAsyncThunk(
 export const loadData = createAsyncThunk(
   'sync/loadData',
   async (userId: string, { dispatch }) => {
-    // TODO: Fix callback hell
     try {
-      await dispatch(getTeamByUserId({ userId })).then(async (res) => {
-        const selectedTeam: ITeam = res.payload;
-        await dispatch(getHerdByTeamId({ teamId: selectedTeam.id })).then(async (res2) => {
-          const selectedHerd: IHerd = res2.payload;
-          await dispatch(getCowCensusesByHerdId({ herdId: selectedHerd.id }));
-          await dispatch(getDungCensusesByHerdId({ herdId: selectedHerd.id }));
-          await dispatch(getPlotsByTeamId({ teamId: selectedTeam.id })).then(async (res3) => {
-            const plots: IPlot[] = res3.payload as IPlot[];
-            plots.forEach(async (plot: IPlot) => {
-              await dispatch(getForageQualityCensusesByPlotId({ plotId: plot.id }));
-              await dispatch(getForageQuantityCensusesByPlotId({ plotId: plot.id }));
-            });
-          });
-        });
-      }).finally(() => {
-        return true;
-      });
+      const selectedTeam: ITeam = await (await dispatch(getTeamByUserId({ userId }))).payload;
+      const selectedHerd: IHerd = await (await dispatch(getHerdByTeamId({ teamId: selectedTeam.id }))).payload;
+      await dispatch(getCowCensusesByHerdId({ herdId: selectedHerd.id }));
+      await dispatch(getDungCensusesByHerdId({ herdId: selectedHerd.id }));
+      const plots: IPlot[] = await (await dispatch(getPlotsByTeamId({ teamId: selectedTeam.id }))).payload as IPlot[];
+      for (const plot of plots) {
+        await dispatch(getForageQualityCensusesByPlotId({ plotId: plot.id }));
+        await dispatch(getForageQuantityCensusesByPlotId({ plotId: plot.id }));
+      }
+      return true;
     } catch (e) {
       console.error(e);
       alert('Error while loading census data:');

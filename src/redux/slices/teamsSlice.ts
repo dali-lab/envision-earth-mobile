@@ -24,7 +24,13 @@ const initialState: TeamState = {
 
 export const createTeam = createAsyncThunk(
   'teams/createTeam',
-  async (req: { name: string }, { dispatch }) => {
+  async (req: { 
+    name: string, 
+    acreSize: number, 
+    address: string,
+    yrsRanch: number,
+    yrsHolMang: number,
+  }, { dispatch }) => {
     dispatch(startTeamsLoading());
     return axios
       .post(`${SERVER_URL}teams/`, req)

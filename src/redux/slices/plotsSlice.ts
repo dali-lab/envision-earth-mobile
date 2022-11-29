@@ -49,11 +49,13 @@ interface IPhotoInput {
 }
 
 interface ICreatePlotsRequest {
-  herdId: string;
-  bcs: number,
-  notes: string;
-  tag: string;
-  photo?: IPhotoInput;
+  teamId: string;
+  photoId: IPhotoInput | null;
+  latitude: number;
+  longitude: number;
+  length: number;
+  width: number;
+  name: string;
 }
 
 export const createPlots = createAsyncThunk(

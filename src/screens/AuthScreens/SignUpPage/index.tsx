@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { signUp } from '../../../redux/slices/authSlice';
-import AppTextInput from '../../../components/AppTextInput';
-import AppButton from '../../../components/AppButton';
+import { IUser } from '../../../redux/slices/usersSlice';
+import { createTeam, ITeam } from '../../../redux/slices/teamsSlice';
+import { createHerd } from '../../../redux/slices/herdsSlice';
+import { createPlots } from '../../../redux/slices/plotsSlice';
+import { createMembership } from '../../../redux/slices/membershipSlice';
 import NavType from '../../../utils/NavType';
 import { ROUTES } from '../../../utils/constants';
-import { GlobalStyle, TextStyles, Colors } from '../../../styles';
+import { GlobalStyle } from '../../../styles';
 import {
   BreedingDatePage,
   CalvingDatePage,
@@ -43,10 +46,6 @@ import {
 const SignUpPage = () => {
   const dispatch = useAppDispatch();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-
   // States from each of the pages in the signup flow 
   const [breedingPageData, setBreedingPageData] = useState<BreedingDateData>(BreedingDateDefaultData);
   const [calvingPageData, setCalvingPageData] = useState<CalvingDateData>(CalvingDateDefaultData);
@@ -62,16 +61,6 @@ const SignUpPage = () => {
 
   const navigation = useNavigation<NavType>();
 
-  const handleSubmit = async () => {
-    // Send only if all fields filled in
-    /* if (!email) alert('Please enter an email address!');
-    else if (!password) alert('Please enter a password!');
-    else if (!name) alert('Please enter a name!'); */
-    await dispatch(signUp({ email: loginPageData.email, password: loginPageData.pwd, name: namePageData.fname })).then(() => {
-      navigation.navigate(ROUTES.AUTHLAUNCH);
-    });
-  };
-
   function onPageSubmit<Type>(data: Type, stateSet: (value: React.SetStateAction<Type>) => void): void {
     stateSet(data);
     setPageInd(val => val + 1);
@@ -79,9 +68,40 @@ const SignUpPage = () => {
 
   async function onFinalSubmit<Type>(data: Type, stateSet: (value: React.SetStateAction<Type>) => void): Promise<void> {
     stateSet(data);
-    await dispatch(signUp({ email: loginPageData.email, password: loginPageData.pwd, name: namePageData.fname })).then(() => {
-      navigation.navigate(ROUTES.AUTHLAUNCH);
-    });
+    const user: IUser = await (await dispatch(signUp({ email: loginPageData.email, password: loginPageData.pwd, name: namePageData.fname }))).payload.user;
+    // TODO: shouldn't there be different flows depending on ranchRolePageData.role?
+    const team: ITeam = await (await dispatch(createTeam({
+      name: 'default',  // TODO: Entry for team name
+      acreSize: 0,      // TODO: Entry for acreSize
+      address: ranchAddrPageData.address,
+      yrsRanch: ranchDetailsPageData.yrsRanching,
+      yrsHolMang: ranchDetailsPageData.yrsHolistic,
+    }))).payload;
+    await dispatch(createHerd({
+      teamId: team.id,
+      breed: cattlePageData.cattleBreed,
+      count: cattlePageData.numCattle,
+      breedingDate: breedingPageData.date,
+      calvingDate: calvingPageData.date,
+    }));
+    for (let plotName of paddockPageData.paddocks) {
+      if (plotName === '') {
+        plotName = ' ';
+      }
+      await dispatch(createPlots({
+        teamId: team.id,
+        photoId: null,
+        latitude: 0,  // TBD
+        longitude: 0, // TBD
+        length: 0,    // TBD
+        width: 0,     // TBD
+        name: plotName,
+      }));
+    }
+    await dispatch(createMembership({
+      teamId: team.id,
+      userId: user.id,
+    }));
   }
 
   const pages = [
@@ -93,7 +113,7 @@ const SignUpPage = () => {
     <CattleDetailsPage onSubmit={(data: CattleDetailsData) => onPageSubmit(data, setCattlePageData)} />,
     <PaddocksDetailsPage onSubmit={(data: PaddocksDetailsData) => onPageSubmit(data, setPaddockPageData)} />,
     <BreedingDatePage onSubmit={(data: BreedingDateData) => onPageSubmit(data, setBreedingPageData)} />,
-    <CalvingDatePage onSubmit={(data: CalvingDateData) => onFinalSubmit(data, setCalvingPageData)} />,
+    <CalvingDatePage onSubmit={(data: CalvingDateData) => onFinalSubmit(data, setCalvingPageData).then(() => navigation.navigate(ROUTES.AUTHLAUNCH))} />,
   ];
 
   return (

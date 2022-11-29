@@ -4,7 +4,7 @@ import { Overlay } from 'react-native-elements';
 import { useIsConnected } from 'react-native-offline';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { createCowCensus, locallyCreateCowCensus } from '../../../redux/slices/cowCensusSlice';
@@ -18,6 +18,7 @@ import BCSEntry from '../../../components/Entries/BCSEntry';
 import NavType from '../../../utils/NavType';
 import { GlobalStyle, TextStyles, Colors, DropdownStyle } from '../../../styles';
 import { BCS_TEXT, IBCSText } from '../../../utils/sampleInfo/BCSInfo/BCSText';
+import FormGrassImage from '../../../assets/form_grass.svg';
 
 const BCSPage = () => {
   const isWifi = useIsConnected();
@@ -121,7 +122,7 @@ const BCSPage = () => {
   const navigation = useNavigation<NavType>();
 
   return (
-    <SafeAreaView style={GlobalStyle.container}>
+    <SafeAreaView style={[GlobalStyle.container, { backgroundColor: Colors.secondary.white }]}>
       <ScrollView
         contentContainerStyle={GlobalStyle.contentContainerScroll}
         style={{
@@ -140,15 +141,24 @@ const BCSPage = () => {
               flex: 1,
               flexDirection: 'row',
               justifyContent: 'flex-start',
+              paddingLeft: 20,
             }}
           >
-            <Ionicons
-              name='ios-arrow-back'
-              size={32}
-              onPress={() => {
-                navigation.goBack();
+            <View
+              style={{
+                backgroundColor: Colors.primary.lightOrange,
+                borderRadius: 10,
               }}
-            />
+            >
+              <AntDesign
+                name='left'
+                size={32}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+                color={Colors.primary.mainOrange}
+              />
+            </View>
           </View>
           <Text
             style={[TextStyles.title, { color: Colors.primary.mainOrange }]}
@@ -166,11 +176,22 @@ const BCSPage = () => {
         </View>
         <View
           style={{
-            width: 310,
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            width: '100%',
+            paddingTop: 10,
+            paddingBottom: 50,
+            paddingLeft: 20,
           }}
         >
+          <Text
+            style={[TextStyles.subHeading, { color: Colors.primary.deepGreen, paddingBottom: 10 }]}
+          >
+            paddock
+          </Text>
           <Dropdown
-            style={[DropdownStyle.dropdown, plotIdFocus && { borderColor: 'blue' }]}
+            style={[DropdownStyle.dropdown, { width: 200 }, plotIdFocus && { borderColor: 'blue' }]}
             containerStyle={DropdownStyle.dropdownContainerStyle}
             placeholderStyle={DropdownStyle.dropdownPlaceholderStyle}
             selectedTextStyle={DropdownStyle.dropdownSelectedTextStyle}
@@ -199,7 +220,11 @@ const BCSPage = () => {
         <Text style={TextStyles.subHeading}>
           See identifiers
         </Text>
-        <View>
+        <View
+          style={{
+            paddingBottom: 50,
+          }}
+        >
           <Accordion
             title={'BCS ' + (selectedIdx + 1)}
           >
@@ -220,50 +245,74 @@ const BCSPage = () => {
             </Text>
           </Accordion>
         </View>
-        {
-          bcsArr.map((bcs, index) => (
-            <View
-              key={index}
-            >
-              <BCSEntry
-                bcs={bcs}
-                onBCSEdit={(value) => handleEditBcs(value, index)}
-                onBCSDelete={() => handleDeleteBcs(index)}
-              />
-            </View>
-          ))
-        }
-        <AppButton
-          onPress={() => handleAddBcs()}
-          title={'add new BCS entry'}
-          backgroundColor={Colors.primary.mainOrange}
-          textColor={Colors.secondary.white}
-        />
-        <AppButton
-          onPress={() => setImageOverlay(!notesOverlay)}
-          title={'take photo'}
-          backgroundColor={Colors.primary.lightGreen}
-          textColor={Colors.primary.deepGreen}
-          width={215}
-          height={44}
-        />
-        <AppButton
-          onPress={() => setNotesOverlay(!notesOverlay)}
-          title={'add note'}
-          backgroundColor={Colors.primary.lightOrange}
-          textColor={Colors.primary.mainOrange}
-          width={215}
-          height={44}
-        />
-        <AppButton
-          onPress={handleCreateCowCensus}
-          title={'submit'}
-          backgroundColor={Colors.primary.deepGreen}
-          textColor={Colors.secondary.white}
-          width={215}
-          height={51}
-          disabled={loading}
-        />
+        <View 
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            top: 410,
+          }}
+        >
+          <FormGrassImage />
+        </View>
+        <View
+          style={{
+            backgroundColor: Colors.primary.lightestGreen,
+            width: Dimensions.get('window').width,
+            minHeight: Dimensions.get('window').height - 310,
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingBottom: 40,
+          }}
+        >
+          {
+            bcsArr.map((bcs, index) => (
+              <View
+                key={index}
+              >
+                <BCSEntry
+                  bcs={bcs}
+                  onBCSEdit={(value) => handleEditBcs(value, index)}
+                  onBCSDelete={() => handleDeleteBcs(index)}
+                />
+              </View>
+            ))
+          }
+          <View>
+            <AppButton
+              onPress={() => handleAddBcs()}
+              title={'add new BCS entry'}
+              backgroundColor={Colors.primary.mainOrange}
+              textColor={Colors.secondary.white}
+            />
+            <AppButton
+              onPress={() => setImageOverlay(!notesOverlay)}
+              title={'take photo'}
+              backgroundColor={Colors.primary.lightGreen}
+              textColor={Colors.primary.deepGreen}
+              width={215}
+              height={44}
+            />
+            <AppButton
+              onPress={() => setNotesOverlay(!notesOverlay)}
+              title={'add note'}
+              backgroundColor={Colors.primary.lightOrange}
+              textColor={Colors.primary.mainOrange}
+              width={215}
+              height={44}
+            />
+            <AppButton
+              onPress={handleCreateCowCensus}
+              title={'submit'}
+              backgroundColor={Colors.primary.deepGreen}
+              textColor={Colors.secondary.white}
+              width={215}
+              height={51}
+              disabled={loading}
+            />
+          </View>
+        </View>
       </ScrollView>
       <Overlay
         isVisible={imageOverlay}

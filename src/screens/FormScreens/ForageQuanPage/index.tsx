@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView, SafeAreaView, View, Text, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 import EyeballPage from './EyeballPage';
 import StacPage from './StacPage';
 import { AppButton } from '../../../components';
@@ -13,7 +13,7 @@ const ForageQuanPage = () => {
   const [isEyeballPage, setIsEyeballPage] = useState<boolean>(true);
 
   return (
-    <SafeAreaView style={GlobalStyle.container}>
+    <SafeAreaView style={[GlobalStyle.container, { backgroundColor: Colors.secondary.white }]}>
       <ScrollView
         horizontal={false}
         contentContainerStyle={GlobalStyle.contentContainerScroll}
@@ -23,9 +23,10 @@ const ForageQuanPage = () => {
       >
         <View
           style={{
+            flex: 1,
             flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
+            justifyContent: 'flex-start',
+            paddingLeft: 20,
           }}
         >
           <View
@@ -35,13 +36,21 @@ const ForageQuanPage = () => {
               justifyContent: 'flex-start',
             }}
           >
-            <Ionicons
-              name='ios-arrow-back'
-              size={32}
-              onPress={() => {
-                navigation.goBack();
+            <View
+              style={{
+                backgroundColor: Colors.primary.lightOrange,
+                borderRadius: 10,
               }}
-            />
+            >
+              <AntDesign
+                name='left'
+                size={32}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+                color={Colors.primary.mainOrange}
+              />
+            </View>
           </View>
           <Text
             style={[TextStyles.title, { color: Colors.primary.mainOrange }]}
@@ -59,32 +68,48 @@ const ForageQuanPage = () => {
         </View>
         <View
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingBottom: 10,
+            flexDirection: 'column',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            width: '100%',
+            paddingTop: 10,
+            paddingBottom: 50,
+            paddingLeft: 20,
           }}
         >
-          <AppButton
-            onPress={() => {
-              setIsEyeballPage(true);
+          <Text
+            style={[TextStyles.subHeading, { color: Colors.primary.deepGreen, paddingBottom: 10 }]}
+          >
+            What method are you using?
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
             }}
-            title={'Eyeballing'}
-            backgroundColor={isEyeballPage ? Colors.primary.mainOrange : Colors.secondary.white}
-            textColor={isEyeballPage ? Colors.secondary.white : Colors.primary.mainOrange}
-            width={150}
-            height={50}
-          />
-          <AppButton
-            onPress={() => {
-              setIsEyeballPage(false);
-            }}
-            title={'STAC'}
-            backgroundColor={isEyeballPage ? Colors.secondary.white : Colors.primary.mainOrange}
-            textColor={isEyeballPage ? Colors.primary.mainOrange : Colors.secondary.white}
-            width={150}
-            height={50}
-          />
+          >
+            <AppButton
+              onPress={() => {
+                setIsEyeballPage(true);
+              }}
+              title={'Eyeballing'}
+              backgroundColor={isEyeballPage ? Colors.primary.mainOrange : Colors.secondary.white}
+              textColor={isEyeballPage ? Colors.secondary.white : Colors.primary.mainOrange}
+              width={150}
+              height={50}
+            />
+            <AppButton
+              onPress={() => {
+                setIsEyeballPage(false);
+              }}
+              title={'STAC'}
+              backgroundColor={isEyeballPage ? Colors.secondary.white : Colors.primary.mainOrange}
+              textColor={isEyeballPage ? Colors.primary.mainOrange : Colors.secondary.white}
+              width={150}
+              height={50}
+            />
+          </View>
         </View>
         {
           isEyeballPage ?

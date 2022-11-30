@@ -9,6 +9,11 @@ import ProfileStyle from '../../../styles/pages/ProfileStyle';
 import { Colors, TextStyles } from '../../../styles';
 import { ITeam, updateTeam } from '../../../redux/slices/teamsSlice';
 import { IHerd, updateHerd } from '../../../redux/slices/herdsSlice';
+import ProfileBackgroundTopImage from '../../../assets/profile_background_top.svg';
+import ProfileBackgroundMiddleImage from '../../../assets/profile_background_middle.svg';
+import ProfileGrassImage from '../../../assets/profile_grass.svg';
+import DefaultCowGreenImage from '../../../assets/default_cow_green.svg';
+import DefaultCowBlueImage from '../../../assets/default_cow_blue.svg';
 
 type PageModes = 'view' | 'edit';
 
@@ -42,8 +47,6 @@ const ProfilePage = () => {
   };
 
   const handleChangeProfileInfo = async () => {
-    console.log('hi');
-    
     if (!editYrsRanch) {
       alert('Error: no editYrsRanch');
     } else if (!editYrsHolMang) {
@@ -68,7 +71,6 @@ const ProfilePage = () => {
         yrsRanch: editYrsRanch,
         yrsHolMang: editYrsHolMang,
       }));
-      /*
       await dispatch(updateHerd({
         id: selectedHerd.id,
         teamId: selectedTeam.id,
@@ -77,29 +79,38 @@ const ProfilePage = () => {
         breedingDate: editBreedingPeriod as Date,
         calvingDate: editCalvingDate as Date,
       }));
-      */
     }
   };
 
   return (
     <SafeAreaView>
       <ScrollView>
-        <View style={ProfileStyle.headerLayout}>
-          <Text style={ProfileStyle.headerTitle}>Profile Page</Text>
-          <AppButton
-            title="View"
-            onPress={onPressView}
-            backgroundColor={pageMode === 'view' ? Colors.primary.vibrantGreen : Colors.primary.lightGreen}
-            textColor={pageMode === 'view' ? Colors.primary.lightestGreen : Colors.secondary.mediumGreen}
-            textStyle={TextStyles.body}
-          />
-          <AppButton
-            title="Edit"
-            onPress={onPressEdit}
-            backgroundColor={pageMode === 'edit' ? Colors.primary.vibrantGreen : Colors.primary.lightGreen}
-            textColor={pageMode === 'edit' ? Colors.primary.lightestGreen : Colors.secondary.mediumGreen}
-            textStyle={TextStyles.body}
-          />
+        <View style={ProfileStyle.backgroundMiddleView}>
+          <ProfileBackgroundMiddleImage />
+        </View>
+        <View style={ProfileStyle.backgroundTopView}>
+          <ProfileBackgroundTopImage />
+        </View>
+        <View style={ProfileStyle.headerView}>
+          <View style={ProfileStyle.subHeaderLeft}>
+            <Text style={ProfileStyle.headerTitle}>Profile Page</Text>
+          </View>
+          <View style={ProfileStyle.subHeaderRight}>
+            <AppButton
+              title="View"
+              onPress={onPressView}
+              backgroundColor={pageMode === 'view' ? Colors.primary.vibrantGreen : Colors.primary.lightGreen}
+              textColor={pageMode === 'view' ? Colors.primary.lightestGreen : Colors.secondary.mediumGreen}
+              textStyle={TextStyles.body}
+            />
+            <AppButton
+              title="Edit"
+              onPress={onPressEdit}
+              backgroundColor={pageMode === 'edit' ? Colors.primary.vibrantGreen : Colors.primary.lightGreen}
+              textColor={pageMode === 'edit' ? Colors.primary.lightestGreen : Colors.secondary.mediumGreen}
+              textStyle={TextStyles.body}
+            />
+          </View>
         </View>
         {
           (pageMode === 'view') ? 
@@ -114,23 +125,55 @@ const ProfilePage = () => {
               <View style={ProfileStyle.fieldsContainer}>
                 <Text style={ProfileStyle.sectionHeading}>Experience</Text>
                 <Text style={ProfileStyle.fieldTitle}>Years Ranching:</Text>
-                <Text style={styles.textContainer}>{selectedTeam.yrsRanch}</Text>
+                <View
+                  style={ProfileStyle.textContainer}
+                >
+                  <Text style={ProfileStyle.textContent}>{selectedTeam.yrsRanch}</Text>
+                </View>
                 <Text style={ProfileStyle.fieldTitle}>Years Holistic Ranching:</Text>
-                <Text style={styles.textContainer}>{selectedTeam.yrsHolMang}</Text>
+                <View
+                  style={ProfileStyle.textContainer}
+                >
+                  <Text style={ProfileStyle.textContent}>{selectedTeam.yrsHolMang}</Text>
+                </View>
                 <Text style={ProfileStyle.sectionHeading}>Ranching Information</Text>
                 <Text style={ProfileStyle.fieldTitle}>Ranch Address:</Text>
-                <Text style={styles.textContainer}>{selectedTeam.address}</Text>
+                <View
+                  style={ProfileStyle.textContainer}
+                >
+                  <Text style={ProfileStyle.textContent}>{selectedTeam.address}</Text>
+                </View>
                 <Text style={ProfileStyle.fieldTitle}>Land Area:</Text>
-                <Text style={styles.textContainer}>{selectedTeam.acreSize}</Text>
+                <View
+                  style={ProfileStyle.textContainer}
+                >
+                  <Text style={ProfileStyle.textContent}>{selectedTeam.acreSize}</Text>
+                </View>
                 <Text style={ProfileStyle.fieldTitle}>Cattle Breed:</Text>
-                <Text style={styles.textContainer}>{selectedHerd.breed}</Text>
+                <View
+                  style={ProfileStyle.textContainer}
+                >
+                  <Text style={ProfileStyle.textContent}>{selectedHerd.breed}</Text>
+                </View>
                 <Text style={ProfileStyle.fieldTitle}># of Cattle in Herd:</Text>
-                <Text style={styles.textContainer}>{selectedHerd.count}</Text>
+                <View
+                  style={ProfileStyle.textContainer}
+                >
+                  <Text style={ProfileStyle.textContent}>{selectedHerd.count}</Text>
+                </View>
                 <Text style={ProfileStyle.sectionHeading}>Critical Dates</Text>
                 <Text style={ProfileStyle.fieldTitle}>Breeding Period:</Text>
-                <Text style={styles.textContainer}>{selectedHerd.breedingDate.toString()}</Text>
+                <View
+                  style={ProfileStyle.textContainer}
+                >
+                  <Text style={ProfileStyle.textContent}>{selectedHerd.breedingDate.toString()}</Text>
+                </View>
                 <Text style={ProfileStyle.fieldTitle}>Calving Date:</Text>
-                <Text style={styles.textContainer}>{selectedHerd.calvingDate.toString()}</Text>
+                <View
+                  style={ProfileStyle.textContainer}
+                >
+                  <Text style={ProfileStyle.textContent}>{selectedHerd.calvingDate.toString()}</Text>
+                </View>
               </View>
             </> 
             :
@@ -209,22 +252,28 @@ const ProfilePage = () => {
               </View>
             </>
         }
+        <View
+          style={{
+            paddingBottom: 200,
+          }}
+        >
+        </View>
+        <View style={ProfileStyle.backgroundGrassView}>
+          <ProfileGrassImage />
+        </View>
+        <View
+          style={ProfileStyle.greenCowView}
+        >
+          <DefaultCowGreenImage />
+        </View>
+        <View
+          style={ProfileStyle.blueCowView}
+        >
+          <DefaultCowBlueImage />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  textContainer: {
-    ...TextStyles.body,
-    borderColor: 'lightgrey',
-    borderRadius: 12,
-    borderWidth: 1,
-    width: '100%',
-    padding: 10,
-    textAlign: 'center',
-    textColor: Colors.primary.deepGreen,
-  },
-});
 
 export default ProfilePage;

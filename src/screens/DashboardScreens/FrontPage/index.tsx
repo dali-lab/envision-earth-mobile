@@ -1,12 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Image, ScrollView, View, SafeAreaView, Dimensions, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { Image, ScrollView, View, SafeAreaView, Text } from 'react-native';
 import useAppSelector from '../../../hooks/useAppSelector';
-import useAppDispatch from '../../../hooks/useAppDispatch';
-import { logout } from '../../../redux/slices/authSlice';
-import AppButton from '../../../components/AppButton';
-import NavType from '../../../utils/NavType';
-import { ROUTES, DAYS_OF_WEEK } from '../../../utils/constants';
+import { DAYS_OF_WEEK } from '../../../utils/constants';
 import { IHerd } from '../../../redux/slices/herdsSlice';
 import { ICowCensus } from '../../../redux/slices/cowCensusSlice';
 import { IDungCensus } from '../../../redux/slices/dungCensusSlice';
@@ -19,14 +14,13 @@ import average from '../../../utils/average';
 import { diffDays } from '../../../utils/dateUtil';
 import OuterSunImage from '../../../assets/outer_sun.svg';
 import InnerSunImage from '../../../assets/inner_sun.svg';
+import DashboardCowOneImage from '../../../assets/dashboard_cow_one.svg';
+import DashboardCowTwoImage from '../../../assets/dashboard_cow_two.svg';
 import DashboardHillImage from '../../../assets/dashboard_hill.svg';
 import DashboardBackgroundImage from '../../../assets/dashboard_background.svg';
 import DashboardGrassImage from '../../../assets/dashboard_grass.svg';
 
 const FrontPage = () => {
-  const navigation = useNavigation<NavType>();
-  const dispatch = useAppDispatch();
-
   const { allPlots } = useAppSelector((state) => state.plots);
   const { name } = useAppSelector((state) => state.auth);
   const selectedHerd: IHerd = useAppSelector((state) => state.herds.selectedHerd);
@@ -70,7 +64,7 @@ const FrontPage = () => {
 
             <View style={DashboardStyle.critPeriodLayout}>
               {/* Cow Image */}
-              <Image source={require('../../../assets/cow1.png')} />
+              <DashboardCowOneImage />
               <View>
                 <Text style={DashboardStyle.critDays}>{diffDays(new Date(selectedHerd.calvingDate), new Date())} days</Text>
                 <Text style={DashboardStyle.critText}>to calving</Text>
@@ -79,7 +73,7 @@ const FrontPage = () => {
 
             <View style={DashboardStyle.critPeriodLayout}>
               {/* Cow Image */}
-              <Image source={require('../../../assets/cow2.png')} />
+              <DashboardCowTwoImage />
               <View>
                 <Text style={DashboardStyle.critDays}>{diffDays(new Date(selectedHerd.breedingDate), new Date())} days</Text>
                 <Text style={DashboardStyle.critText}>to breeding</Text>

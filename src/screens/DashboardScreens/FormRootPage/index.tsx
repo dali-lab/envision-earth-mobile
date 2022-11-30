@@ -48,7 +48,7 @@ const FormRootPage = () => {
           width: '100%',
           position: 'absolute',
           top: 70,
-          left: 20,
+          left: 40,
         }}
       >
         <Text

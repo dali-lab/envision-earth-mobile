@@ -9,12 +9,15 @@ import { AntDesign } from '@expo/vector-icons';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { createForageQualityCensus } from '../../../redux/slices/forageQualityCensusSlice';
-import { AppButton, AppTextInput, PaddockSelector } from '../../../components';
+import { AppButton, AppTextInput } from '../../../components';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import NavType from '../../../utils/NavType';
 import { GlobalStyle, TextStyles, Colors, DropdownStyle } from '../../../styles';
 import FormGrassImage from '../../../assets/form_grass.svg';
+import StockForageQualityOne from '../../../assets/fqual_stock_1.svg';
+import StockForageQualityFive from '../../../assets/fqual_stock_5.svg';
+import StockForageQualityNine from '../../../assets/fqual_stock_9.svg';
 
 const ForageQualPage = () => {
   const isWifi = useIsConnected();
@@ -159,11 +162,110 @@ const ForageQualPage = () => {
         </View>
         <View
           style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            paddingLeft: 20,
+            width: '100%',
+          }}
+        >
+          <Text
+            style={[TextStyles.subHeading, { color: Colors.primary.deepGreen, paddingBottom: 10 }]}
+          >
+            reference images
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            transform: [{ rotate: '180deg' }], // For some reason, these stock assets from Figma were created upside down.
+            // When changing to use actual assets, make sure to change this transform!
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              paddingTop: 10,
+              paddingLeft: 20,
+            }}
+          >
+            <StockForageQualityOne />
+          </View>
+          <View
+            style={{
+              paddingTop: 10,
+            }}
+          >
+            <StockForageQualityFive />
+          </View>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              paddingTop: 10,
+              paddingRight: 20,
+            }}
+          >
+            <StockForageQualityNine />
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingBottom: 40,
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              paddingLeft: 50,
+            }}
+          >
+            <Text
+              style={[TextStyles.subHeading, { color: Colors.primary.vibrantGreen }]}
+            > 
+              1
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={[TextStyles.subHeading, { color: Colors.primary.vibrantGreen }]}
+            > 
+              5
+            </Text>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              paddingRight: 50,
+            }}
+          >
+            <Text
+              style={[TextStyles.subHeading, { color: Colors.primary.vibrantGreen }]}
+            > 
+              9
+            </Text>
+          </View>
+        </View>
+        <View 
+          style={{
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
             position: 'absolute',
-            top: 152,
+            top: 365,
           }}
         >
           <FormGrassImage />
@@ -172,7 +274,7 @@ const ForageQualPage = () => {
           style={{
             backgroundColor: Colors.primary.lightestGreen,
             width: Dimensions.get('window').width,
-            minHeight: Dimensions.get('window').height - 310,
+            minHeight: 0.4 * Dimensions.get('window').height,
             justifyContent: 'space-between',
             alignItems: 'center',
             paddingBottom: 40,

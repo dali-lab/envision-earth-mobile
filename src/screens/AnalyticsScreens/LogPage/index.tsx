@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
-import { ScrollView, SafeAreaView, View, Text, Dimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
+import { Dimensions, ScrollView, SafeAreaView, View, Text, TouchableOpacity } from 'react-native';
 import FormPage from './FormPage';
 import PaddockPage from './PaddockPage';
 import { AppButton } from '../../../components';
-import NavType from '../../../utils/NavType';
 import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 
 const LogPage = () => {
-  const navigation = useNavigation<NavType>();
   const [isByForm, setIsByForm] = useState<boolean>(true);
 
   return (
-    <SafeAreaView style={GlobalStyle.container}>
+    <SafeAreaView style={[GlobalStyle.container, { backgroundColor: Colors.secondary.white }]}>
       <ScrollView
         horizontal={false}
         contentContainerStyle={GlobalStyle.contentContainerScroll}
@@ -39,36 +35,76 @@ const LogPage = () => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            paddingBottom: 10,
           }}
         >
-          <AppButton
+          <TouchableOpacity
             onPress={() => {
               setIsByForm(true);
             }}
-            title={'By Form'}
-            backgroundColor={isByForm ? Colors.primary.mainOrange : Colors.secondary.white}
-            textColor={isByForm ? Colors.secondary.white : Colors.primary.mainOrange}
-            width={150}
-            height={50}
-          />
-          <AppButton
+            style={{
+              elevation: 8,
+              backgroundColor: (isByForm ? Colors.primary.lightestGreen : '#9CB758'),
+              borderTopLeftRadius: 12,
+              paddingVertical: 10,
+              paddingHorizontal: 12,
+              marginTop: 30,
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              width: 150,
+              height: 50,
+            }}
+          >
+            <Text
+              style={{
+                ...TextStyles.subHeading,
+                color: (isByForm ? '#597415' : Colors.secondary.white),
+              }}
+            >
+              By Form
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             onPress={() => {
               setIsByForm(false);
             }}
-            title={'By Paddock'}
-            backgroundColor={isByForm ? Colors.secondary.white : Colors.primary.mainOrange}
-            textColor={isByForm ? Colors.primary.mainOrange : Colors.secondary.white}
-            width={150}
-            height={50}
-          />
+            style={{
+              elevation: 8,
+              backgroundColor: (isByForm ? '#9CB758' : Colors.primary.lightestGreen),
+              borderTopRightRadius: 12,
+              paddingVertical: 10,
+              paddingHorizontal: 12,
+              marginTop: 30,
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              width: 150,
+              height: 50,
+            }}
+          >
+            <Text
+              style={{
+                ...TextStyles.subHeading,
+                color: (isByForm ? Colors.secondary.white : '#597415'),
+              }}
+            >
+              By Paddock
+            </Text>
+          </TouchableOpacity>
         </View>
-        {
-          isByForm ?
-            <FormPage />
-            : 
-            <PaddockPage />
-        }
+        <View
+          style={{
+            backgroundColor: Colors.primary.lightestGreen,
+            minHeight: 0.7 * Dimensions.get('window').height,
+          }}
+        >
+          {
+            isByForm ?
+              <FormPage />
+              : 
+              <PaddockPage />
+          }
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

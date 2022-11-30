@@ -5,13 +5,13 @@ import { useIsConnected } from 'react-native-offline';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
+import Carousel from 'react-native-reanimated-carousel';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { createCowCensus, locallyCreateCowCensus } from '../../../redux/slices/cowCensusSlice';
 import Accordion from '../../../components/Accordion';
 import AppButton from '../../../components/AppButton';
 import AppTextInput from '../../../components/AppTextInput';
-import ScrollPick from '../../../components/ScrollPick';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import BCSEntry from '../../../components/Entries/BCSEntry';
@@ -40,14 +40,32 @@ const BCSPage = () => {
   const bcsDisplayElements: Array<ReactNode> = [];
   BCS_TEXT.forEach((e: IBCSText) => {
     bcsDisplayElements.push(
-      <Image
-        key={e.val}
-        style={{
-          width: Dimensions.get('window').width * (2 / 7),
-          height: Dimensions.get('window').width * (2 / 7),
-        }}
-        source={{ uri: e.imageUri }}
-      />,
+      <View>
+        <Image
+          key={e.val}
+          style={{
+            width: 125,
+            height: 125,
+          }}
+          source={{ uri: e.imageUri }}
+        />
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            backgroundColor: Colors.primary.mainOrange,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text
+            style={[TextStyles.body, { color: Colors.secondary.white, width: 20, height: 20, paddingLeft: 5 }]}
+          >
+            { e.val }
+          </Text> 
+        </View>
+      </View>,
     );
   });
 
@@ -84,7 +102,7 @@ const BCSPage = () => {
     if (loading) {
       return;
     }
-    
+
     if (!selectedHerd) {
       alert('Error: no selected herd');
     } else if (!allPlots[selectedPlotId]?.id) {
@@ -211,15 +229,47 @@ const BCSPage = () => {
             }}
           />
         </View>
-        <ScrollPick
-          elements={bcsDisplayElements}
-          selectedIdx={selectedIdx}
-          setSelectedIdx={setSelectedIdx}
-          offsetWidth={Dimensions.get('window').width * (2 / 7)}
+        <Carousel
+          loop
+          width={Dimensions.get('window').width}
+          height={125}
+          autoPlay={false}
+          data={bcsDisplayElements}
+          scrollAnimationDuration={1000}
+          onSnapToItem={(index) => setSelectedIdx(index)}
+          mode="parallax"
+          modeConfig={{
+            parallaxScrollingScale: 0.9,
+            parallaxScrollingOffset: 250,
+          }}
+          renderItem={({ item, index }) => (
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              {item}
+            </View>
+          )}
         />
-        <Text style={TextStyles.subHeading}>
-          See identifiers
-        </Text>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            paddingTop: 20,
+            paddingLeft: 20,
+            width: '100%',
+          }}
+        >
+          <Text
+            style={[TextStyles.subHeading, { color: Colors.primary.deepGreen, paddingBottom: 10 }]}
+          >
+            see identifiers
+          </Text>
+        </View>
         <View
           style={{
             paddingBottom: 50,
@@ -229,29 +279,29 @@ const BCSPage = () => {
             title={'BCS ' + (selectedIdx + 1)}
           >
             <Text style={TextStyles.small}>
-              { BCS_TEXT[selectedIdx].description }
+              {BCS_TEXT[selectedIdx].description}
             </Text>
             <Text style={TextStyles.small}>
-              { BCS_TEXT[selectedIdx].tail }
+              {BCS_TEXT[selectedIdx].tail}
             </Text>
             <Text style={TextStyles.small}>
-              { BCS_TEXT[selectedIdx].ribs }
+              {BCS_TEXT[selectedIdx].ribs}
             </Text>
             <Text style={TextStyles.small}>
-              { BCS_TEXT[selectedIdx].shoulder }
+              {BCS_TEXT[selectedIdx].shoulder}
             </Text>
             <Text style={TextStyles.small}>
-              { BCS_TEXT[selectedIdx].brisket }
+              {BCS_TEXT[selectedIdx].brisket}
             </Text>
           </Accordion>
         </View>
-        <View 
+        <View
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
             position: 'absolute',
-            top: 410,
+            top: 455,
           }}
         >
           <FormGrassImage />
@@ -359,12 +409,14 @@ const BCSPage = () => {
         overlayStyle={GlobalStyle.overlayModal}
       >
         <View style={{ alignItems: 'center' }}>
-          <Text style={[TextStyles.title, 
-            { 
-              minWidth: 100, 
-              textAlign: 'center', 
+          <Text style={[TextStyles.title,
+            {
+              minWidth: 100,
+              textAlign: 'center',
               color: Colors.secondary.deepTeal,
-            }]}>Data Recorded!</Text>
+            }]}>
+            Data Recorded!
+          </Text>
           <AppButton
             onPress={() => setSubmitOverlay(!submitOverlay)}
             title={'Log new data'}

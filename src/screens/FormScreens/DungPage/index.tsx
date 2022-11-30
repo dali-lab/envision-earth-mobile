@@ -16,6 +16,7 @@ import DungEntry from '../../../components/Entries/DungEntry';
 import NavType from '../../../utils/NavType';
 import { GlobalStyle, TextStyles, Colors, DropdownStyle } from '../../../styles';
 import FormGrassImage from '../../../assets/form_grass.svg';
+import PlaceholderImage from '../../../assets/image_placeholder.svg';
 
 const DungPage = () => {
   const isWifi = useIsConnected();
@@ -180,13 +181,153 @@ const DungPage = () => {
             }}
           />
         </View>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'flex-start',
+            paddingLeft: 20,
+            width: '100%',
+          }}
+        >
+          <Text
+            style={[TextStyles.subHeading, { color: Colors.primary.deepGreen, paddingBottom: 10 }]}
+          >
+            reference images
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              paddingLeft: 20,
+            }}
+          >
+            <Text
+              style={[TextStyles.subHeading, { color: Colors.primary.vibrantGreen }]}
+            > 
+              Too Soft
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={[TextStyles.subHeading, { color: Colors.primary.vibrantGreen }]}
+            > 
+              Just Right
+            </Text>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              paddingRight: 20,
+            }}
+          >
+            <Text
+              style={[TextStyles.subHeading, { color: Colors.primary.vibrantGreen }]}
+            > 
+              Too Firm
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              paddingTop: 10,
+              paddingLeft: 20,
+            }}
+          >
+            <PlaceholderImage />
+          </View>
+          <View
+            style={{
+              paddingTop: 10,
+            }}
+          >
+            <PlaceholderImage />
+          </View>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              paddingTop: 10,
+              paddingRight: 20,
+            }}
+          >
+            <PlaceholderImage />
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingBottom: 40,
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              paddingLeft: 50,
+            }}
+          >
+            <Text
+              style={[TextStyles.subHeading, { color: Colors.primary.vibrantGreen }]}
+            > 
+              -1
+            </Text>
+          </View>
+          <View>
+            <Text
+              style={[TextStyles.subHeading, { color: Colors.primary.vibrantGreen }]}
+            > 
+              0
+            </Text>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              paddingRight: 50,
+            }}
+          >
+            <Text
+              style={[TextStyles.subHeading, { color: Colors.primary.vibrantGreen }]}
+            > 
+              1
+            </Text>
+          </View>
+        </View>
         <View 
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
             position: 'absolute',
-            top: 152,
+            top: 375,
           }}
         >
           <FormGrassImage />

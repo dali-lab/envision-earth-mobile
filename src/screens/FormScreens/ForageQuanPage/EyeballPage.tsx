@@ -128,7 +128,7 @@ const StacPage = () => {
           }}
         >
           <Text
-            style={[TextStyles.subHeading, { color: Colors.primary.deepGreen, paddingTop: 20 }]}
+            style={[TextStyles.subHeading, { color: Colors.primary.deepGreen, paddingTop: 20, paddingBottom: 10 }]}
           >
             Amount of forage (acres)
           </Text>

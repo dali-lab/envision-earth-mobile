@@ -12,16 +12,32 @@ export interface IForageQualityCensus {
   updatedAt: Date,
 }
 
+interface IPhotoInput {
+  uri: string,
+  fileName: string,
+  buffer: string, // base64
+}
+
+export interface ICreateForageQualityCensusRequest {
+  plotId: string;
+  rating: number,
+  notes: string;
+  photo?: IPhotoInput;
+}
+
 export interface ForageQualityCensusState {
   loading: boolean
   all: Record<string, IForageQualityCensus>
   byPlot: Record<string, IForageQualityCensus[]>
+  drafts: ICreateForageQualityCensusRequest[],
 }
+
 
 const initialState: ForageQualityCensusState = {
   loading: false,
   all: {},
   byPlot: {},
+  drafts: [],
 };
 
 export const getForageQualityCensusesByPlotId = createAsyncThunk(
@@ -40,19 +56,6 @@ export const getForageQualityCensusesByPlotId = createAsyncThunk(
       });
   },
 );
-
-interface IPhotoInput {
-  uri: string,
-  fileName: string,
-  buffer: string, // base64
-}
-
-interface ICreateForageQualityCensusRequest {
-  plotId: string;
-  rating: number,
-  notes: string;
-  photo?: IPhotoInput;
-}
 
 export const createForageQualityCensus = createAsyncThunk(
   'forageQualityCensuses/createForageQualityCensus',
@@ -126,6 +129,12 @@ export const forageQualityCensusSlice = createSlice({
   name: 'forageQualityCensuses',
   initialState,
   reducers: {
+    locallyCreateForageQualityCensus: (state, action) => {
+      state.drafts.push(action.payload);
+    },
+    clearForageQualityCensusDrafts: (state) => {
+      state.drafts = [];
+    },
     startForageQualityCensusLoading: (state) => ({ ...state, loading: true }),
     stopForageQualityCensusLoading: (state) => ({ ...state, loading: false }),
   },
@@ -182,7 +191,12 @@ export const forageQualityCensusSlice = createSlice({
   },
 });
 
-export const { startForageQualityCensusLoading, stopForageQualityCensusLoading } =
+export const { 
+  locallyCreateForageQualityCensus,
+  clearForageQualityCensusDrafts,
+  startForageQualityCensusLoading, 
+  stopForageQualityCensusLoading,
+} =
   forageQualityCensusSlice.actions;
 
 export default forageQualityCensusSlice.reducer;

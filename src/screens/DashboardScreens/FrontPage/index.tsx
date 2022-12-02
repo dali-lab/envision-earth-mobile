@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, ScrollView, View, SafeAreaView, Text } from 'react-native';
+import { Image, ScrollView, View, SafeAreaView, Text, Dimensions } from 'react-native';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { DAYS_OF_WEEK } from '../../../utils/constants';
 import { IHerd } from '../../../redux/slices/herdsSlice';
@@ -7,11 +7,12 @@ import { ICowCensus } from '../../../redux/slices/cowCensusSlice';
 import { IDungCensus } from '../../../redux/slices/dungCensusSlice';
 import { IForageQualityCensus } from '../../../redux/slices/forageQualityCensusSlice';
 import { IForageQuantityCensus } from '../../../redux/slices/forageQuantityCensusSlice';
-import { Colors, GlobalStyle } from '../../../styles';
 import { LivestockStatusCard, PaddockStatusCard } from '../../../components/Dashboard';
-import DashboardStyle from '../../../styles/pages/DashboardStyle';
+import { LoadRefresh } from '../../../components';
 import average from '../../../utils/average';
 import { diffDays } from '../../../utils/dateUtil';
+import DashboardStyle from '../../../styles/pages/DashboardStyle';
+import { Colors, GlobalStyle } from '../../../styles';
 import OuterSunImage from '../../../assets/outer_sun.svg';
 import InnerSunImage from '../../../assets/inner_sun.svg';
 import DashboardCowOneImage from '../../../assets/dashboard_cow_one.svg';
@@ -28,11 +29,13 @@ const FrontPage = () => {
   const latestDungCensus: IDungCensus = useAppSelector((state) => state.dungCensuses.indices.latest);
   const forageQualityByPlot: Record<string, IForageQualityCensus[]> = useAppSelector((state) => state.forageQuality.byPlot);
   const forageQuantityByPlot: Record<string, IForageQuantityCensus[]> = useAppSelector((state) => state.forageQuantity.byPlot);
-
   const [isOpenGraph, setIsOpenGraph] = useState<boolean>(false);
 
   return (
-    <SafeAreaView style={[GlobalStyle.container, { backgroundColor: Colors.secondary.white }]}>
+    <SafeAreaView 
+      style={[GlobalStyle.container, { backgroundColor: Colors.secondary.white, width: Dimensions.get('window').width }]}
+    >
+      <LoadRefresh />
       <ScrollView
         contentContainerStyle={GlobalStyle.contentContainerScroll}
       >
@@ -58,7 +61,6 @@ const FrontPage = () => {
           paddingBottom: 70,
         }}>
           <Text style={DashboardStyle.subtitle}>Your Ranch</Text>
-
           <View style={DashboardStyle.section}>
             <Text style={DashboardStyle.sectionTitle}>Critical Period Countdown</Text>
 
@@ -70,7 +72,6 @@ const FrontPage = () => {
                 <Text style={DashboardStyle.critText}>to calving</Text>
               </View>
             </View>
-
             <View style={DashboardStyle.critPeriodLayout}>
               {/* Cow Image */}
               <DashboardCowTwoImage />
@@ -80,7 +81,6 @@ const FrontPage = () => {
               </View>
             </View>
           </View>
-
           <View style={DashboardStyle.section}>
             <Text style={DashboardStyle.sectionTitle}>Livestock status</Text>
 
@@ -145,7 +145,6 @@ const FrontPage = () => {
             }
           </ScrollView>
         </View>
-
       </ScrollView>
     </SafeAreaView>
   );

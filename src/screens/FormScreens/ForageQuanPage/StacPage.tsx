@@ -6,7 +6,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
-import { createForageQuantityCensus } from '../../../redux/slices/forageQuantityCensusSlice';
+import { createForageQuantityCensus, locallyCreateForageQuantityCensus } from '../../../redux/slices/forageQuantityCensusSlice';
 import { AppButton, AppTextInput, PaddockSelector } from '../../../components';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
@@ -67,6 +67,13 @@ const EyeballPage = () => {
             setSubmitOverlay(true);
           }
         });
+      } else {
+        dispatch(locallyCreateForageQuantityCensus({
+          plotId: allPlots[selectedPlotId]?.id as string,
+          rating: parseInt(rating),
+          notes: (notes + ' '),
+          photo: image,
+        }));
       }
     }
   };

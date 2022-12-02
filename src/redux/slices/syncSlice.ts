@@ -5,9 +5,9 @@ import { getTeamByUserId, ITeam } from './teamsSlice';
 import { getPlotsByTeamId, IPlot } from './plotsSlice';
 import { getHerdByTeamId, IHerd } from './herdsSlice';
 import { clearCowCensusDrafts, ICowCensus, ICreateCowCensusRequest, getCowCensusesByHerdId } from './cowCensusSlice';
-import { getDungCensusesByHerdId, IDungCensus } from './dungCensusSlice';
-import { getForageQualityCensusesByPlotId } from './forageQualityCensusSlice';
-import { getForageQuantityCensusesByPlotId } from './forageQuantityCensusSlice';
+import { clearDungCensusDrafts, IDungCensus, ICreateDungCensusRequest, getDungCensusesByHerdId } from './dungCensusSlice';
+import { clearForageQualityCensusDrafts, IForageQualityCensus, ICreateForageQualityCensusRequest, getForageQualityCensusesByPlotId } from './forageQualityCensusSlice';
+import { clearForageQuantityCensusDrafts, IForageQuantityCensus, ICreateForageQuantityCensusRequest, getForageQuantityCensusesByPlotId } from './forageQuantityCensusSlice';
 import axios from 'axios';
 
 export type SyncState = {
@@ -18,11 +18,17 @@ export type SyncState = {
 interface SyncData {
   upserted: {
     cowCensusRequests: ICreateCowCensusRequest[],
+    dungCensusRequests: ICreateDungCensusRequest[],
+    forageQualityCensusRequests: ICreateForageQualityCensusRequest[],
+    forageQuantityCensusRequests: ICreateForageQuantityCensusRequest[],
   };
 }
 
 interface SyncResponse {
   cowCensuses: ICowCensus[],
+  dungCensuses: IDungCensus[],
+  forageQualityCensuses: IForageQualityCensus[],
+  forageQuantityCensuses: IForageQuantityCensus[],
 }
 
 const initialState: SyncState = {
@@ -34,27 +40,42 @@ export const uploadCensusData = createAsyncThunk(
   'sync/uploadCensusData',
   async (params, { getState, dispatch }) => {
     const loadMessage = 'Uploading New Census Data...';
-    dispatch(startLoading(loadMessage));
+    // dispatch(startLoading(loadMessage));
     const appState = getState() as RootState;
-    
+
     const cowCensusRequests: ICreateCowCensusRequest[] = [];
+    const dungCensusRequests: ICreateDungCensusRequest[] = [];
+    const forageQualityCensusRequests: ICreateForageQualityCensusRequest[] = [];
+    const forageQuantityCensusRequests: ICreateForageQuantityCensusRequest[] = [];
     appState.cowCensuses.drafts.forEach((draft: ICreateCowCensusRequest) => {
       cowCensusRequests.push(draft);
     });
+    appState.dungCensuses.drafts.forEach((draft: ICreateDungCensusRequest) => {
+      dungCensusRequests.push(draft);
+    });
+    appState.forageQuality.drafts.forEach((draft: ICreateForageQualityCensusRequest) => {
+      forageQualityCensusRequests.push(draft);
+    });
+    appState.forageQuantity.drafts.forEach((draft: ICreateForageQuantityCensusRequest) => {
+      forageQuantityCensusRequests.push(draft);
+    });
 
     const syncData: SyncData = {
-      upserted: { cowCensusRequests },
+      upserted: { cowCensusRequests, dungCensusRequests, forageQualityCensusRequests, forageQuantityCensusRequests },
     };
 
     return axios
       .post<SyncData, { data: SyncResponse }>(`${SERVER_URL}sync/`, syncData)
       .then(async (response) => {
-        dispatch(stopLoading(loadMessage));
+        // dispatch(stopLoading(loadMessage));
         dispatch(clearCowCensusDrafts());
+        dispatch(clearDungCensusDrafts());
+        dispatch(clearForageQualityCensusDrafts());
+        dispatch(clearForageQuantityCensusDrafts());
         return response.data;
       })
       .catch((err) => {
-        dispatch(stopLoading(loadMessage));
+        // dispatch(stopLoading(loadMessage));
         alert(
           'An error occurred while syncing your data: ' +
             err?.message +
@@ -95,6 +116,13 @@ export const syncSlice = createSlice({
     resetData: () => {
 
     },
+    setIsDataLoaded: (
+      state,
+      action: { payload: boolean },
+    ) => {
+      state.isDataLoaded = action.payload;
+      return state;
+    },
     startLoading: (
       state,
       action: { payload: string } = { payload: 'Loading...' },
@@ -117,6 +145,6 @@ export const syncSlice = createSlice({
   },
 });
 
-export const { resetData, startLoading, stopLoading } = syncSlice.actions;
+export const { resetData, startLoading, stopLoading, setIsDataLoaded } = syncSlice.actions;
 
 export default syncSlice.reducer;

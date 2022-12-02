@@ -12,16 +12,31 @@ export interface IForageQuantityCensus {
   updatedAt: Date,
 }
 
+interface IPhotoInput {
+  uri: string,
+  fileName: string,
+  buffer: string, // base64
+}
+
+export interface ICreateForageQuantityCensusRequest {
+  plotId: string;
+  rating: number,
+  notes: string;
+  photo?: IPhotoInput;
+}
+
 export interface ForageQuantityCensusState {
   loading: boolean
   all: Record<string, IForageQuantityCensus>
   byPlot: Record<string, IForageQuantityCensus[]>
+  drafts: ICreateForageQuantityCensusRequest[],
 }
 
 const initialState: ForageQuantityCensusState = {
   loading: false,
   all: {},
   byPlot: {},
+  drafts: [],
 };
 
 export const getForageQuantityCensusesByPlotId = createAsyncThunk(
@@ -40,19 +55,6 @@ export const getForageQuantityCensusesByPlotId = createAsyncThunk(
       });
   },
 );
-
-interface IPhotoInput {
-  uri: string,
-  fileName: string,
-  buffer: string, // base64
-}
-
-interface ICreateForageQuantityCensusRequest {
-  plotId: string;
-  rating: number,
-  notes: string;
-  photo?: IPhotoInput;
-}
 
 export const createForageQuantityCensus = createAsyncThunk(
   'forageQuantityCensuses/createForageQuantityCensus',
@@ -126,6 +128,12 @@ export const forageQuantityCensusSlice = createSlice({
   name: 'forageQuantityCensuses',
   initialState,
   reducers: {
+    locallyCreateForageQuantityCensus: (state, action) => {
+      state.drafts.push(action.payload);
+    },
+    clearForageQuantityCensusDrafts: (state) => {
+      state.drafts = [];
+    },
     startForageQuantityCensusLoading: (state) => ({ ...state, loading: true }),
     stopForageQuantityCensusLoading: (state) => ({ ...state, loading: false }),
   },
@@ -182,7 +190,11 @@ export const forageQuantityCensusSlice = createSlice({
   },
 });
 
-export const { startForageQuantityCensusLoading, stopForageQuantityCensusLoading } =
-  forageQuantityCensusSlice.actions;
+export const { 
+  locallyCreateForageQuantityCensus,
+  clearForageQuantityCensusDrafts,
+  startForageQuantityCensusLoading, 
+  stopForageQuantityCensusLoading,
+} = forageQuantityCensusSlice.actions;
 
 export default forageQuantityCensusSlice.reducer;

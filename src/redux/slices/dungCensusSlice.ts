@@ -33,7 +33,8 @@ export interface DungCensusState {
   all: Record<string, IDungCensus>
   indices: {
     latest: IDungCensus | undefined
-  }
+  },
+  drafts: ICreateDungCensusRequest[],
 }
 
 const initialState: DungCensusState = {
@@ -42,6 +43,7 @@ const initialState: DungCensusState = {
   indices: {
     latest: undefined,
   },
+  drafts: [],
 };
 
 export const getDungCensusesByHerdId = createAsyncThunk(
@@ -133,6 +135,12 @@ export const dungCensusSlice = createSlice({
   name: 'dungCensuses',
   initialState,
   reducers: {
+    locallyCreateDungCensus: (state, action) => {
+      state.drafts.push(action.payload);
+    },
+    clearDungCensusDrafts: (state) => {
+      state.drafts = [];
+    },
     startDungCensusLoading: (state) => ({ ...state, loading: true }),
     stopDungCensusLoading: (state) => ({ ...state, loading: false }),
   },
@@ -177,7 +185,11 @@ export const dungCensusSlice = createSlice({
   },
 });
 
-export const { startDungCensusLoading, stopDungCensusLoading } =
-  dungCensusSlice.actions;
+export const { 
+  locallyCreateDungCensus,
+  clearDungCensusDrafts,
+  startDungCensusLoading, 
+  stopDungCensusLoading, 
+} = dungCensusSlice.actions;
 
 export default dungCensusSlice.reducer;

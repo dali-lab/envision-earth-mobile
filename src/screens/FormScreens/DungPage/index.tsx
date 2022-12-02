@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
-import { createDungCensus } from '../../../redux/slices/dungCensusSlice';
+import { createDungCensus, locallyCreateDungCensus } from '../../../redux/slices/dungCensusSlice';
 import AppButton from '../../../components/AppButton';
 import AppTextInput from '../../../components/AppTextInput';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
@@ -88,6 +88,14 @@ const DungPage = () => {
             setSubmitOverlay(true);
           }
         });
+      } else {
+        dispatch(locallyCreateDungCensus({
+          herdId: selectedHerd?.id as string,
+          plotId: allPlots[selectedPlotId]?.id as string,
+          ratings: dungArr,
+          notes: (notes + ' '),
+          photo: image,
+        }));
       }
     }
   };

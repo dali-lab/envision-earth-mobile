@@ -5,7 +5,7 @@ import { useIsConnected } from 'react-native-offline';
 import { Dropdown } from 'react-native-element-dropdown';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
-import { createForageQuantityCensus } from '../../../redux/slices/forageQuantityCensusSlice';
+import { createForageQuantityCensus, locallyCreateForageQuantityCensus } from '../../../redux/slices/forageQuantityCensusSlice';
 import { AppButton, AppTextInput } from '../../../components';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
@@ -62,6 +62,13 @@ const StacPage = () => {
             setSubmitOverlay(true);
           }
         });
+      } else {
+        dispatch(locallyCreateForageQuantityCensus({
+          plotId: allPlots[selectedPlotId]?.id as string,
+          rating: parseInt(rating),
+          notes: (notes + ' '),
+          photo: image,
+        }));
       }
     }
   };

@@ -11,7 +11,7 @@ const PaddockDropdown = (props: {
   const [name, setName] = useState('');
   const [focus, setFocus] = useState(false);
 
-  return <View style={DropdownStyle.container}>
+  return <View style={[DropdownStyle.container]}>
     <Text
       style={{
         ...TextStyles.subHeading,

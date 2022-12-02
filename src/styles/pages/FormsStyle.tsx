@@ -14,12 +14,14 @@ const FormsStyle = StyleSheet.create({
   sectionBottom: {
     backgroundColor: Colors.primary.lightestGreen,
     width: '100%',
+    minHeight: 0.65 * Dimensions.get('window').height,
     padding: WIDTH * 0.1,
   },
 
   sectionButtons: {
     paddingBottom: WIDTH * 0.15,
     paddingHorizontal: WIDTH * 0.15,
+    alignItems: 'center',
   },
 
   entryTitle: {

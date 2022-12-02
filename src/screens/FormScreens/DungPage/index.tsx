@@ -108,7 +108,7 @@ const DungPage = () => {
   return (
     <SafeAreaView style={[GlobalStyle.container, { backgroundColor: Colors.secondary.white }]}>
       <ScrollView
-        contentContainerStyle={GlobalStyle.contentContainerScroll}
+        contentContainerStyle={[GlobalStyle.contentContainerScroll, { width: Dimensions.get('window').width }]}
       >
         <FormHeader
           title="Dung Condition"

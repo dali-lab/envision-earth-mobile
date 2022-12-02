@@ -270,8 +270,6 @@ const BCSPage = () => {
           </Accordion>
         </View>
 
-        <FormGrassImage />
-
         <View
           style={FormsStyle.sectionBottom}
         >

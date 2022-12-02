@@ -3,6 +3,8 @@ import {
   ScrollView,
   SafeAreaView,
   Text,
+  View,
+  Dimensions,
 } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 import { useNavigation } from '@react-navigation/native';
@@ -21,7 +23,7 @@ import {
 } from '../../../components';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import NavType from '../../../utils/NavType';
-import { GlobalStyle, TextStyles, Colors, DropdownStyle } from '../../../styles';
+import { GlobalStyle, TextStyles, Colors, FormsStyle } from '../../../styles';
 import FormGrassImage from '../../../assets/form_grass.svg';
 import StockForageQualityOne from '../../../assets/fqual_stock_1.svg';
 import StockForageQualityFive from '../../../assets/fqual_stock_5.svg';
@@ -88,41 +90,50 @@ const ForageQualPage = () => {
   return (
     <SafeAreaView style={[GlobalStyle.container, { backgroundColor: Colors.secondary.white }]}>
       <ScrollView
-        contentContainerStyle={GlobalStyle.contentContainerScroll}
+        contentContainerStyle={[GlobalStyle.contentContainerScroll, { width: Dimensions.get('window').width }]}
       >
         <FormHeader
           title='Forage Quality'
           nav={navigation}
         />
 
-        <PaddockDropdown
-          data={plotData}
-          plotId={selectedPlotId}
-          setPlotId={setSelectedPlotId}
-        />
+        <View style={FormsStyle.sectionTop}>
+          <PaddockDropdown
+            data={plotData}
+            plotId={selectedPlotId}
+            setPlotId={setSelectedPlotId}
+          />
+        </View>
 
-        <Text style={[TextStyles.subHeading, { minWidth: 100, textAlign: 'center' }]}>Rate Forage: {rating}</Text>
-        <Slider
-          style={GlobalStyle.slider}
-          minimumValue={1}
-          maximumValue={9}
-          onValueChange={(val) => setRating(val)}
-          step={1}
-          value={rating}
-        />
-        <AddPhotoButton
-          image={image}
-          setImage={setImage}
-        />
-        <AddNotesButton
-          notes={notes}
-          setNotes={setNotes}
-        />
-        <SubmitButton
-          onSubmit={handleCreateForageQualityCensus}
-          loadingState={loading}
-          goBack={navigation.goBack}
-        />
+        <FormGrassImage />
+        <View style={FormsStyle.sectionBottom}>
+          <Text style={[TextStyles.subHeading, { minWidth: 100, textAlign: 'center' }]}>Rate Forage: {rating}</Text>
+          <Slider
+            style={GlobalStyle.slider}
+            minimumValue={1}
+            maximumValue={9}
+            onValueChange={(val) => setRating(val)}
+            step={1}
+            value={rating}
+            minimumTrackTintColor={Colors.primary.vibrantGreen}
+            thumbTintColor={Colors.primary.vibrantGreen}
+          />
+          <View style={FormsStyle.sectionButtons}>
+            <AddPhotoButton
+              image={image}
+              setImage={setImage}
+            />
+            <AddNotesButton
+              notes={notes}
+              setNotes={setNotes}
+            />
+            <SubmitButton
+              onSubmit={handleCreateForageQualityCensus}
+              loadingState={loading}
+              goBack={navigation.goBack}
+            />
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

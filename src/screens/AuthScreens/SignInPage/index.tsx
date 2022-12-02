@@ -5,7 +5,7 @@ import { signIn } from '../../../redux/slices/authSlice';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
 import { GlobalStyle, TextStyles, Colors } from '../../../styles';
-import { SignInPageStyle } from '../../../styles/pages';
+import { AuthStyle, SignInPageStyle } from '../../../styles/pages';
 import LargeGlobeImage from '../../../assets/large_globe.svg';
 
 const SignInPage = () => {
@@ -24,7 +24,7 @@ const SignInPage = () => {
   };
 
   return (
-    <SafeAreaView style={GlobalStyle.container}>
+    <SafeAreaView style={AuthStyle.container}>
       <View style={SignInPageStyle.globeView}>
         <LargeGlobeImage />
       </View>

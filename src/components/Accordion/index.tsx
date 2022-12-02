@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import AccordionStyle from '../../styles/components/AccordionStyle';
+import { Colors } from '../../styles';
 
 interface AccordionProps {
   title: string
@@ -19,7 +20,7 @@ const Accordion = ({ title, children }: AccordionProps) => {
     <View style={AccordionStyle.outer}>
       <TouchableOpacity style={AccordionStyle.row} onPress={() => toggleExpand()}>
         <Text style={AccordionStyle.title}>{title}</Text>
-        <AntDesign name={expanded ? 'minuscircleo' : 'pluscircleo'} size={30} color='white' />
+        <AntDesign name={expanded ? 'minuscircleo' : 'pluscircleo'} size={20} color={Colors.primary.mainOrange} />
       </TouchableOpacity>
       {
         expanded &&

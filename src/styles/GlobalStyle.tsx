@@ -5,7 +5,7 @@ import TextStyles from '../styles/TextStyles';
 const GlobalStyle = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.primary.lightestGreen,
+    backgroundColor: Colors.secondary.white,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -50,7 +50,8 @@ const GlobalStyle = StyleSheet.create({
   },
 
   slider: {
-    width: 329,
+    alignSelf: 'center',
+    width: Dimensions.get('window').width * 0.8,
   },
 
   title: {

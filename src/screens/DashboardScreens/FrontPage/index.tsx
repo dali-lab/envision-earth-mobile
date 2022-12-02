@@ -37,7 +37,7 @@ const FrontPage = () => {
     >
       <LoadRefresh />
       <ScrollView
-        contentContainerStyle={GlobalStyle.contentContainerScroll}
+        contentContainerStyle={[GlobalStyle.contentContainerScroll, DashboardStyle.scrollView]}
       >
         <View style={DashboardStyle.sectionWelcome}>
           <Text style={DashboardStyle.title}>Welcome, {name}</Text>

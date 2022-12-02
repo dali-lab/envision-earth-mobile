@@ -1,19 +1,29 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
-import { Dimensions, ScrollView, SafeAreaView, View, Text } from 'react-native';
-import { Overlay } from 'react-native-elements';
+import React, { useState } from 'react';
+import {
+  ScrollView,
+  SafeAreaView,
+  Text,
+  View,
+  Dimensions,
+} from 'react-native';
 import { useIsConnected } from 'react-native-offline';
-import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
-import { AntDesign } from '@expo/vector-icons';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { createForageQualityCensus, locallyCreateForageQualityCensus } from '../../../redux/slices/forageQualityCensusSlice';
 import { AppButton, AppTextInput } from '../../../components';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
+import {
+  AddPhotoButton,
+  AddNotesButton,
+  SubmitButton,
+  PaddockDropdown,
+  FormHeader,
+} from '../../../components';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import NavType from '../../../utils/NavType';
-import { GlobalStyle, TextStyles, Colors, DropdownStyle } from '../../../styles';
+import { GlobalStyle, TextStyles, Colors, FormsStyle } from '../../../styles';
 import FormGrassImage from '../../../assets/form_grass.svg';
 import StockForageQualityOne from '../../../assets/fqual_stock_1.svg';
 import StockForageQualityFive from '../../../assets/fqual_stock_5.svg';
@@ -33,16 +43,12 @@ const ForageQualPage = () => {
     data: plotId,
   }));
   const [selectedPlotId, setSelectedPlotId] = useState<string>('');
-  const [plotIdFocus, setPlotIdFocus] = useState(false);
-  const [plotName, setPlotName] = useState('Select paddock...');
 
   const [rating, setRating] = useState<number>(5);
 
   const [image, setImage] = useState<IPhotoInput>();
-  const [imageOverlay, setImageOverlay] = useState<boolean>(false);
 
   const [notes, setNotes] = useState<string>('');
-  const [notesOverlay, setNotesOverlay] = useState<boolean>(false);
 
   const [submitOverlay, setSubmitOverlay] = useState<boolean>(false);
 
@@ -53,7 +59,8 @@ const ForageQualPage = () => {
 
     if (!selectedHerd) {
       alert('Error: no selected herd');
-    } else if (!allPlots[selectedPlotId]?.id) {
+      return;
+    } if (!allPlots[selectedPlotId]?.id) {
       alert('Error: no selected plot');
     } else {
       if (isWifi) {
@@ -83,388 +90,51 @@ const ForageQualPage = () => {
   return (
     <SafeAreaView style={[GlobalStyle.container, { backgroundColor: Colors.secondary.white }]}>
       <ScrollView
-        contentContainerStyle={GlobalStyle.contentContainerScroll}
+        contentContainerStyle={[GlobalStyle.contentContainerScroll, { width: Dimensions.get('window').width }]}
       >
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              paddingLeft: 20,
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: Colors.primary.lightOrange,
-                borderRadius: 10,
-              }}
-            >
-              <AntDesign
-                name='left'
-                size={32}
-                onPress={() => {
-                  navigation.goBack();
-                }}
-                color={Colors.primary.mainOrange}
-              />
-            </View>
-          </View>
-          <Text
-            style={[TextStyles.title, { color: Colors.primary.mainOrange }]}
-          >
-            Forage Quality
-          </Text>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-            }}
-          >
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-            width: '100%',
-            paddingTop: 10,
-            paddingBottom: 50,
-            paddingLeft: 20,
-          }}
-        >
-          <Text
-            style={[TextStyles.subHeading, { color: Colors.primary.deepGreen, paddingBottom: 10 }]}
-          >
-            paddock
-          </Text>
-          <Dropdown
-            style={[DropdownStyle.dropdown, { width: 200 }, plotIdFocus && { borderColor: 'blue' }]}
-            containerStyle={DropdownStyle.dropdownContainerStyle}
-            placeholderStyle={DropdownStyle.dropdownPlaceholderStyle}
-            selectedTextStyle={DropdownStyle.dropdownSelectedTextStyle}
-            itemContainerStyle={DropdownStyle.dropdownItemContainerStyle}
-            itemTextStyle={DropdownStyle.dropdownItemTextStyle}
+        <FormHeader
+          title='Forage Quality'
+          nav={navigation}
+        />
+
+        <View style={FormsStyle.sectionTop}>
+          <PaddockDropdown
             data={plotData}
-            maxHeight={300}
-            labelField='label'
-            valueField='value'
-            placeholder={!plotIdFocus ? plotName : '...'}
-            value={selectedPlotId}
-            onFocus={() => setPlotIdFocus(true)}
-            onBlur={() => setPlotIdFocus(false)}
-            onChange={item => {
-              setPlotName(item.label);
-              setSelectedPlotId(item.data);
-            }}
+            plotId={selectedPlotId}
+            setPlotId={setSelectedPlotId}
           />
         </View>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-            paddingLeft: 20,
-            width: '100%',
-          }}
-        >
-          <Text
-            style={[TextStyles.subHeading, { color: Colors.primary.deepGreen, paddingBottom: 10 }]}
-          >
-            reference images
-          </Text>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            transform: [{ rotate: '180deg' }], // For some reason, these stock assets from Figma were created upside down.
-            // When changing to use actual assets, make sure to change this transform!
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              paddingTop: 10,
-              paddingLeft: 20,
-            }}
-          >
-            <StockForageQualityOne />
-          </View>
-          <View
-            style={{
-              paddingTop: 10,
-            }}
-          >
-            <StockForageQualityFive />
-          </View>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-              paddingTop: 10,
-              paddingRight: 20,
-            }}
-          >
-            <StockForageQualityNine />
-          </View>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingBottom: 40,
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              paddingLeft: 50,
-            }}
-          >
-            <Text
-              style={[TextStyles.subHeading, { color: Colors.primary.vibrantGreen }]}
-            > 
-              1
-            </Text>
-          </View>
-          <View>
-            <Text
-              style={[TextStyles.subHeading, { color: Colors.primary.vibrantGreen }]}
-            > 
-              5
-            </Text>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-              paddingRight: 50,
-            }}
-          >
-            <Text
-              style={[TextStyles.subHeading, { color: Colors.primary.vibrantGreen }]}
-            > 
-              9
-            </Text>
-          </View>
-        </View>
-        <View 
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'absolute',
-            top: 365,
-          }}
-        >
-          <FormGrassImage />
-        </View>
-        <View
-          style={{
-            backgroundColor: Colors.primary.lightestGreen,
-            width: Dimensions.get('window').width,
-            minHeight: 0.4 * Dimensions.get('window').height,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingBottom: 40,
-          }}
-        >
-          <View>
-            <Text
-              style={[TextStyles.subHeading, { color: Colors.primary.deepGreen, paddingTop: 20 }]}
-            >
-              rate forage
-            </Text>
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Slider
-                style={GlobalStyle.slider}
-                minimumValue={1}
-                maximumValue={9}
-                onValueChange={(val) => setRating(val)}
-                step={1}
-                value={rating}
-                minimumTrackTintColor={Colors.primary.vibrantGreen}
-                thumbTintColor={Colors.primary.vibrantGreen}
-              />
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                  }}
-                >
-                  <Text>
-                    1
-                  </Text>
-                </View>
-                <View>
-                  <Text>
-                    5
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end',
-                  }}
-                >
-                  <Text>
-                    9
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  justifyContent: 'flex-end',
-                  alignItems: 'flex-end',
-                  width: '100%',
-                }}
-              >
-                <View
-                  style={{
-                    backgroundColor: Colors.secondary.white,
-                    borderRadius: 10,
-                  }}
-                >
-                  <Text style={[
-                    TextStyles.subHeading,
-                    { minWidth: 100, textAlign: 'center', color: Colors.primary.vibrantGreen }]}
-                  >
-                    {rating}
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
-          <AppButton
-            onPress={() => setImageOverlay(!notesOverlay)}
-            title={'take photo'}
-            backgroundColor={Colors.primary.lightGreen}
-            textColor={Colors.primary.deepGreen}
-            width={215}
-            height={44}
+
+        <FormGrassImage />
+        <View style={FormsStyle.sectionBottom}>
+          <Text style={[TextStyles.subHeading, { minWidth: 100, textAlign: 'center' }]}>Rate Forage: {rating}</Text>
+          <Slider
+            style={GlobalStyle.slider}
+            minimumValue={1}
+            maximumValue={9}
+            onValueChange={(val) => setRating(val)}
+            step={1}
+            value={rating}
+            minimumTrackTintColor={Colors.primary.vibrantGreen}
+            thumbTintColor={Colors.primary.vibrantGreen}
           />
-          <AppButton
-            onPress={() => setNotesOverlay(!notesOverlay)}
-            title={'add note'}
-            backgroundColor={Colors.primary.lightOrange}
-            textColor={Colors.primary.mainOrange}
-            width={215}
-            height={44}
-          />
-          <AppButton
-            onPress={handleCreateForageQualityCensus}
-            title={'submit'}
-            backgroundColor={Colors.primary.deepGreen}
-            textColor={Colors.secondary.white}
-            width={215}
-            height={51}
-            disabled={loading}
-          />
+          <View style={FormsStyle.sectionButtons}>
+            <AddPhotoButton
+              image={image}
+              setImage={setImage}
+            />
+            <AddNotesButton
+              notes={notes}
+              setNotes={setNotes}
+            />
+            <SubmitButton
+              onSubmit={handleCreateForageQualityCensus}
+              loadingState={loading}
+              goBack={navigation.goBack}
+            />
+          </View>
         </View>
       </ScrollView>
-      <Overlay
-        isVisible={imageOverlay}
-        onBackdropPress={() => setImageOverlay(!imageOverlay)}
-        overlayStyle={GlobalStyle.overlayModal}
-      >
-        <UploadImage
-          image={image}
-          setImage={setImage as Dispatch<SetStateAction<IPhotoInput>>}
-        />
-        <AppButton
-          onPress={() => setImageOverlay(!imageOverlay)}
-          title={'ok'}
-          backgroundColor={Colors.primary.deepGreen}
-          textColor={Colors.secondary.white}
-          width={215}
-          height={51}
-        />
-      </Overlay>
-      <Overlay
-        isVisible={notesOverlay}
-        onBackdropPress={() => setNotesOverlay(!notesOverlay)}
-        overlayStyle={GlobalStyle.overlayModal}
-      >
-        <AppTextInput
-          onChangeText={(text) => setNotes(text)}
-          value={notes}
-          placeholder='Notes'
-          multiline={true}
-          width={250}
-        />
-        <AppButton
-          onPress={() => setNotesOverlay(!notesOverlay)}
-          title={'ok'}
-          backgroundColor={Colors.primary.deepGreen}
-          textColor={Colors.secondary.white}
-          width={215}
-          height={51}
-        />
-      </Overlay>
-      <Overlay
-        isVisible={submitOverlay}
-        onBackdropPress={() => setSubmitOverlay(!submitOverlay)}
-        overlayStyle={GlobalStyle.overlayModal}
-      >
-        <View style={{ alignItems: 'center' }}>
-          <Text style={[TextStyles.title,
-            {
-              minWidth: 100,
-              textAlign: 'center',
-              color: Colors.secondary.deepTeal,
-            }]}>
-            Data Recorded!
-          </Text>
-          <AppButton
-            onPress={() => setSubmitOverlay(!submitOverlay)}
-            title={'Log new data'}
-            backgroundColor={Colors.primary.lightOrange}
-            textColor={Colors.primary.mainOrange}
-            width={215}
-            height={51}
-          />
-          <AppButton
-            onPress={() => setSubmitOverlay(!submitOverlay)}
-            title={'See my dashboard'}
-            backgroundColor={Colors.primary.lightOrange}
-            textColor={Colors.primary.mainOrange}
-            width={215}
-            height={51}
-          />
-        </View>
-      </Overlay>
     </SafeAreaView>
   );
 };

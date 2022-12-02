@@ -14,6 +14,7 @@ import LogEntry from '../../../components/Entries/LogEntry';
 import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 import average from '../../../utils/average';
 import AnalyticsGrassImage from '../../../assets/analytics_grass.svg';
+import { FormHeader } from '../../../components';
 
 const SelectedPaddockPage = () => {
   const dispatch = useAppDispatch();
@@ -32,53 +33,12 @@ const SelectedPaddockPage = () => {
         horizontal={false}
         contentContainerStyle={GlobalStyle.contentContainerScroll}
       >
+        <FormHeader
+          title={allPlots[selectedPlotId].name}
+          nav={navigation}
+        />
+
         <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingBottom: 40,
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-              paddingLeft: 20,
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: Colors.primary.lightOrange,
-                borderRadius: 10,
-              }}
-            >
-              <AntDesign
-                name='left'
-                size={32}
-                onPress={() => {
-                  navigation.goBack();
-                }}
-                color={Colors.primary.mainOrange}
-              />
-            </View>
-          </View>
-          <Text
-            style={[TextStyles.title, { color: Colors.primary.mainOrange }]}
-          >
-            {allPlots[selectedPlotId].name}
-          </Text>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-            }}
-          >
-          </View>
-        </View>
-        <View 
           style={{
             flexDirection: 'row',
             justifyContent: 'center',

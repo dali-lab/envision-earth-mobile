@@ -1,7 +1,6 @@
 import Accordion from './Accordion';
 import AppButton from './AppButton';
 import AppTextInput from './AppTextInput';
-import ScrollPick from './ScrollPick';
 import UploadImage from './UploadImage';
 import {
   PaddockDropdown,
@@ -11,12 +10,17 @@ import {
   AddEntryButton,
   FormHeader,
 } from './Forms';
+import {
+  BCSEntry,
+  DungEntry,
+  EntryNumberWatch,
+  PaddockEntry,
+} from './Entries';
 
 export {
   Accordion,
   AppButton,
   AppTextInput,
-  ScrollPick,
   UploadImage,
   PaddockDropdown,
   AddPhotoButton,
@@ -24,4 +28,8 @@ export {
   SubmitButton,
   AddEntryButton,
   FormHeader,
+  BCSEntry,
+  DungEntry,
+  EntryNumberWatch,
+  PaddockEntry,
 };

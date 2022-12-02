@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, SafeAreaView, View } from 'react-native';
+import { ScrollView, SafeAreaView, View, Dimensions } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
@@ -10,7 +10,8 @@ import { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import DungEntry from '../../../components/Entries/DungEntry';
 import NavType from '../../../utils/NavType';
-import { GlobalStyle, TextStyles, Colors, DropdownStyle } from '../../../styles';
+import { GlobalStyle, TextStyles, Colors, FormsStyle } from '../../../styles';
+import { FormHeader, PaddockDropdown, AddEntryButton, AddNotesButton, AddPhotoButton, SubmitButton } from '../../../components';
 import FormGrassImage from '../../../assets/form_grass.svg';
 import PlaceholderImage from '../../../assets/image_placeholder.svg';
 
@@ -114,13 +115,16 @@ const DungPage = () => {
           />
         </View>
 
+        <FormGrassImage />
+
         <View style={FormsStyle.sectionBottom}>
           {
             dungArr.map((rating, index) => (
               <View
-                key={index}
+                key={'entry' + index.toString()}
               >
                 <DungEntry
+                  num={index}
                   rating={rating}
                   onDungEdit={(value) => handleEditDung(value, index)}
                   onDungDelete={() => handleDeleteDung(index)}

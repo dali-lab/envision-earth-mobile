@@ -10,7 +10,7 @@ import { createPlots } from '../../../redux/slices/plotsSlice';
 import { createMembership } from '../../../redux/slices/membershipSlice';
 import NavType from '../../../utils/NavType';
 import { ROUTES } from '../../../utils/constants';
-import { GlobalStyle } from '../../../styles';
+import { AuthStyle } from '../../../styles';
 import {
   BreedingDatePage,
   CalvingDatePage,
@@ -117,7 +117,7 @@ const SignUpPage = () => {
   ];
 
   return (
-    <SafeAreaView style={GlobalStyle.container}>
+    <SafeAreaView style={AuthStyle.container}>
       <View>
         {pages[pageInd]}
       </View>

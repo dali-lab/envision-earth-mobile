@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { ScrollView, SafeAreaView, View, Dimensions } from 'react-native';
+import { ScrollView, SafeAreaView, Text, View, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import EyeballPage from './EyeballPage';
 import StacPage from './StacPage';
 import { AppButton, FormHeader } from '../../../components';
 import NavType from '../../../utils/NavType';
-import { GlobalStyle, Colors } from '../../../styles';
+import { GlobalStyle, Colors, TextStyles, QuanStyle, FormsStyle } from '../../../styles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const ForageQuanPage = () => {
   const navigation = useNavigation<NavType>();
@@ -26,18 +27,10 @@ const ForageQuanPage = () => {
           nav={navigation}
         />
         <View
-          style={{
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-            width: '100%',
-            paddingTop: 10,
-            paddingBottom: 50,
-            paddingLeft: 20,
-          }}
+          style={FormsStyle.sectionTop}
         >
           <Text
-            style={[TextStyles.subHeading, { color: Colors.primary.deepGreen, paddingBottom: 10 }]}
+            style={[TextStyles.subHeading, { color: Colors.primary.deepGreen, paddingBottom: 0 }]}
           >
             What method are you using?
           </Text>
@@ -46,30 +39,23 @@ const ForageQuanPage = () => {
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
+              width: Dimensions.get('window').width * 0.5,
             }}
           >
-            <AppButton
-              onPress={() => {
-                setIsEyeballPage(true);
-              }}
-              title={'Eyeballing'}
-              backgroundColor={isEyeballPage ? Colors.primary.mainOrange : Colors.secondary.white}
-              textColor={isEyeballPage ? Colors.secondary.white : Colors.primary.mainOrange}
-              width={150}
-              height={50}
-            />
-            <AppButton
-              onPress={() => {
-                setIsEyeballPage(false);
-              }}
-              title={'STAC'}
-              backgroundColor={isEyeballPage ? Colors.secondary.white : Colors.primary.mainOrange}
-              textColor={isEyeballPage ? Colors.primary.mainOrange : Colors.secondary.white}
-              width={150}
-              height={50}
-            />
+            <TouchableOpacity onPress={() => { setIsEyeballPage(true); }}>
+              <View style={isEyeballPage ? QuanStyle.methodContainerEnabled : QuanStyle.methodContainerDisabled}>
+                <Text style={isEyeballPage ? QuanStyle.methodTitleEnabled : QuanStyle.methodTitleDisabled}>Eyeballing</Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => { setIsEyeballPage(false); }}>
+              <View style={!isEyeballPage ? QuanStyle.methodContainerEnabled : QuanStyle.methodContainerDisabled}>
+                <Text style={!isEyeballPage ? QuanStyle.methodTitleEnabled : QuanStyle.methodTitleDisabled}>STAC</Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
+
         {
           isEyeballPage ?
             <EyeballPage /> :

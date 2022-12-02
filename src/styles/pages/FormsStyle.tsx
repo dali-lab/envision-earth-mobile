@@ -18,7 +18,8 @@ const FormsStyle = StyleSheet.create({
   },
 
   sectionButtons: {
-    padding: WIDTH * 0.15,
+    paddingBottom: WIDTH * 0.15,
+    paddingHorizontal: WIDTH * 0.15,
   },
 
   entryTitle: {
@@ -79,10 +80,35 @@ const BCSStyle = StyleSheet.create({
   identifierListItem: {
     marginBottom: 5,
   },
+});
 
+const QuanStyle = StyleSheet.create({
+  methodContainerDisabled: {
+    borderColor: Colors.primary.mainOrange,
+    borderWidth: 2,
+    borderRadius: 10,
+    backgroundColor: Colors.secondary.white,
+    padding: 10,
+  },
+  methodContainerEnabled: {
+    borderColor: Colors.primary.vibrantGreen,
+    borderWidth: 1,
+    borderRadius: 10,
+    backgroundColor: Colors.primary.mainOrange,
+    padding: 10,
+  },
+  methodTitleDisabled: {
+    color: Colors.primary.mainOrange,
+    ...TextStyles.subHeading,
+  },
+  methodTitleEnabled: {
+    color: Colors.secondary.white,
+    ...TextStyles.subHeading,
+  },
 });
 
 export default FormsStyle;
 export {
   BCSStyle,
+  QuanStyle,
 };

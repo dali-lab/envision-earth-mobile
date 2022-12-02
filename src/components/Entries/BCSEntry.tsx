@@ -26,8 +26,65 @@ const BCSEntry = ({ bcs, onBCSEdit, onBCSDelete }: IBCSEntry) => {
         onValueChange={onBCSEdit}
         step={1}
         value={bcs}
-        thumbTintColor={Colors.secondary.mediumGreen}
+        minimumTrackTintColor={Colors.primary.vibrantGreen}
+        thumbTintColor={Colors.primary.vibrantGreen}
       />
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+          }}
+        >
+          <Text>
+            1
+          </Text>
+        </View>
+        <View>
+          <Text>
+            5
+          </Text>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Text>
+            9
+          </Text>
+        </View>
+      </View>
+      <View
+        style={{
+          justifyContent: 'flex-end',
+          alignItems: 'flex-end',
+          width: '100%',
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: Colors.secondary.white,
+            borderRadius: 10,
+          }}
+        >
+          <Text style={[
+            TextStyles.subHeading,
+            { minWidth: 100, textAlign: 'center', color: Colors.primary.vibrantGreen }]}
+          >
+            {bcs}
+          </Text>
+        </View>
+      </View>
     </View>
   );
 };

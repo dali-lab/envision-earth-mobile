@@ -36,11 +36,11 @@ export const ROUTES = {
 };
 
 export const DAYS_OF_WEEK = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
+  'Sun.',
+  'Mon.',
+  'Tue.',
+  'Wed.',
+  'Thur.',
+  'Fri.',
+  'Sat.',
 ];

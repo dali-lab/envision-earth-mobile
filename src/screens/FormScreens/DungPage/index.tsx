@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ScrollView, SafeAreaView, View } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 import { useNavigation } from '@react-navigation/native';
+import { AntDesign } from '@expo/vector-icons';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { createDungCensus } from '../../../redux/slices/dungCensusSlice';
@@ -9,8 +10,9 @@ import { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import DungEntry from '../../../components/Entries/DungEntry';
 import NavType from '../../../utils/NavType';
-import { FormsStyle, GlobalStyle } from '../../../styles';
-import { AddEntryButton, AddNotesButton, AddPhotoButton, FormHeader, PaddockDropdown, SubmitButton } from '../../../components/Forms';
+import { GlobalStyle, TextStyles, Colors, DropdownStyle } from '../../../styles';
+import FormGrassImage from '../../../assets/form_grass.svg';
+import PlaceholderImage from '../../../assets/image_placeholder.svg';
 
 const DungPage = () => {
   const isWifi = useIsConnected();
@@ -95,7 +97,7 @@ const DungPage = () => {
   const navigation = useNavigation<NavType>();
 
   return (
-    <SafeAreaView style={GlobalStyle.container}>
+    <SafeAreaView style={[GlobalStyle.container, { backgroundColor: Colors.secondary.white }]}>
       <ScrollView
         contentContainerStyle={GlobalStyle.contentContainerScroll}
       >

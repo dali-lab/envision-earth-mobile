@@ -1,20 +1,23 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
-import { ScrollView, SafeAreaView, View, Text } from 'react-native';
+import { Dimensions, ScrollView, SafeAreaView, View, Text } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import { useIsConnected } from 'react-native-offline';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
-import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { createForageQualityCensus } from '../../../redux/slices/forageQualityCensusSlice';
-import { AddNotesButton, AddPhotoButton, AppButton, AppTextInput, PaddockDropdown, SubmitButton } from '../../../components';
+import { AppButton, AppTextInput } from '../../../components';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import NavType from '../../../utils/NavType';
-import { GlobalStyle, TextStyles, Colors } from '../../../styles';
-import { FormHeader } from '../../../components';
+import { GlobalStyle, TextStyles, Colors, DropdownStyle } from '../../../styles';
+import FormGrassImage from '../../../assets/form_grass.svg';
+import StockForageQualityOne from '../../../assets/fqual_stock_1.svg';
+import StockForageQualityFive from '../../../assets/fqual_stock_5.svg';
+import StockForageQualityNine from '../../../assets/fqual_stock_9.svg';
 
 const ForageQualPage = () => {
   const isWifi = useIsConnected();
@@ -71,7 +74,7 @@ const ForageQualPage = () => {
   const navigation = useNavigation<NavType>();
 
   return (
-    <SafeAreaView style={GlobalStyle.container}>
+    <SafeAreaView style={[GlobalStyle.container, { backgroundColor: Colors.secondary.white }]}>
       <ScrollView
         contentContainerStyle={GlobalStyle.contentContainerScroll}
       >

@@ -16,6 +16,8 @@ const DungEntry = ({ rating, onDungEdit, onDungDelete }: IDungEntry) => {
       style={{
         alignItems: 'center',
         justifyContent: 'center',
+        paddingTop: 20,
+        paddingBottom: 20,
       }}
     >
       <EntryLabel
@@ -29,7 +31,65 @@ const DungEntry = ({ rating, onDungEdit, onDungDelete }: IDungEntry) => {
         onValueChange={onDungEdit}
         step={0.1}
         value={rating}
+        minimumTrackTintColor={Colors.primary.vibrantGreen}
+        thumbTintColor={Colors.primary.vibrantGreen}
       />
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+          }}
+        >
+          <Text>
+            -1
+          </Text>
+        </View>
+        <View>
+          <Text>
+            0
+          </Text>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Text>
+            1
+          </Text>
+        </View>
+      </View>
+      <View
+        style={{
+          justifyContent: 'flex-end',
+          alignItems: 'flex-end',
+          width: '100%',
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: Colors.secondary.white,
+            borderRadius: 10,
+          }}
+        >
+          <Text style={[
+            TextStyles.subHeading,
+            { minWidth: 100, textAlign: 'center', color: Colors.primary.vibrantGreen }]}
+          >
+            {rating.toFixed(1)}
+          </Text>
+        </View>
+      </View>
     </View>
   );
 };

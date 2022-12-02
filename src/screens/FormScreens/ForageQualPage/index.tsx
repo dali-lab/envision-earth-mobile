@@ -8,7 +8,7 @@ import Slider from '@react-native-community/slider';
 import { AntDesign } from '@expo/vector-icons';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
-import { createForageQualityCensus } from '../../../redux/slices/forageQualityCensusSlice';
+import { createForageQualityCensus, locallyCreateForageQualityCensus } from '../../../redux/slices/forageQualityCensusSlice';
 import { AppButton, AppTextInput } from '../../../components';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
@@ -67,6 +67,13 @@ const ForageQualPage = () => {
             setSubmitOverlay(true);
           }
         });
+      } else {
+        dispatch(locallyCreateForageQualityCensus({
+          plotId: allPlots[selectedPlotId]?.id as string,
+          rating,
+          notes: (notes + ' '),
+          photo: image,
+        }));
       }
     }
   };

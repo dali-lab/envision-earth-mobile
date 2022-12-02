@@ -1,20 +1,16 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
-import { ScrollView, SafeAreaView, View, Text } from 'react-native';
-import { Overlay } from 'react-native-elements';
+import React, { useState } from 'react';
+import { ScrollView, SafeAreaView, View } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
-import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { createDungCensus } from '../../../redux/slices/dungCensusSlice';
-import AppButton from '../../../components/AppButton';
-import AppTextInput from '../../../components/AppTextInput';
-import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
+import { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import DungEntry from '../../../components/Entries/DungEntry';
 import NavType from '../../../utils/NavType';
-import { GlobalStyle, TextStyles, Colors, DropdownStyle } from '../../../styles';
+import { FormsStyle, GlobalStyle } from '../../../styles';
+import { AddEntryButton, AddNotesButton, AddPhotoButton, FormHeader, PaddockDropdown, SubmitButton } from '../../../components/Forms';
 
 const DungPage = () => {
   const isWifi = useIsConnected();
@@ -30,8 +26,6 @@ const DungPage = () => {
     data: plotId,
   }));
   const [selectedPlotId, setSelectedPlotId] = useState<string>('');
-  const [plotIdFocus, setPlotIdFocus] = useState(false);
-  const [plotName, setPlotName] = useState('Select paddock...');
 
   const [dungArr, setDungArr] = useState<number[]>([0]);
   const handleAddDung = () => {
@@ -51,42 +45,50 @@ const DungPage = () => {
   };
 
   const [image, setImage] = useState<IPhotoInput>();
-  const [imageOverlay, setImageOverlay] = useState<boolean>(false);
 
   // TODO: Add tag
 
   const [notes, setNotes] = useState<string>('');
-  const [notesOverlay, setNotesOverlay] = useState<boolean>(false);
 
+  // TODO: fix this so that submitting the form correctly sets this state
+  // (currently handed off to the submit button/overlay component)
   const [submitOverlay, setSubmitOverlay] = useState<boolean>(false);
 
   const handleCreateDungCensus = async () => {
     if (loading) {
       return;
     }
-    
+
     if (!selectedHerd) {
       alert('Error: no selected herd');
-    } else if (!allPlots[selectedPlotId]?.id) {
+      return;
+    }
+    if (!allPlots[selectedPlotId]?.id) {
       alert('Error: no selected plot');
-    } else if (!dungArr) {
+      return;
+    }
+    if (!dungArr) {
       alert('Error: no dung arr');
-    } else if (dungArr.length < 1) {
+      return;
+    }
+    if (dungArr.length < 1) {
       alert('Error: no elements in dung arr');
-    } else {
-      if (isWifi) {
-        await dispatch(createDungCensus({
-          herdId: selectedHerd?.id as string,
-          plotId: allPlots[selectedPlotId]?.id as string,
-          ratings: dungArr,
-          notes: (notes + ' '),
-          photo: image,
-        })).then((res) => {
-          if (res.payload) {
-            setSubmitOverlay(true);
-          }
-        });
-      }
+      return;
+    }
+
+    // Success condition
+    if (isWifi) {
+      await dispatch(createDungCensus({
+        herdId: selectedHerd?.id as string,
+        plotId: allPlots[selectedPlotId]?.id as string,
+        ratings: dungArr,
+        notes: (notes + ' '),
+        photo: image,
+      })).then((res) => {
+        if (res.payload) {
+          setSubmitOverlay(true);
+        }
+      });
     }
   };
 
@@ -97,182 +99,54 @@ const DungPage = () => {
       <ScrollView
         contentContainerStyle={GlobalStyle.contentContainerScroll}
       >
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-            }}
-          >
-            <Ionicons
-              name='ios-arrow-back'
-              size={32}
-              onPress={() => {
-                navigation.goBack();
-              }}
+        <FormHeader
+          title="Dung Condition"
+          nav={navigation}
+        />
+
+        <View style={FormsStyle.sectionTop}>
+          <PaddockDropdown
+            data={plotData}
+            plotId={selectedPlotId}
+            setPlotId={setSelectedPlotId}
+          />
+        </View>
+
+        <View style={FormsStyle.sectionBottom}>
+          {
+            dungArr.map((rating, index) => (
+              <View
+                key={index}
+              >
+                <DungEntry
+                  rating={rating}
+                  onDungEdit={(value) => handleEditDung(value, index)}
+                  onDungDelete={() => handleDeleteDung(index)}
+                />
+              </View>
+            ))
+          }
+          <AddEntryButton
+            onPress={handleAddDung}
+          />
+
+          <View style={FormsStyle.sectionButtons}>
+            <AddPhotoButton
+              image={image}
+              setImage={setImage}
+            />
+            <AddNotesButton
+              notes={notes}
+              setNotes={setNotes}
+            />
+            <SubmitButton
+              onSubmit={handleCreateDungCensus}
+              loadingState={loading}
+              goBack={navigation.goBack}
             />
           </View>
-          <Text
-            style={[TextStyles.title, { color: Colors.primary.mainOrange }]}
-          >
-            Dung Condition
-          </Text>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-            }}
-          >
-          </View>
         </View>
-        <View
-          style={{
-            width: 310,
-          }}
-        >
-          <Dropdown
-            style={[DropdownStyle.dropdown, plotIdFocus && { borderColor: 'blue' }]}
-            containerStyle={DropdownStyle.dropdownContainerStyle}
-            placeholderStyle={DropdownStyle.dropdownPlaceholderStyle}
-            selectedTextStyle={DropdownStyle.dropdownSelectedTextStyle}
-            itemContainerStyle={DropdownStyle.dropdownItemContainerStyle}
-            itemTextStyle={DropdownStyle.dropdownItemTextStyle}
-            data={plotData}
-            maxHeight={300}
-            labelField='label'
-            valueField='value'
-            placeholder={!plotIdFocus ? plotName : '...'}
-            value={selectedPlotId}
-            onFocus={() => setPlotIdFocus(true)}
-            onBlur={() => setPlotIdFocus(false)}
-            onChange={item => {
-              setPlotName(item.label);
-              setSelectedPlotId(item.data);
-            }}
-          />
-        </View>
-        {
-          dungArr.map((rating, index) => (
-            <View
-              key={index}
-            >
-              <DungEntry
-                rating={rating}
-                onDungEdit={(value) => handleEditDung(value, index)}
-                onDungDelete={() => handleDeleteDung(index)}
-              />
-            </View>
-          ))
-        }
-        <AppButton
-          onPress={() => handleAddDung()}
-          title={'add new dung entry'}
-          backgroundColor={Colors.primary.mainOrange}
-          textColor={Colors.secondary.white}
-        />
-        <AppButton
-          onPress={() => setImageOverlay(!notesOverlay)}
-          title={'take photo'}
-          backgroundColor={Colors.primary.lightGreen}
-          textColor={Colors.primary.deepGreen}
-          width={215}
-          height={44}
-        />
-        <AppButton
-          onPress={() => setNotesOverlay(!notesOverlay)}
-          title={'add note'}
-          backgroundColor={Colors.primary.lightOrange}
-          textColor={Colors.primary.mainOrange}
-          width={215}
-          height={44}
-        />
-        <AppButton
-          onPress={handleCreateDungCensus}
-          title={'submit'}
-          backgroundColor={Colors.primary.deepGreen}
-          textColor={Colors.secondary.white}
-          width={215}
-          height={51}
-          disabled={loading}
-        />
       </ScrollView>
-      <Overlay
-        isVisible={imageOverlay}
-        onBackdropPress={() => setImageOverlay(!imageOverlay)}
-        overlayStyle={GlobalStyle.overlayModal}
-      >
-        <UploadImage
-          image={image}
-          setImage={setImage as Dispatch<SetStateAction<IPhotoInput>>}
-        />
-        <AppButton
-          onPress={() => setImageOverlay(!imageOverlay)}
-          title={'ok'}
-          backgroundColor={Colors.primary.deepGreen}
-          textColor={Colors.secondary.white}
-          width={215}
-          height={51}
-        />
-      </Overlay>
-      <Overlay
-        isVisible={notesOverlay}
-        onBackdropPress={() => setNotesOverlay(!notesOverlay)}
-        overlayStyle={GlobalStyle.overlayModal}
-      >
-        <AppTextInput
-          onChangeText={(text) => setNotes(text)}
-          value={notes}
-          placeholder='Notes'
-          multiline={true}
-          width={250}
-        />
-        <AppButton
-          onPress={() => setNotesOverlay(!notesOverlay)}
-          title={'ok'}
-          backgroundColor={Colors.primary.deepGreen}
-          textColor={Colors.secondary.white}
-          width={215}
-          height={51}
-        />
-      </Overlay>
-      <Overlay
-        isVisible={submitOverlay}
-        onBackdropPress={() => setSubmitOverlay(!submitOverlay)}
-        overlayStyle={GlobalStyle.overlayModal}
-      >
-        <View style={{ alignItems: 'center' }}>
-          <Text style={[TextStyles.title, 
-            { 
-              minWidth: 100, 
-              textAlign: 'center', 
-              color: Colors.secondary.deepTeal,
-            }]}>Data Recorded!</Text>
-          <AppButton
-            onPress={() => setSubmitOverlay(!submitOverlay)}
-            title={'Log new data'}
-            backgroundColor={Colors.primary.lightOrange}
-            textColor={Colors.primary.mainOrange}
-            width={215}
-            height={51}
-          />
-          <AppButton
-            onPress={() => setSubmitOverlay(!submitOverlay)}
-            title={'See my dashboard'}
-            backgroundColor={Colors.primary.lightOrange}
-            textColor={Colors.primary.mainOrange}
-            width={215}
-            height={51}
-          />
-        </View>
-      </Overlay>
     </SafeAreaView>
   );
 };

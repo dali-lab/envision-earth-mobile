@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { ScrollView, SafeAreaView, View, Text, Dimensions } from 'react-native';
+import { ScrollView, SafeAreaView, View, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
 import EyeballPage from './EyeballPage';
 import StacPage from './StacPage';
-import { AppButton } from '../../../components';
+import { AppButton, FormHeader } from '../../../components';
 import NavType from '../../../utils/NavType';
-import { GlobalStyle, TextStyles, Colors } from '../../../styles';
+import { GlobalStyle, Colors } from '../../../styles';
 
 const ForageQuanPage = () => {
   const navigation = useNavigation<NavType>();
@@ -21,42 +20,10 @@ const ForageQuanPage = () => {
           width: Dimensions.get('window').width,
         }}
       >
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-start',
-            }}
-          >
-            <Ionicons
-              name='ios-arrow-back'
-              size={32}
-              onPress={() => {
-                navigation.goBack();
-              }}
-            />
-          </View>
-          <Text
-            style={[TextStyles.title, { color: Colors.primary.mainOrange }]}
-          >
-            Forage Quantity
-          </Text>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-            }}
-          >
-          </View>
-        </View>
+        <FormHeader
+          title='Forage Quantity'
+          nav={navigation}
+        />
         <View
           style={{
             flexDirection: 'row',
@@ -88,8 +55,7 @@ const ForageQuanPage = () => {
         </View>
         {
           isEyeballPage ?
-            <EyeballPage />
-            : 
+            <EyeballPage /> :
             <StacPage />
         }
       </ScrollView>

@@ -25,6 +25,9 @@ const DashboardStyle = StyleSheet.create({
     marginVertical: 10,
     ...TextStyles.subHeading,
   },
+  scrollView: {
+    width: Dimensions.get('window').width,
+  },
   section: {
     backgroundColor: Colors.secondary.white,
     borderRadius: 10,

@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, GestureResponderEvent } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { Ionicons } from '@expo/vector-icons';
-import { GlobalStyle, TextStyles, Colors } from '../../styles';
+import { GlobalStyle, Colors, FormsStyle } from '../../styles';
+import EntryLabel from './EntryLabel';
 
 export interface IBCSEntry {
   bcs: number,
@@ -13,13 +14,11 @@ export interface IBCSEntry {
 const BCSEntry = ({ bcs, onBCSEdit, onBCSDelete }: IBCSEntry) => {
   return (
     <View
-      style={{
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
     >
-      <Ionicons name='trash-outline' size={26} onPress={onBCSDelete} />
-      <Text style={[TextStyles.subHeading, { minWidth: 100, textAlign: 'center' }]}>BCS Entry: {bcs}</Text>
+      <EntryLabel
+        title={'BCS: ' + bcs}
+        deleteCallback={onBCSDelete}
+      />
       <Slider
         style={GlobalStyle.slider}
         minimumValue={1}
@@ -27,6 +26,7 @@ const BCSEntry = ({ bcs, onBCSEdit, onBCSDelete }: IBCSEntry) => {
         onValueChange={onBCSEdit}
         step={1}
         value={bcs}
+        thumbTintColor={Colors.secondary.mediumGreen}
       />
     </View>
   );

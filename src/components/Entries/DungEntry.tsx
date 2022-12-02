@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, GestureResponderEvent } from 'react-native';
+import { View, GestureResponderEvent } from 'react-native';
 import Slider from '@react-native-community/slider';
-import { Ionicons } from '@expo/vector-icons';
-import { GlobalStyle, TextStyles } from '../../styles';
+import { GlobalStyle } from '../../styles';
+import EntryLabel from './EntryLabel';
 
 export interface IDungEntry {
   rating: number,
@@ -18,13 +18,10 @@ const DungEntry = ({ rating, onDungEdit, onDungDelete }: IDungEntry) => {
         justifyContent: 'center',
       }}
     >
-      <Ionicons name='trash-outline' size={26} onPress={onDungDelete} />
-      <Text style={[
-        TextStyles.subHeading,
-        { minWidth: 100, textAlign: 'center' }]}
-      >
-        Dung Entry: {rating.toFixed(1)}
-      </Text>
+      <EntryLabel
+        title={'Dung Entry: ' + rating.toFixed(1)}
+        deleteCallback={onDungDelete}
+      />
       <Slider
         style={GlobalStyle.slider}
         minimumValue={-1}

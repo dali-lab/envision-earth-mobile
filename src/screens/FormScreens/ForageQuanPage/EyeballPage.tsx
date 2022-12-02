@@ -9,13 +9,13 @@ import { Ionicons } from '@expo/vector-icons';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { createForageQuantityCensus } from '../../../redux/slices/forageQuantityCensusSlice';
-import { AppButton, AppTextInput, PaddockSelector } from '../../../components';
+import { AddNotesButton, AddPhotoButton, AppButton, AppTextInput, PaddockDropdown, SubmitButton } from '../../../components';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import { GlobalStyle, TextStyles, Colors } from '../../../styles';
 
 
-const StacPage = () => {
+const EyeballPage = () => {
   const isWifi = useIsConnected();
   const dispatch = useAppDispatch();
 
@@ -46,50 +46,44 @@ const StacPage = () => {
     if (loading) {
       return;
     }
-    
+
     if (!selectedHerd) {
       alert('Error: no selected herd');
-    } else if (!allPlots[selectedPlotId]?.id) {
+      return;
+    }
+    if (!allPlots[selectedPlotId]?.id) {
       alert('Error: no selected plot');
-    } else if (rating == '') {
+      return;
+    }
+    if (rating == '') {
       alert('Error: rating can\'t be empty');
-    } else {
-      if (isWifi) {
-        await dispatch(createForageQuantityCensus({
-          plotId: allPlots[selectedPlotId]?.id as string,
-          rating: parseInt(rating),
-          notes: (notes + ' '),
-          photo: image,
-        })).then((res) => {
-          if (res.payload) {
-            setSubmitOverlay(true);
-          }
-        });
-      }
+      return;
+    }
+
+    // Success condition
+    if (isWifi) {
+      await dispatch(createForageQuantityCensus({
+        plotId: allPlots[selectedPlotId]?.id as string,
+        rating: parseInt(rating),
+        notes: (notes + ' '),
+        photo: image,
+      })).then((res) => {
+        if (res.payload) {
+          setSubmitOverlay(true);
+        }
+      });
     }
   };
 
   return (
-    <>
-      <>
-        <View
-          style={{
-            width: 310,
-          }}
-        >
-          <PaddockSelector
-            data={plotData}
-            placeholder={!plotIdFocus ? plotName : '...'}
-            value={selectedPlotId}
-            focus={plotIdFocus}
-            onFocus={() => setPlotIdFocus(true)}
-            onBlur={() => setPlotIdFocus(false)}
-            onChange={item => {
-              setPlotName(item.label);
-              setSelectedPlotId(item.data);
-            }}
-          />
-        </View>
+    <View>
+      <View>
+        <PaddockDropdown
+          data={plotData}
+          plotId={selectedPlotId}
+          setPlotId={setSelectedPlotId}
+        />
+
         <Text style={[TextStyles.subHeading, { minWidth: 100, textAlign: 'center' }]}>Amount of forage (acres):</Text>
         <TextInput
           onChangeText={value => setRating(value)}
@@ -108,103 +102,23 @@ const StacPage = () => {
           }}
           keyboardType="numeric"
         />
-        <AppButton
-          onPress={() => setImageOverlay(!notesOverlay)}
-          title={'take photo'}
-          backgroundColor={Colors.primary.lightGreen}
-          textColor={Colors.primary.deepGreen}
-          width={215}
-          height={44}
-        />
-        <AppButton
-          onPress={() => setNotesOverlay(!notesOverlay)}
-          title={'add note'}
-          backgroundColor={Colors.primary.lightOrange}
-          textColor={Colors.primary.mainOrange}
-          width={215}
-          height={44}
-        />
-        <AppButton
-          onPress={handleCreateForageQualityCensus}
-          title={'submit'}
-          backgroundColor={Colors.primary.deepGreen}
-          textColor={Colors.secondary.white}
-          width={215}
-          height={51}
-          disabled={loading}
-        />
-      </>
-      <Overlay
-        isVisible={imageOverlay}
-        onBackdropPress={() => setImageOverlay(!imageOverlay)}
-        overlayStyle={GlobalStyle.overlayModal}
-      >
-        <UploadImage
+
+        <AddPhotoButton
           image={image}
-          setImage={setImage as Dispatch<SetStateAction<IPhotoInput>>}
+          setImage={setImage}
         />
-        <AppButton
-          onPress={() => setImageOverlay(!imageOverlay)}
-          title={'ok'}
-          backgroundColor={Colors.primary.deepGreen}
-          textColor={Colors.secondary.white}
-          width={215}
-          height={51}
+        <AddNotesButton
+          notes={notes}
+          setNotes={setNotes}
         />
-      </Overlay>
-      <Overlay
-        isVisible={notesOverlay}
-        onBackdropPress={() => setNotesOverlay(!notesOverlay)}
-        overlayStyle={GlobalStyle.overlayModal}
-      >
-        <AppTextInput
-          onChangeText={(text) => setNotes(text)}
-          value={notes}
-          placeholder='Notes'
-          multiline={true}
-          width={250}
+        <SubmitButton
+          onSubmit={handleCreateForageQualityCensus}
+          loadingState={loading}
+          goBack={useNavigation().goBack}
         />
-        <AppButton
-          onPress={() => setNotesOverlay(!notesOverlay)}
-          title={'ok'}
-          backgroundColor={Colors.primary.deepGreen}
-          textColor={Colors.secondary.white}
-          width={215}
-          height={51}
-        />
-      </Overlay>
-      <Overlay
-        isVisible={submitOverlay}
-        onBackdropPress={() => setSubmitOverlay(!submitOverlay)}
-        overlayStyle={GlobalStyle.overlayModal}
-      >
-        <View style={{ alignItems: 'center' }}>
-          <Text style={[TextStyles.title, 
-            { 
-              minWidth: 100, 
-              textAlign: 'center', 
-              color: Colors.secondary.deepTeal,
-            }]}>Data Recorded!</Text>
-          <AppButton
-            onPress={() => setSubmitOverlay(!submitOverlay)}
-            title={'Log new data'}
-            backgroundColor={Colors.primary.lightOrange}
-            textColor={Colors.primary.mainOrange}
-            width={215}
-            height={51}
-          />
-          <AppButton
-            onPress={() => setSubmitOverlay(!submitOverlay)}
-            title={'See my dashboard'}
-            backgroundColor={Colors.primary.lightOrange}
-            textColor={Colors.primary.mainOrange}
-            width={215}
-            height={51}
-          />
-        </View>
-      </Overlay>
-    </>
+      </View>
+    </View>
   );
 };
 
-export default StacPage;
+export default EyeballPage;

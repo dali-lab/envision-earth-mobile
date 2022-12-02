@@ -123,8 +123,6 @@ const DungPage = () => {
           />
         </View>
 
-        <FormGrassImage />
-
         <View style={FormsStyle.sectionBottom}>
           {
             dungArr.map((rating, index) => (

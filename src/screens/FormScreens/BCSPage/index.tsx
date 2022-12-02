@@ -163,7 +163,6 @@ const BCSPage = () => {
         }
       });
     } else {
-<<<<<<< HEAD
       if (isWifi) {
         await dispatch(createCowCensus({
           herdId: selectedHerd?.id as string,
@@ -187,9 +186,6 @@ const BCSPage = () => {
           photo: image,
         }));
       }
-=======
-      dispatch(locallyCreateCowCensus(payload));
->>>>>>> d3ce8b92802746b510b456f0226f5e3a5e1a89c3
     }
 
   };

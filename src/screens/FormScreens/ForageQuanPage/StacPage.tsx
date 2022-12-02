@@ -6,13 +6,8 @@ import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
-<<<<<<< HEAD
 import { createForageQuantityCensus, locallyCreateForageQuantityCensus } from '../../../redux/slices/forageQuantityCensusSlice';
-import { AppButton, AppTextInput, PaddockSelector } from '../../../components';
-=======
-import { createForageQuantityCensus } from '../../../redux/slices/forageQuantityCensusSlice';
 import { AddNotesButton, AddPhotoButton, AppButton, AppTextInput, PaddockDropdown, SubmitButton } from '../../../components';
->>>>>>> d3ce8b92802746b510b456f0226f5e3a5e1a89c3
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import { GlobalStyle, TextStyles, Colors, DropdownStyle, FormsStyle } from '../../../styles';

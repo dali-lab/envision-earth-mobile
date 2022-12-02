@@ -5,15 +5,10 @@ import { useNavigation } from '@react-navigation/native';
 import { AntDesign } from '@expo/vector-icons';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
-<<<<<<< HEAD
 import { createDungCensus, locallyCreateDungCensus } from '../../../redux/slices/dungCensusSlice';
 import AppButton from '../../../components/AppButton';
 import AppTextInput from '../../../components/AppTextInput';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
-=======
-import { createDungCensus } from '../../../redux/slices/dungCensusSlice';
-import { IPhotoInput } from '../../../components/UploadImage';
->>>>>>> d3ce8b92802746b510b456f0226f5e3a5e1a89c3
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import DungEntry from '../../../components/Entries/DungEntry';
 import NavType from '../../../utils/NavType';
@@ -83,7 +78,6 @@ const DungPage = () => {
     }
     if (dungArr.length < 1) {
       alert('Error: no elements in dung arr');
-<<<<<<< HEAD
     } else {
       if (isWifi) {
         await dispatch(createDungCensus({
@@ -106,24 +100,6 @@ const DungPage = () => {
           photo: image,
         }));
       }
-=======
-      return;
-    }
-
-    // Success condition
-    if (isWifi) {
-      await dispatch(createDungCensus({
-        herdId: selectedHerd?.id as string,
-        plotId: allPlots[selectedPlotId]?.id as string,
-        ratings: dungArr,
-        notes: (notes + ' '),
-        photo: image,
-      })).then((res) => {
-        if (res.payload) {
-          setSubmitOverlay(true);
-        }
-      });
->>>>>>> d3ce8b92802746b510b456f0226f5e3a5e1a89c3
     }
   };
 

@@ -3,15 +3,9 @@ import { Dimensions, View, Text, TextInput } from 'react-native';
 import { useIsConnected } from 'react-native-offline';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
-<<<<<<< HEAD
 import { createForageQuantityCensus, locallyCreateForageQuantityCensus } from '../../../redux/slices/forageQuantityCensusSlice';
-import { AppButton, AppTextInput } from '../../../components';
-import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
-=======
-import { createForageQuantityCensus } from '../../../redux/slices/forageQuantityCensusSlice';
 import { AddNotesButton, AddPhotoButton, AppButton, AppTextInput, PaddockDropdown, SubmitButton } from '../../../components';
 import { IPhotoInput } from '../../../components/UploadImage';
->>>>>>> d3ce8b92802746b510b456f0226f5e3a5e1a89c3
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import { GlobalStyle, TextStyles, Colors, DropdownStyle, FormsStyle } from '../../../styles';
 import FormGrassImage from '../../../assets/form_grass.svg';
@@ -55,7 +49,6 @@ const EyeballPage = () => {
     }
     if (rating == '') {
       alert('Error: rating can\'t be empty');
-<<<<<<< HEAD
     } else {
       if (isWifi) {
         await dispatch(createForageQuantityCensus({
@@ -76,23 +69,6 @@ const EyeballPage = () => {
           photo: image,
         }));
       }
-=======
-      return;
-    }
-
-    // Success condition
-    if (isWifi) {
-      await dispatch(createForageQuantityCensus({
-        plotId: allPlots[selectedPlotId]?.id as string,
-        rating: parseInt(rating),
-        notes: (notes + ' '),
-        photo: image,
-      })).then((res) => {
-        if (res.payload) {
-          setSubmitOverlay(true);
-        }
-      });
->>>>>>> d3ce8b92802746b510b456f0226f5e3a5e1a89c3
     }
   };
 

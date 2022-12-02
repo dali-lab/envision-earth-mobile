@@ -9,12 +9,9 @@ import { useNavigation } from '@react-navigation/native';
 import Slider from '@react-native-community/slider';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
-<<<<<<< HEAD
 import { createForageQualityCensus, locallyCreateForageQualityCensus } from '../../../redux/slices/forageQualityCensusSlice';
 import { AppButton, AppTextInput } from '../../../components';
 import UploadImage, { IPhotoInput } from '../../../components/UploadImage';
-=======
-import { createForageQualityCensus } from '../../../redux/slices/forageQualityCensusSlice';
 import {
   AddPhotoButton,
   AddNotesButton,
@@ -22,8 +19,6 @@ import {
   PaddockDropdown,
   FormHeader,
 } from '../../../components';
-import { IPhotoInput } from '../../../components/UploadImage';
->>>>>>> d3ce8b92802746b510b456f0226f5e3a5e1a89c3
 import { IPlot } from '../../../redux/slices/plotsSlice';
 import NavType from '../../../utils/NavType';
 import { GlobalStyle, TextStyles, Colors, DropdownStyle } from '../../../styles';
@@ -65,7 +60,6 @@ const ForageQualPage = () => {
       return;
     } if (!allPlots[selectedPlotId]?.id) {
       alert('Error: no selected plot');
-<<<<<<< HEAD
     } else {
       if (isWifi) {
         await dispatch(createForageQualityCensus({
@@ -86,23 +80,6 @@ const ForageQualPage = () => {
           photo: image,
         }));
       }
-=======
-      return;
-    }
-
-    // Success condition
-    if (isWifi) {
-      await dispatch(createForageQualityCensus({
-        plotId: allPlots[selectedPlotId]?.id as string,
-        rating,
-        notes: (notes + ' '),
-        photo: image,
-      })).then((res) => {
-        if (res.payload) {
-          setSubmitOverlay(true);
-        }
-      });
->>>>>>> d3ce8b92802746b510b456f0226f5e3a5e1a89c3
     }
   };
 

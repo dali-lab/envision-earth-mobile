@@ -128,9 +128,10 @@ const BCSPage = () => {
       } else {
         dispatch(locallyCreateCowCensus({
           herdId: selectedHerd?.id as string,
+          plotId: allPlots[selectedPlotId]?.id as string,
           bcs: bcsArr,
-          notes,
-          tag,
+          notes: (notes + ' '),
+          tag: (tag + ' '),
           photo: image,
         }));
       }

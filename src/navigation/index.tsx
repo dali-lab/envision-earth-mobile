@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Text } from 'react-native';
+import { Text, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -37,8 +37,8 @@ import {
   ForageQuanPage,
   LogPage,
   SelectedPaddockPage,
-  LoadingPage,
 } from './../screens';
+import { LoadRefresh } from '../components';
 import { ROUTES } from '../utils/constants';
 import { LaunchScreen } from '../screens/AuthScreens';
 import { Colors } from '../styles';
@@ -264,7 +264,9 @@ const RootNavigation = () => {
   } else if (!isDataLoaded) {
     return (
       <NavigationContainer>
-        <LoadingPage />
+        <SafeAreaView>
+          <LoadRefresh />
+        </SafeAreaView>
       </NavigationContainer>
     );
   } else {

@@ -15,6 +15,7 @@ import { PlotsState } from './slices/plotsSlice';
 import { CowCensusState } from './slices/cowCensusSlice';
 import { DungCensusState } from './slices/dungCensusSlice';
 import { ForageQualityCensusState } from './slices/forageQualityCensusSlice';
+import { ForageQuantityCensusState } from './slices/forageQuantityCensusSlice';
 
 export type RootState = {
   connection: ConnectionState,
@@ -28,4 +29,5 @@ export type RootState = {
   cowCensuses: CowCensusState,
   dungCensuses: DungCensusState,
   forageQuality: ForageQualityCensusState,
+  forageQuantity: ForageQuantityCensusState,
 };

@@ -1,7 +1,12 @@
 import { StyleSheet } from 'react-native';
+import GlobalStyle from '../../styles/GlobalStyle';
 import Colors from '../Colors';
 
 const AuthStyle = StyleSheet.create({
+  container: {
+    ...GlobalStyle.container,
+    backgroundColor: Colors.primary.lightestGreen,
+  },
   title: {
     color: Colors.secondary.deepTeal,
   },

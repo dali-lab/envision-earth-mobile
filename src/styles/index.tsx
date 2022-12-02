@@ -1,6 +1,7 @@
 import GlobalStyle from './GlobalStyle';
 import Colors from './Colors';
 import TextStyles from './TextStyles';
+import FormsStyle, { BCSStyle, QuanStyle } from './pages/FormsStyle';
 
 import {
   AuthStyle,
@@ -21,5 +22,8 @@ export {
   AuthStyle,
   DashboardStyle,
   SignupStyle,
+  FormsStyle,
+  BCSStyle,
+  QuanStyle,
   signupPages,
 };

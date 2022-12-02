@@ -22,9 +22,10 @@ const LaunchScreen = () => {
 
   return (
     <SafeAreaView
-      style={[
-        GlobalStyle.container,
-      ]}
+      style={{
+        ...GlobalStyle.container,
+        backgroundColor: Colors.primary.lightestGreen,
+      }}
     >
       <View style={LaunchStyle.globeView}>
         <SmallGlobeImage />

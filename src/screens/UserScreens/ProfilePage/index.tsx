@@ -1,6 +1,6 @@
 import { AppButton, AppTextInput } from '../../../components';
 import { useState } from 'react';
-import { SafeAreaView, Text, View, StyleSheet } from 'react-native';
+import { SafeAreaView, Text, View, StyleSheet, Dimensions } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useIsConnected } from 'react-native-offline';
 import useAppSelector from '../../../hooks/useAppSelector';
@@ -24,7 +24,7 @@ const ProfilePage = () => {
   const { id, email, name } = useAppSelector((state) => state.auth);
   const selectedTeam: ITeam = useAppSelector((state) => state.teams.selectedTeam);
   const selectedHerd: IHerd = useAppSelector((state) => state.herds.selectedHerd);
-  
+
   const [pageMode, setPageMode] = useState<PageModes>('view');
 
   const [editYrsRanch, setEditYrsRanch] = useState<number>(selectedTeam.yrsRanch);
@@ -49,47 +49,57 @@ const ProfilePage = () => {
   const handleChangeProfileInfo = async () => {
     if (!editYrsRanch) {
       alert('Error: no editYrsRanch');
-    } else if (!editYrsHolMang) {
+      return;
+    } if (!editYrsHolMang) {
       alert('Error: no editYrsHolMang');
-    } else if (!editAddress) {
+      return;
+    } if (!editAddress) {
       alert('Error: no editAddress');
-    } else if (!editAcreSize) {
+      return;
+    } if (!editAcreSize) {
       alert('Error: no editAcreSize');
-    } else if (!editBreed) {
+      return;
+    } if (!editBreed) {
       alert('Error: no editBreed');
-    } else if (!editCount) {
+      return;
+    } if (!editCount) {
       alert('Error: no editCount');
-    } else if (!editBreedingPeriod) {
+      return;
+    } if (!editBreedingPeriod) {
       alert('Error: no breedingPeriod');
-    } else if (!editCalvingDate) {
+      return;
+    } if (!editCalvingDate) {
       alert('Error: no calvingDate');
-    } else {
-      await dispatch(updateTeam({
-        id: selectedTeam.id,
-        acreSize: editAcreSize,
-        address: editAddress,
-        yrsRanch: editYrsRanch,
-        yrsHolMang: editYrsHolMang,
-      }));
-      await dispatch(updateHerd({
-        id: selectedHerd.id,
-        teamId: selectedTeam.id,
-        breed: editBreed,
-        count: editCount,
-        breedingDate: editBreedingPeriod as Date,
-        calvingDate: editCalvingDate as Date,
-      }));
+      return;
     }
+
+    await dispatch(updateTeam({
+      id: selectedTeam.id,
+      acreSize: editAcreSize,
+      address: editAddress,
+      yrsRanch: editYrsRanch,
+      yrsHolMang: editYrsHolMang,
+    }));
+    await dispatch(updateHerd({
+      id: selectedHerd.id,
+      teamId: selectedTeam.id,
+      breed: editBreed,
+      count: editCount,
+      breedingDate: editBreedingPeriod as Date,
+      calvingDate: editCalvingDate as Date,
+    }));
   };
+
+  const SVG_WIDTH = Dimensions.get('window').width;
 
   return (
     <SafeAreaView>
       <ScrollView>
         <View style={ProfileStyle.backgroundMiddleView}>
-          <ProfileBackgroundMiddleImage />
+          <ProfileBackgroundMiddleImage width={SVG_WIDTH} />
         </View>
         <View style={ProfileStyle.backgroundTopView}>
-          <ProfileBackgroundTopImage />
+          <ProfileBackgroundTopImage width={SVG_WIDTH} />
         </View>
         <View style={ProfileStyle.headerView}>
           <View style={ProfileStyle.subHeaderLeft}>
@@ -113,7 +123,7 @@ const ProfilePage = () => {
           </View>
         </View>
         {
-          (pageMode === 'view') ? 
+          (pageMode === 'view') ?
             <>
               <View style={ProfileStyle.nameCircleOuter}>
                 <View style={ProfileStyle.nameCircle}>
@@ -175,7 +185,7 @@ const ProfilePage = () => {
                   <Text style={ProfileStyle.textContent}>{selectedHerd.calvingDate.toString()}</Text>
                 </View>
               </View>
-            </> 
+            </>
             :
             <>
               <View style={ProfileStyle.nameCircleOuter}>

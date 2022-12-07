@@ -11,7 +11,13 @@ Expo / React Native application for the Grazing Earth mobile app.
 
 ## Designs
 
-[Insert videos]
+[Video of Auth Flow](https://drive.google.com/file/d/1YCM55DrjuRjhGMfjDI_hOMdjj0VTYAs6/view?usp=share_link)
+
+[Video of Primary Usage](https://drive.google.com/file/d/1i1JUlTDhdVu2D3sDVSfA0dYbBYb5zOFN/view?usp=share_link)
+
+Also see the [project's Figma](https://www.figma.com/file/jG7r9xm9YPpl9n1knMEhvN/Grazing-Earth-22F?node-id=204%3A14&t=imGaYR2s9wZ4U1dU-0) for designer HiFis.
+
+Note that you will need to be logged into your DALI account to view these resources.
 
 ## Directory Structure
     .
@@ -61,7 +67,7 @@ For user testing, the app is deployed on Testflight, under the account `grazing.
 
 Run the following command, **making sure** to replace "1" with a **new, unique** version number (it will not work otherwise):
 
-`eas update --branch dev --message "1"`
+```eas update --branch dev --message "1"```
 
 This will both update Expo and Testflight.
 
@@ -70,7 +76,7 @@ This will both update Expo and Testflight.
 1. Log into [App Store Connect](https://appstoreconnect.apple.com/) with the credentials as specified in the official Handoff Document.
 2. Go to Apps > Grazing Earth > TestFlight > Internal Testing
 3. Add the desired email. **However, make sure that the requested email is the one used by that person's Apple ID!**
-4. The invited person should recieve an email with further instructions.
+4. The invited person should receive an email with further instructions.
 
 ## Authors & Credits
 - Eric Lu '25

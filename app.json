@@ -2,7 +2,7 @@
   "expo": {
     "name": "grazing-earth-mobile",
     "slug": "grazing-earth-mobile",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -11,7 +11,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/c5872fa3-3143-48d0-946a-23aeca397fae"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -19,13 +20,14 @@
     "ios": {
       "supportsTablet": true,
       "buildNumber": "1",
-      "bundleIdentifier": "host.exp.grazing-earth-mobile",
+      "bundleIdentifier": "com.grazing-earth"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.grazing_earth_dev.grazingearthmobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,6 +36,9 @@
       "eas": {
         "projectId": "c5872fa3-3143-48d0-946a-23aeca397fae"
       }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }

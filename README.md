@@ -9,6 +9,10 @@ Expo / React Native application for the Grazing Earth mobile app.
 - [axios](https://github.com/axios/axios)
 - [TypeScript](https://www.typescriptlang.org/docs/)
 
+## Designs
+
+[Insert videos]
+
 ## Directory Structure
     .
     ├── ...    
@@ -26,14 +30,15 @@ Expo / React Native application for the Grazing Earth mobile app.
     ├── package.json           # npm config
     └── ...
 
-## Setup
+## Local Setup
 
-1. clone repo and `npm install --legacy-peer-deps`
+1. clone repo and `yarn install`
+   - npm does not install peer dependencies correctly
 2. Change `SERVER_URL` endpoint to exact IPv4 address + port
    - You can view your IPv4 address by running `ipconfig` in command terminal
    - Use `4000` for port
 3. App should be ready for use now
-   - `npm start` to run with hot reloading
+   - `yarn start` to run with hot reloading
       - If you are getting "This is taking much longer than it should..." error, try doing `expo start --tunnel` instead. This error happens sometimes when trying to run on Dartmouth eduroam.
 
 #### Redux Debugging
@@ -44,7 +49,28 @@ Expo / React Native application for the Grazing Earth mobile app.
 
 #### Linting
 
-ESLint is set up in this project. To keep code clean, always remember to run `npm run lint` and fix any lint problems before merging into master.
+ESLint is set up in this project. To keep code clean, always remember to run `yarn run lint` and fix any lint problems before merging into master.
+
+## Deployment
+
+For dev deployment testing, the app is deployed on Expo, under the account `grazing.earth.dev@gmail.com`. Credentials and further instructions can be found in the official Handoff Document.
+
+For user testing, the app is deployed on Testflight, under the account `grazing.earth.dev@gmail.com`. Credentials and further instructions can be found in the official Handoff Document.
+
+### Publishing Updates
+
+Run the following command, **making sure** to replace "1" with a **new, unique** version number (it will not work otherwise):
+
+`eas update --branch dev --message "1"`
+
+This will both update Expo and Testflight.
+
+### Add New User Testers (Testflight)
+
+1. Log into [App Store Connect](https://appstoreconnect.apple.com/) with the credentials as specified in the official Handoff Document.
+2. Go to Apps > Grazing Earth > TestFlight > Internal Testing
+3. Add the desired email. **However, make sure that the requested email is the one used by that person's Apple ID!**
+4. The invited person should recieve an email with further instructions.
 
 ## Authors & Credits
 - Eric Lu '25

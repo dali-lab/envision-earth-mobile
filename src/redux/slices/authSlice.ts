@@ -102,7 +102,12 @@ export const signIn = createAsyncThunk(
 
 export const jwtSignIn = createAsyncThunk(
   'auth/jwt-signin',
-  async (token: string, { dispatch }) => {
+  async (req: unknown, { dispatch }) => {
+    const token = await getBearerToken();
+    if (!token) {
+      throw Error('null token');
+    }
+    
     dispatch(startAuthLoading());
     return axios
       .get<LoginResponse>(`${SERVER_URL}auth/jwt-signin/`, {
@@ -112,7 +117,9 @@ export const jwtSignIn = createAsyncThunk(
       })
       .finally(() => dispatch(stopAuthLoading()))
       .then((response) => {
-        dispatch(setCredentials(response.data.token));
+        if (token) {
+          dispatch(setCredentials(token));
+        }
         return response.data;
       })
       .catch((err) => {

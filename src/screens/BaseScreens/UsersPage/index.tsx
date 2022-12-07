@@ -3,7 +3,6 @@ import { SafeAreaView, ScrollView, Text, View } from 'react-native';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { createUser, getUser, updateUser, deleteUser, UserScopes } from '../../../redux/slices/usersSlice';
-import { Picker } from '@react-native-picker/picker';
 import Accordion from '../../../components/Accordion';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
@@ -139,16 +138,6 @@ const UsersPage = () => {
                     onPress={handleUpdateUserSubmit}
                     title={'Update User'}
                   />
-                  <Picker
-                    selectedValue={updateRole}
-                    onValueChange={(itemValue) => {
-                      setUpdateRole(itemValue);
-                    }}
-                  >
-                    <Picker.Item label={UserScopes.Unverified} value={UserScopes.Unverified} />
-                    <Picker.Item label={UserScopes.User} value={UserScopes.User} />
-                    <Picker.Item label={UserScopes.Admin} value={UserScopes.Admin} />
-                  </Picker>
                 </View>
               </Accordion>
               <Accordion

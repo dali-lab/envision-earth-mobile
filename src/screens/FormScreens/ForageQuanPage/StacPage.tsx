@@ -1,6 +1,5 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import { Dimensions, View, Text, TouchableOpacity } from 'react-native';
-import { Overlay } from 'react-native-elements';
 import { useIsConnected } from 'react-native-offline';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from '@react-navigation/native';

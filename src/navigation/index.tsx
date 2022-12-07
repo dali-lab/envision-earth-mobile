@@ -13,7 +13,7 @@ import useAppSelector from './../hooks/useAppSelector';
 import useAppDispatch from './../hooks/useAppDispatch';
 // import { UserScopes } from './../redux/slices/usersSlice';
 import { checkConnection } from '../redux/slices/connectionSlice';
-import { initCredentials } from '../redux/slices/authSlice';
+import { initCredentials, jwtSignIn } from '../redux/slices/authSlice';
 import { getTeamByUserId } from '../redux/slices/teamsSlice';
 import { UserScopes } from '../redux/slices/usersSlice';
 import {
@@ -224,7 +224,7 @@ const TabNavigator = () => {
 };
 
 const RootNavigation = () => {
-  // const { isConnected } = useAppSelector((state) => state.connection);
+  const { isConnected } = useAppSelector((state) => state.connection);
   const { authenticated } = useAppSelector((state) => state.auth);
   const { id, role } = useAppSelector((state) => state.auth); // userId
   const { selectedTeam } = useAppSelector((state) => state.teams);
@@ -237,6 +237,12 @@ const RootNavigation = () => {
   useEffect(() => {
     dispatch(initCredentials({})).finally(() => { });
   }, []);
+  // When the app loads, try to log in with token stored in async storage
+  useEffect(() => {
+    if (isConnected) {
+      dispatch(jwtSignIn({}));
+    }
+  }, [isConnected]);
   useEffect(() => {
     if (authenticated) {
       dispatch(getTeamByUserId({ userId: id }));

@@ -30,8 +30,8 @@ Note that you will need to be logged into your DALI account to view these resour
     │   └── navigation         # Defines navigation flow
     │   └── redux              # Redux store and setup
     │   └── screens            # individual pages
+    │   └── styles             # individual styles
     │   └── utils              # utility folder containing helper files
-    │     └── styles           # global styles
     ├── tsconfig.json          # TypeScript configuration
     ├── package.json           # npm config
     └── ...

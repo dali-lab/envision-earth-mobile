@@ -33,7 +33,7 @@ Note that you will need to be logged into your DALI account to view these resour
     │   └── styles             # individual styles
     │   └── utils              # utility folder containing helper files
     ├── tsconfig.json          # TypeScript configuration
-    ├── package.json           # npm config
+    ├── yarn.lock              # yarn config
     └── ...
 
 ## Local Setup
